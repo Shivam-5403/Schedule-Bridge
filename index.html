@@ -30,19 +30,6 @@
     </style>
 </head>
 <body style="background-image: radial-gradient(white, #b3d6e6, white);">
-    <!-- <div class="login-container">
-        <h2>Login</h2>
-        <form id="login-form" action="/login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div class="options">
-            <a href="/forgot-password">Forgot Password?</a>
-            <a href="/signup">Sign Up</a>
-        </div>
-    </div> -->
-
     <div class="container">
         <div class="row justify-content-center center-div">
             <div class="col-lg-5 text-center">
@@ -67,12 +54,9 @@
                             </div>
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary" onclick="loginbtn()">Login</button>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary" id="submitbtn" style="display: none;">Submit</button>
-                            </div>
-                            <div class="text-center">
-                                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+                                <button type="submit" class="btn btn-primary" id="submitbtn" style="display: none;">Submit</button>                            
+                                <button type="button" class="btn btn-primary" onclick="document.location='\signup'">Sign Up</button>
+                                <button type="button" class="btn btn-primary" onclick="document.location='\admin'">Admin</button>
                             </div>
                         </form>
                     </div>
@@ -85,37 +69,44 @@
 
     <script>
     function bgcolor(e) {
-    let c = document.getElementById(e.target.id);
-    if (c.value == "") {
-        c.style.borderColor = 'red';
-    } else {
-        c.style.borderColor = 'lightgray';
-    }
+        let c = document.getElementById(e.target.id);
+            if (c.value == "") {
+                c.style.borderColor = 'red';
+            } else {
+                c.style.borderColor = 'lightgray';
+            }
     }
 
     function loginbtn() {
-    var un = document.getElementById('un').value;
-    var pwd = document.getElementById('pwd').value;
-    if (un == "") {
-        document.getElementById('un').style.borderColor = "red";
-        window.alert('Fill the require fields!');
-    } else if (pwd == "") {
-        document.getElementById('pwd').style.borderColor = "red";
-        window.alert('Fill the require fields!');
-    } else {
-        console.log(un);
-        console.log(pwd);
-        document.getElementById('submitbtn').click();
-    }
+        var un = document.getElementById('un').value;
+        var pwd = document.getElementById('pwd').value;
+        if (un == "") {
+            document.getElementById('un').style.borderColor = "red";
+            window.alert('Fill the require fields!');
+        } else if (pwd == "") {
+            document.getElementById('pwd').style.borderColor = "red";
+            window.alert('Fill the require fields!');
+        } else {
+            console.log(un);
+            console.log(pwd);
+            document.getElementById('submitbtn').click();
+        }
     }
 
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const params = new URLSearchParams(window.location.search);
+    //     const errorMessage = params.get('error');
+    //     if (errorMessage) {
+    //         document.getElementById('error-message').textContent = decodeURIComponent(errorMessage);
+    //     }
+    // });
     document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            const errorMessage = params.get('error');
-            if (errorMessage) {
-                document.getElementById('error-message').textContent = decodeURIComponent(errorMessage);
-            }
-        });
+        const params = new URLSearchParams(window.location.search);
+        const errorMessage = params.get('error');
+        if (errorMessage) {
+            alert(decodeURIComponent(errorMessage));
+        }
+    });
     </script>
 </body>
 </html>
