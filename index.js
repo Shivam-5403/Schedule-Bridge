@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost:27017/oabs', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/oabs');
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -23,18 +23,18 @@ app.get('/', (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    try{
-    const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(password, user.password)) {
-        // res.send("Login Successful!");
-        res.sendFile(__dirname + '/home.html');
-    } else {
-        // res.send("Invalid credentials, please try again.");
-        res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
+    try {
+        const user = await User.findOne({ username });
+        if (user && bcrypt.compareSync(password, user.password)) {
+            // res.send("Login Successful!");
+            res.sendFile(__dirname + '/home.html');
+        } else {
+            // res.send("Invalid credentials, please try again.");
+            res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
 
+        }
     }
-    }
-    catch(error){
+    catch (error) {
         console.error('Error during login:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
