@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const app = express();
+const path=require('path');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname));
 app.use(express.static('public'));
 
 mongoose.connect('mongodb://localhost:27017/oabs');
@@ -18,7 +20,7 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('User', UserSchema);
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname,'index.html'));
 });
 
 app.post('/login', async (req, res) => {
@@ -27,7 +29,7 @@ app.post('/login', async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             // res.send("Login Successful!");
-            res.sendFile(__dirname + '/home.html');
+            res.sendFile(path.join(__dirname, 'home.html'));
         } else {
             // res.send("Invalid credentials, please try again.");
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
@@ -41,7 +43,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.sendFile(__dirname + '/signup.html');
+    res.sendFile(path.join(__dirname, 'signup.html'));
 });
 
 app.post('/signup', async (req, res) => {
