@@ -50,7 +50,8 @@ app.get('/signup', (req, res) => {
 app.post('/signup', async (req, res) => {
     const { username, password, reckey} = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
-    const newUser = new User({ username, password: hashedPassword, reckey});
+    const hashedPassword2 = bcrypt.hashSync(reckey, 8);
+    const newUser = new User({ username, password: hashedPassword, reckey: hashedPassword2});
     await newUser.save();
     res.redirect('/');
 });
@@ -63,11 +64,9 @@ app.post('/verification', async (req,res) => {
     const { username, reckey } = req.body;
     try{
     const user = await User.findOne({ username });
-    if (user && user.reckey == reckey){
-        // res.send("Login Successful!");
+    if (user && bcrypt.compareSync(reckey, user.reckey)){
         res.sendFile(__dirname + '/changepassword.html');
     } else {
-        // res.send("Invalid credentials, please try again.");
         res.redirect('/verification?error=Invalid%20recovery%20key,%20please%20try%20again.');
     }
     }
