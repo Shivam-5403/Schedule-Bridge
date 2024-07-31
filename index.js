@@ -12,7 +12,8 @@ mongoose.connect('mongodb://localhost:27017/oabs', { useNewUrlParser: true, useU
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    reckey : { type: String, required: true }
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -45,15 +46,33 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, reckey} = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({ username, password: hashedPassword, reckey});
     await newUser.save();
     res.redirect('/');
 });
 
 app.get('/forgot-password', (req, res) => {
-    res.send("Forgot Password Page");
+    res.sendFile(__dirname + '/verification.html');
+});
+
+app.post('/verification', async (req,res) => {
+    const { username, reckey } = req.body;
+    try{
+    const user = await User.findOne({ username });
+    if (user && user.reckey == reckey){
+        // res.send("Login Successful!");
+        res.sendFile(__dirname + '/changepassword.html');
+    } else {
+        // res.send("Invalid credentials, please try again.");
+        res.redirect('/verification?error=Invalid%20recovery%20key,%20please%20try%20again.');
+    }
+    }
+    catch(error){
+        console.error('Error during login:', error);
+        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
+    }
 });
 
 app.listen(3000, () => {
