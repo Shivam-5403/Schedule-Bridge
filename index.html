@@ -103,8 +103,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
         const errorMessage = params.get('error');
+        const Message = params.get('message');
         if (errorMessage) {
             alert(decodeURIComponent(errorMessage));
+        }
+        else if (Message) {
+            alert(decodeURIComponent(Message));
         }
     });
     </script>

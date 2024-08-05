@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
@@ -9,6 +10,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.use(express.static('public'));
+
+app.use(session({
+    secret: 'Userkey888',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
+
 
 mongoose.connect('mongodb://localhost:27017/oabs');
 
@@ -60,19 +69,46 @@ app.get('/forgot-password', (req, res) => {
     res.sendFile(__dirname + '/verification.html');
 });
 
+app.get('/verification', (req,res) => {
+    res.sendFile(path.join(__dirname, 'verification.html'));
+});
+
 app.post('/verification', async (req,res) => {
     const { username, reckey } = req.body;
     try{
     const user = await User.findOne({ username });
     if (user && bcrypt.compareSync(reckey, user.reckey)){
+        req.session.username=username;
         res.sendFile(__dirname + '/changepassword.html');
     } else {
-        res.redirect('/verification?error=Invalid%20recovery%20key,%20please%20try%20again.');
+        res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
     }
     }
     catch(error){
-        console.error('Error during login:', error);
+        console.error('Error during verification:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
+    }
+});
+
+app.post('/changepassword', async (req,res) =>{
+    const { newpassword, newreckey } = req.body;
+    const username = req.session.username;
+
+    if (!username) {
+        return res.redirect('/verification/?error=Session%20expired,%20please%20try%20again.');
+    }
+
+    try {
+        const hashedPassword = bcrypt.hashSync(newpassword, 8);
+        const hashedReckey = bcrypt.hashSync(newreckey, 8);
+
+        await User.updateOne({ username }, { password: hashedPassword, reckey: hashedReckey });
+        
+        req.session.destroy(); // Destroy session after updating password
+        res.redirect('/?message=Password%20changed%20successfully.');
+    } catch (error) {
+        console.error('Error during password change:', error);
+        res.redirect('/changepassword/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
     }
 });
 
