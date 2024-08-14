@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Shivam Bhundiya">
     <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="icon/book-appointment-5373317-4486818.png">
+    <link rel="icon" type="image/x-icon" href="/icon/book-appointment-5373317-4486818.png">
     <link rel="stylesheet" href="./styles.css">
     <!-- Latest compiled and minified CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
@@ -103,8 +103,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
         const errorMessage = params.get('error');
+        const Message = params.get('message');
         if (errorMessage) {
             alert(decodeURIComponent(errorMessage));
+        }
+        else if (Message) {
+            alert(decodeURIComponent(Message));
         }
     });
     </script>
