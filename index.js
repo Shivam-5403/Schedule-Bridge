@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const app = express();
-const path=require('path');
+const path = require('path');
 const { type } = require('os');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true},
     password: { type: String, required: true },
-    reckey : { type: String, required: true }
+    reckey: { type: String, required: true }
 });
 
 const AdminSchema = new mongoose.Schema({
@@ -61,7 +62,7 @@ const Admin = mongoose.model('Admin', AdminSchema);
 const Booking = mongoose.model('Booking', BookingSchema);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/login', async (req, res) => {
@@ -174,31 +175,31 @@ app.post('/admin_changepassword', async (req,res) =>{
 });
 
 app.get('/forgot-password', (req, res) => {
-    res.sendFile(__dirname + '/verification.html');
-});
-
-app.get('/verification', (req,res) => {
     res.sendFile(path.join(__dirname, 'verification.html'));
 });
 
-app.post('/verification', async (req,res) => {
+app.get('/verification', (req, res) => {
+    res.sendFile(path.join(__dirname, 'verification.html'));
+});
+
+app.post('/verification', async (req, res) => {
     const { username, reckey } = req.body;
-    try{
-    const user = await User.findOne({ username });
-    if (user && bcrypt.compareSync(reckey, user.reckey)){
-        req.session.username=username;
-        res.sendFile(__dirname + '/changepassword.html');
-    } else {
-        res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
+    try {
+        const user = await User.findOne({ username });
+        if (user && bcrypt.compareSync(reckey, user.reckey)) {
+            req.session.username = username;
+            res.sendFile(__dirname + '/changepassword.html');
+        } else {
+            res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
+        }
     }
-    }
-    catch(error){
+    catch (error) {
         console.error('Error during verification:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
 });
 
-app.post('/changepassword', async (req,res) =>{
+app.post('/changepassword', async (req, res) => {
     const { newpassword, newreckey } = req.body;
     const username = req.session.username;
 
@@ -211,7 +212,7 @@ app.post('/changepassword', async (req,res) =>{
         const hashedReckey = bcrypt.hashSync(newreckey, 8);
 
         await User.updateOne({ username }, { password: hashedPassword, reckey: hashedReckey });
-        
+
         req.session.destroy(); // Destroy session after updating password
         res.redirect('/?message=Password%20changed%20successfully.');
     } catch (error) {
