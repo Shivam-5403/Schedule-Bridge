@@ -20,6 +20,13 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    next();
+});
+
 mongoose.connect('mongodb://localhost:27017/oabs');
 
 const UserSchema = new mongoose.Schema({
@@ -70,18 +77,26 @@ app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
-            // res.send("Login Successful!");
+            req.session.name=username;
             res.sendFile(path.join(__dirname, 'home.html'));
         } else {
-            // res.send("Invalid credentials, please try again.");
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
-
         }
     }
     catch (error) {
         console.error('Error during login:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
+});
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).send('Error logging out, please try again.');
+        }
+        res.redirect('/'); // Redirect to login page after logout
+    });
 });
 
 app.get('/signup', (req, res) => {
@@ -172,6 +187,14 @@ app.post('/admin_changepassword', async (req,res) =>{
         console.error('Error during password change:', error);
         res.redirect('/admin_changepassword/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
     }
+});
+
+app.get('/admin_verification', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin_verification.html'));
+});
+
+app.get('/admin_changepassword', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin_changepassword.html'));
 });
 
 app.get('/forgot-password', (req, res) => {
