@@ -84,7 +84,7 @@ const adminP_changepassword = async (req, res) => {
         await Admin.updateOne({ admin }, { admin_password: hashedPassword, admin_reckey: hashedReckey });
 
         req.session.destroy(); // Destroy session after updating password
-        res.redirect('/?message=Password%20changed%20successfully.');
+        res.redirect('/admin/?message=Password%20changed%20successfully.');
     } catch (error) {
         console.error('Error during password change:', error);
         res.redirect('/admin_changepassword/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
@@ -97,7 +97,7 @@ const adminP_verification = async (req, res) => {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_reckey, ad.admin_reckey)) {
             req.session.adm = admin;
-            res.sendFile(__dirname + '../admin_changepassword.html');
+            res.sendFile(path.join(__dirname, '../admin_changepassword.html'));
         }
         else {
             res.redirect('/admin_verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
@@ -115,7 +115,7 @@ const P_verification = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(reckey, user.reckey)) {
             req.session.username = username;
-            res.sendFile(__dirname + '../changepassword.html');
+            res.sendFile(path.join(__dirname, '../changepassword.html'));
         } else {
             res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
         }
