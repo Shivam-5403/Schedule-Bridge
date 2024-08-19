@@ -1,13 +1,13 @@
 const express = require('express');
 const session = require('express-session');
-//const mongoose = require('./Mongoose/MongoDB');
+const mongoose = require('./Mongoose/MongoDB');
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const { type } = require('os');
-//const appRoute = require('./Routes/Router')
-const mongoose = require('mongoose');
+const appRoute = require('./Routes/Router')
+/*const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/oabs');
 
@@ -55,7 +55,7 @@ module.exports = {
     Admin,
     Booking
 }
-
+*/
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
@@ -74,8 +74,8 @@ app.use((req, res, next) => {
     res.set('Expires', '0');
     next();
 });
-//app.use('/', appRoute);
-app.get('/', (req, res) => {
+app.use('/', appRoute);
+/*app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -250,7 +250,7 @@ app.post('/changepassword', async (req, res) => {
         res.redirect('/changepassword/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
     }
 });
-
+*/
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
