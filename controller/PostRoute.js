@@ -14,7 +14,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.name = username;
-            res.sendFile(path.join(__dirname, '../home.html'));
+            res.sendFile(path.join(__dirname, '../User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
