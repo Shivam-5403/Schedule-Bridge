@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.static(__dirname)); 
+app.use(express.static(path.join(__dirname, '../public/Pages'))); 
 app.use(express.static(path.join(__dirname, '../public'))); 
 
 const Home = (req, res) => {
