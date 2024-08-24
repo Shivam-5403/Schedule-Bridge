@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const { type } = require('os');
-const appRoute = require('./Routes/Router')
+const appRoute = require('./Routes/Router');
+const Login = require('./Routes/home');
 /*const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/oabs');
@@ -75,6 +76,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/', appRoute);
+
 /*app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
