@@ -15,7 +15,7 @@ const G_signup = (req, res) => {
 };
 
 const admin = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin.html')); 
+    res.sendFile(path.join(__dirname, '../admin_login.html')); 
 };
 
 const adminG_signup = (req, res) => {
