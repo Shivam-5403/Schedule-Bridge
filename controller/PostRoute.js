@@ -14,7 +14,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.name = username;
-            res.sendFile(path.join(__dirname, '../User-Home.html'));
+            res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
@@ -49,9 +49,9 @@ const admin_login = async (req, res) => {
     try {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_password, ad.admin_password)) {
-            res.sendFile(path.join(__dirname, '../admin_home.html'));
+            res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         } else {
-            res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
+            res.redirect('./admin/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
     }
     catch (error) {
