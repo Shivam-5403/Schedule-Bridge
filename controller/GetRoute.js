@@ -6,6 +6,8 @@ app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../public/Pages'))); 
 app.use(express.static(path.join(__dirname, '../public'))); 
 
+const { User, Admin, Booking } = require('../Mongoose/MongoDB');
+
 const Home = (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html')); 
 };
@@ -42,6 +44,28 @@ const G_verification = (req, res) => {
     res.sendFile(path.join(__dirname, '../verification.html')); 
 };
 
+const search_business = async (req, res) => {
+    const query = req.query.query;
+    // try {
+    //     const businesses = await Admin.find({ companyname: new RegExp(query, 'i') });
+    //     res.json(businesses);
+    // } catch (error) {
+    //     console.error('Error searching business:', error);
+    //     res.status(500).json({ error: 'An error occurred while searching for businesses.' });
+    // }
+    try {
+        // Assuming you are searching in the companyname field
+        const businesses = await Admin.find({
+            companyname: { $regex: new RegExp(query, 'i') }  // Case-insensitive search
+        });
+        console.log(businesses);
+        res.json(businesses);
+    } catch (error) {
+        console.error('Error searching business:', error);
+        res.status(500).json({ error: 'An error occurred while searching for businesses.' });
+    }
+};
+
 module.exports = {
     Home,
     G_signup,
@@ -51,5 +75,6 @@ module.exports = {
     forgot_admin_password,
     adminG_verification,
     adminG_changepassword,
-    G_verification
+    G_verification,
+    search_business
 };

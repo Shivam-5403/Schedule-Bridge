@@ -61,10 +61,10 @@ const admin_login = async (req, res) => {
 };
 
 const adminP_signup = async (req, res) => {
-    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, s_workhours, e_workhours, totalslots, website } = req.body;
+    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website } = req.body;
     const hashedPassword = bcrypt.hashSync(admin_password, 8);
     const hashedPassword2 = bcrypt.hashSync(admin_reckey, 8);
-    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, s_workhours, e_workhours, totalslots, website });
+    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website });
     await newAdmin.save();
     res.redirect('/admin');
 }
@@ -148,6 +148,33 @@ const P_changepassword = async (req, res) => {
     }
 }
 
+const book_appointment = async (req, res) => {
+    const { companyname, service, date, time } = req.body;
+
+    try {
+        const booking = new Booking({
+            customer_name : "Shiv",
+            companyname,
+            address : " ",
+            first_name : " ",
+            last_name : " ",
+            email : " ",
+            admin_email : " ",
+            mno : " ",
+            time,
+            date,
+            status : "Pending"
+            //userId: req.user._id // assuming you have user authentication
+        });
+
+        await booking.save();
+        res.json({ message: 'Appointment booked successfully!' });
+    } catch (error) {
+        console.error('Error booking appointment:', error);
+        res.status(500).json({ error: 'An error occurred while booking the appointment.' });
+    }
+};
+
 module.exports = {
     login,
     logout,
@@ -157,5 +184,6 @@ module.exports = {
     adminP_verification,
     adminP_changepassword,
     P_verification,
-    P_changepassword
+    P_changepassword,
+    book_appointment
 }
