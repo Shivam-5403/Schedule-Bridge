@@ -61,10 +61,10 @@ const admin_login = async (req, res) => {
 };
 
 const adminP_signup = async (req, res) => {
-    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, totalslots, website } = req.body;
+    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, s_workhours, e_workhours, totalslots, website } = req.body;
     const hashedPassword = bcrypt.hashSync(admin_password, 8);
     const hashedPassword2 = bcrypt.hashSync(admin_reckey, 8);
-    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, totalslots, website });
+    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, workhours, s_workhours, e_workhours, totalslots, website });
     await newAdmin.save();
     res.redirect('/admin');
 }

@@ -30,9 +30,19 @@ const Members = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Team-members.html'));
 };
 
+const BookApp = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Book_appointment.html'));
+};
+
+const ViewApp = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/View_appointment.html'));
+};
+
 module.exports = {
     Login,
     About,
     Contact,
-    Members
+    Members,
+    BookApp,
+    ViewApp
 }

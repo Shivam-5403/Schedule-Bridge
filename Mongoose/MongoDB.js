@@ -21,20 +21,25 @@ const AdminSchema = new mongoose.Schema({
     country: { type: String, required: true },
     pincode: { type: String, required: true },
     mno: { type: String, required: true, unique: true },
-    workhours: { type: String, required: true },
+    total_workhours: { type: Number, required: true },
+    start_time: { type: String, required: true},
+    end_time: { type: String, required: true},
     totalslots: { type: Number, required: true },
     website: { type: String }
 });
 
 const BookingSchema = new mongoose.Schema({
-    customer_name: { type: String, required: true },
-    companyname: { type: String, required: true },
-    address: { type: String, required: true },
+    customer_name: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    companyname: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
+    address: { type: String, ref: 'Admin', required: true },
+    first_name: { type: String, required: true},
+    last_name: { type: String, required: true},
     email: { type: String, required: true },
-    admin_email: { type: String, required: true },
+    admin_email: { type: String, ref: 'Admin', required: true },
     mno: { type: Number, required: true },
     time: { type: String, required: true },
-    date: { type: String, required: true }
+    date: { type: Date, required: true },
+    status: { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending' }    
 });
 
 const User = mongoose.model('User', UserSchema);
