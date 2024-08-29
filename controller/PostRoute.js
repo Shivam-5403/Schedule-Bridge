@@ -14,6 +14,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.name = username;
+            res.cookie('userId',username,{ httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
@@ -149,26 +150,25 @@ const P_changepassword = async (req, res) => {
 }
 
 const book_appointment = async (req, res) => {
-    const { companyname, service, date, time } = req.body;
-
+    const { companyname, address, first_name, last_name, email, admin_email, mno, time, date, status } = req.body;
+    const userId = req.session.name;
     try {
         const booking = new Booking({
-            customer_name : "Shiv",
+            customer_name : userId,
             companyname,
-            address : " ",
-            first_name : " ",
-            last_name : " ",
-            email : " ",
-            admin_email : " ",
-            mno : " ",
+            address,
+            first_name,
+            last_name,
+            email,
+            admin_email,
+            mno,
             time,
             date,
-            status : "Pending"
-            //userId: req.user._id // assuming you have user authentication
+            status
         });
 
         await booking.save();
-        res.json({ message: 'Appointment booked successfully!' });
+        res.json({ message: 'Appointment Request booked successfully! See The Status of Appointment in View Booked Appointment Section. You wil Be Notified After...' });
     } catch (error) {
         console.error('Error booking appointment:', error);
         res.status(500).json({ error: 'An error occurred while booking the appointment.' });

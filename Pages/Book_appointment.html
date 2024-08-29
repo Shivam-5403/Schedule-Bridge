@@ -265,7 +265,7 @@
 
   <main>
     <div class="container">
-        <h1>Book an Appointment</h1>
+        <h1>Search a Business First ...</h1>
 
         <!-- Search Business Section -->
         <div class="search-section">
@@ -284,21 +284,31 @@
             <form id="bookingForm">
                 <label for="companyname">Business:</label>
                 <input type="text" id="companyname" name="companyname" readonly />
-
-                <label for="service">Sector Belongs:</label>
-                <select id="service" name="service" required>
-                    <option>Service</option>
-                    <option>Finance</option>
-                    <option>Select a service</option>
-                    <option>Select a service</option>
-                    <option>Select a service</option>
-                </select>
-
+                <label for="address">Business Address :</label>
+                <input type="text" id="address" name="address" readonly />
+                <label for="admin_email">Business Email : </label>
+                <input type="text" id="admin_email" name="admin_email" required />
+  
+                <label for="first_name">First Name : </label>
+                <input type="text" id="first_name" name="first_name" required />
+                
+                <label for="last_name">Last Name : </label>
+                <input type="text" id="last_name" name="last_name" required />
+                
+                <label for="email">Email : </label>
+                <input type="text" id="email" name="email" required />
+                
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" required />
 
                 <label for="time">Time:</label>
                 <input type="time" id="time" name="time" required />
+                
+                <label for="mno">Mobile No. :</label>
+                <input type="tel" id="mno" name="mno" required />
+
+                <label for="status">Booking Status :</label>
+                <input type="text" id="status" name="status" value="Pending" readonly />
 
                 <button type="submit">Book</button>
             </form>
@@ -500,51 +510,32 @@
     }
 
     function displaySearchResults(data) {
-        // const resultsSection = document.getElementById('searchResults');
-        // resultsSection.innerHTML = ''; // Clear previous results
-        // resultsSection.style.display = 'block'; // Show results section
-
-        // results.forEach(business => {
-        //     const businessDiv = document.createElement('div');
-        //     businessDiv.className = 'business';
-        //     businessDiv.textContent = business.name;
-        //     businessDiv.addEventListener('click', () => {
-        //         selectBusiness(business);
-        //     });
-        //     resultsSection.appendChild(businessDiv);
-        // });
         if (data.length === 0) {
-        console.log('No businesses found');
-        // Optionally, display a message on the page indicating no results were found
-    } else {
-        console.log('Businesses found:', data);
-        // Process and display the data on the page
-        // For example:
-        const resultsSection = document.getElementById('searchResults');
-        resultsSection.innerHTML = ''; // Clear previous results
-        resultsSection.style.display = 'block'; // Show results section
-        data.forEach(business => {
-            const div = document.createElement('div');
-            div.textContent = business.companyname; // or any other business detail
-            resultsSection.appendChild(div);
-        });
-    }
+          console.log('No businesses found');
+        } else {
+            console.log('Businesses found:', data);
+            const resultsSection = document.getElementById('searchResults');
+            resultsSection.innerHTML = ''; // Clear previous results
+            resultsSection.style.display = 'block'; // Show results section
+            data.forEach(business => {
+                const businessdiv = document.createElement('businessdiv');
+                businessdiv.innerHTML = `Company Name: ${business.companyname} <br> 
+                    Sector: ${business.sector} <br> 
+                    Address: ${business.address}`;
+                businessdiv.style.cursor = "pointer";
+                businessdiv.addEventListener('click', () => {
+                  selectBusiness(business);
+                });
+                resultsSection.appendChild(businessdiv);
+            });
+        }
     }
 
     function selectBusiness(business) {
-        document.getElementById('companyname').value = business.name;
+        document.getElementById('companyname').value = business.companyname;
         document.getElementById('bookingFormSection').style.display = 'block';
-        
-        // Populate services dropdown
-        const serviceDropdown = document.getElementById('service');
-        serviceDropdown.innerHTML = ''; // Clear previous options
-
-        business.services.forEach(service => {
-            const option = document.createElement('option');
-            option.value = service;
-            option.textContent = service;
-            serviceDropdown.appendChild(option);
-        });
+        document.getElementById('address').value = business.address;
+        document.getElementById('admin_email').value = business.admin_email;
     }
 
     // Handle booking form submission
@@ -553,9 +544,15 @@
 
         const formData = {
             companyname: document.getElementById('companyname').value,
-            service: document.getElementById('service').value,
+            address : document.getElementById('address').value,
+            first_name : document.getElementById('first_name').value,
+            last_name : document.getElementById('last_name').value,
+            email : document.getElementById('email').value,
+            admin_email : document.getElementById('admin_email').value,
+            mno : document.getElementById('mno').value,
+            time: document.getElementById('time').value,
             date: document.getElementById('date').value,
-            time: document.getElementById('time').value
+            status : document.getElementById('status').value
         };
 
         fetch('/book-appointment', {

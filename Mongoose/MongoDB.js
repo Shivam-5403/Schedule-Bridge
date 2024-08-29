@@ -25,27 +25,28 @@ const AdminSchema = new mongoose.Schema({
     start_time: { type: Number, required: true},
     end_time: { type: Number, required: true},
     totalslots: { type: Number, required: true },
-    website: { type: String }
+    website: { type: String },
+    service : { type: String, required: true}
 });
 
 const BookingSchema = new mongoose.Schema({
-    customer_name: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    companyname: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin'},
-    address: { type: String, ref: 'Admin'},
-    first_name: { type: String},
-    last_name: { type: String},
-    email: { type: String},
-    admin_email: { type: String, ref: 'Admin'},
-    mno: { type: Number},
-    time: { type: String},
-    date: { type: Date},
+    customer_name: { type: String, required: true},
+    companyname: { type: String, required: true},
+    address: { type: String, required: true},
+    first_name: { type: String, required: true},
+    last_name: { type: String, required: true},
+    email: { type: String, required: true},
+    admin_email: { type: String, required: true},
+    mno: { type: Number, required: true},
+    time: { type: String, required: true},
+    date: { type: Date, required: true},
     status: { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending' }    
 });
 
 const User = mongoose.model('User', UserSchema);
 const Admin = mongoose.model('Admin', AdminSchema);
 const Booking = mongoose.model('Booking', BookingSchema);
-
+    
 module.exports = {
     User,
     Admin,
