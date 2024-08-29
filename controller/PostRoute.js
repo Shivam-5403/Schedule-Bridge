@@ -14,7 +14,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.name = username;
-            res.cookie('userId',username,{ httpOnly: true, sameSite: 'strict' });
+            res.cookie('userId', username, { httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
@@ -62,10 +62,10 @@ const admin_login = async (req, res) => {
 };
 
 const adminP_signup = async (req, res) => {
-    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website } = req.body;
+    const { admin, admin_password, admin_reckey, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
     const hashedPassword = bcrypt.hashSync(admin_password, 8);
     const hashedPassword2 = bcrypt.hashSync(admin_reckey, 8);
-    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website });
+    const newAdmin = new Admin({ admin, admin_password: hashedPassword, admin_reckey: hashedPassword2, companyname, sector, address, admin_email, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
     await newAdmin.save();
     res.redirect('/admin');
 }
@@ -154,7 +154,7 @@ const book_appointment = async (req, res) => {
     const userId = req.session.name;
     try {
         const booking = new Booking({
-            customer_name : userId,
+            customer_name: userId,
             companyname,
             address,
             first_name,
