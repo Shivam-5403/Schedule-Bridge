@@ -1,6 +1,5 @@
 const { Login, G_signup, admin, adminG_signup, forgot_password, forgot_admin_password, adminG_verification, adminG_changepassword, G_verification, search_business } = require('../controller/GetRoute');
-const { logout, admin_login, P_signup, adminP_signup, adminP_verification, adminP_changepassword, P_verification, P_changepassword, book_appointment } = require('../controller/PostRoute');
-const { Home } = require('../controller/LoginP');
+const { login, logout, admin_login, P_signup, adminP_signup, adminP_verification, adminP_changepassword, P_verification, P_changepassword, book_appointment } = require('../controller/PostRoute');
 const router = require('express').Router();
 
 router.get('/', Login);
@@ -14,7 +13,7 @@ router.get('/forgot-password', forgot_password);
 router.get('/verification', G_verification);
 router.get('/search-business', search_business);
 
-router.post('/Home', Home);
+router.post('/Home', login);
 router.post('/logout', logout);
 router.post('/signup', P_signup);
 router.post('/admin_login', admin_login);
