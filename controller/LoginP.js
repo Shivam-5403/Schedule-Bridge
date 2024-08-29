@@ -7,17 +7,6 @@ app.use(express.static(path.join(__dirname, '../public'))); // Serves static fil
 
 const { User, Admin, Booking } = require('../Mongoose/MongoDB');
 
-const Home = async (req, res) => {
-    try {
-        const user = await User.findOne({});
-        const userString = JSON.stringify(user);
-        console.log(user);
-    } catch (err) {
-        console.log(err);
-    }
-    res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
-};
-
 const About = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/About-Us.html'));
 };
@@ -78,7 +67,6 @@ const Info = async (req, res) => {
 };
 
 module.exports = {
-    Home,
     About,
     Contact,
     Members,

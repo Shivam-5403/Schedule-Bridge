@@ -151,7 +151,7 @@ const P_changepassword = async (req, res) => {
 
 const book_appointment = async (req, res) => {
     const { companyname, address, first_name, last_name, email, admin_email, mno, time, date, status } = req.body;
-    const userId = req.session.username;
+    const userId = req.session.name;
     try {
         const booking = new Booking({
             customer_name: userId,
