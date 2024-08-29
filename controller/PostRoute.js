@@ -14,7 +14,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
             req.session.name = username;
-            res.cookie('userId',username,{ httpOnly: true, sameSite: 'strict' });
+            res.cookie('userId', username, { httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
@@ -154,7 +154,7 @@ const book_appointment = async (req, res) => {
     const userId = req.session.name;
     try {
         const booking = new Booking({
-            customer_name : userId,
+            customer_name: userId,
             companyname,
             address,
             first_name,
