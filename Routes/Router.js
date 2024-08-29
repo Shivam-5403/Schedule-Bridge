@@ -14,7 +14,7 @@ router.get('/forgot-password', forgot_password);
 router.get('/verification', G_verification);
 router.get('/search-business', search_business);
 
-router.post('/Home', );
+router.post('/Home', Home);
 router.post('/logout', logout);
 router.post('/signup', P_signup);
 router.post('/admin_login', admin_login);
