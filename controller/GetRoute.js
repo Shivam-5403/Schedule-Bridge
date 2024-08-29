@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 const { User, Admin, Booking } = require('../Mongoose/MongoDB');
 
-const Home = (req, res) => {
+const Login = (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html')); 
 };
 
@@ -67,7 +67,7 @@ const search_business = async (req, res) => {
 };
 
 module.exports = {
-    Home,
+    Login,
     G_signup,
     admin,
     adminG_signup,
