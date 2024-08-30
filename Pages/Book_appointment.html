@@ -192,6 +192,13 @@
       border: 2px solid #007bff;
 
     }
+
+    .results-section {
+    max-height: 400px; /* Set your desired max height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding: 10px;     /* Optional: add some padding */
+    border: 1px solid #ccc; /* Optional: add a border for better visibility */
+}
   </style>
 </head>
 
@@ -264,55 +271,136 @@
   </nav>
 
   <main>
-    <div class="container">
-        <h1>Search a Business First ...</h1>
+    <div class="mycontainer">
+      <div class="new-appointment">
+        <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+          <a href="#" class="btn btn-my" data-toggle="modal" data-target="#add-modal">
+            Book Appointment Now
+          </a>
+          <div class="modal fade text-dark" id="add-modal">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                  <div class="w-100 d-flex justify-content-between align-content-center">
+                    <h5 class="modal-title" id="addAppointmentModalLabel">Business Details</h5>
+          
+                      <input class="mr-2" type="text" name="searchQuery" id="searchQuery"
+                        placeholder="Search By Business Name" />
+                      <button class="btn btn-success mr-2" id="searchButton">Search</button>
 
-        <!-- Search Business Section -->
-        <div class="search-section">
-            <input type="text" id="searchQuery" placeholder="Search for a business..." />
-            <button id="searchButton">Search</button>
+                  </div>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div id="searchResults" class="results-section">
+                  <!-- Business results will be displayed here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade text-dark" id="show-business-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addAppointmentModalLabel">Business Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>Business Name:</h6>
+                  <p id="business-name"></p>
+
+                  <h6>Sector:</h6>
+                  <p id="business-sector"></p>
+
+                  <h6>Contact Number:</h6>
+                  <p id="business-contact"></p>
+
+                  <h6>Email:</h6>
+                  <p id="business-email"></p>
+
+                  <h6>Address:</h6>
+                  <p id="business-address"></p>
+
+                  <h6>Business Hours:</h6>
+                  <p id="business-hours"></p>
+
+                  <h6>Service:</h6>
+                  <p id="business-service"></p>
+
+                  <h6>Website:</h6>
+                  <p id="business-website"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade text-dark" id="book-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addAppointmentModalLabel">Book Appointment</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="bookingForm">
+                    <div class="form-group">
+                      <label for="companyname">Business Name :</label>
+                      <input type="text" class="form-control" id="companyname" name="companyname" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Business Address :</label>
+                      <input type="text" class="form-control" id="address" name="address" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="admin_email">Business Email :</label>
+                      <input type="text" class="form-control" id="admin_email" name="admin_email" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="first_name">First Name :</label>
+                      <input type="text" class="form-control" id="first_name" name="first_name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="last_name">Last Name :</label>
+                      <input type="text" class="form-control" id="last_name" name="last_name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email :</label>
+                      <input type="text" class="form-control" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="date">Date : </label>
+                      <input type="date" class="form-control" id="date" name="date" required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="time">Time : </label>
+                      <select class="form-control" id="time" required>
+                        <option value="" disabled selected>Select a time slot</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="mno">Mobile No :</label>
+                      <input type="tel" class="form-control" id="mno" name="mno" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="status">Booking Status :</label>
+                      <input type="text" class="form-control" id="status" name="status" value="Pending" readonly />
+                    </div>
+                    <button type="submit" class="btn btn-success">Book</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Search Results Section -->
-        <div id="searchResults" class="results-section">
-            <!-- Business results will be displayed here -->
-        </div>
-
-        <!-- Booking Form Section -->
-        <div id="bookingFormSection" class="booking-section">
-            <h2>Book an Appointment</h2>
-            <form id="bookingForm">
-                <label for="companyname">Business:</label>
-                <input type="text" id="companyname" name="companyname" readonly />
-                <label for="address">Business Address :</label>
-                <input type="text" id="address" name="address" readonly />
-                <label for="admin_email">Business Email : </label>
-                <input type="text" id="admin_email" name="admin_email" required />
-  
-                <label for="first_name">First Name : </label>
-                <input type="text" id="first_name" name="first_name" required />
-                
-                <label for="last_name">Last Name : </label>
-                <input type="text" id="last_name" name="last_name" required />
-                
-                <label for="email">Email : </label>
-                <input type="text" id="email" name="email" required />
-                
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required />
-
-                <label for="time">Time:</label>
-                <input type="time" id="time" name="time" required />
-                
-                <label for="mno">Mobile No. :</label>
-                <input type="tel" id="mno" name="mno" required />
-
-                <label for="status">Booking Status :</label>
-                <input type="text" id="status" name="status" value="Pending" readonly />
-
-                <button type="submit">Book</button>
-            </form>
-        </div>
+      </div>
     </div>
   </main>
 
@@ -409,8 +497,6 @@
               stroke-linejoin="round" />
           </svg>
         </div>
-
-
       </div>
 
       <!-- ext -->
@@ -461,8 +547,6 @@
       document.querySelector('.foot-theme').classList.remove('light-theme-footer');
       document.querySelector('.foot-theme').classList.add('dark-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(1)';
-
-
     });
 
     document.getElementById('light-theme').addEventListener('click', function () {
@@ -481,8 +565,6 @@
       document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
       document.querySelector('.foot-theme').classList.add('light-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(0)';
-
-
     });
 
 
@@ -519,23 +601,80 @@
             resultsSection.style.display = 'block'; // Show results section
             data.forEach(business => {
                 const businessdiv = document.createElement('businessdiv');
-                businessdiv.innerHTML = `Company Name: ${business.companyname} <br> 
-                    Sector: ${business.sector} <br> 
-                    Address: ${business.address}`;
-                businessdiv.style.cursor = "pointer";
-                businessdiv.addEventListener('click', () => {
-                  selectBusiness(business);
-                });
+                businessdiv.innerHTML = `
+                  <div class="modal-body">
+                  <div class="cards d-flex flex-wrap">
+                    <div style="width: 370px" class="card">
+                      <div class="card-body text-dark">
+                        <h4 class="card-title"> ${business.companyname}</h4>
+                        <div class="card-text2">
+                          Sector : ${business.sector} <br>
+                          Address : ${business.address} <br>
+                          Service Provides : ${business.service}
+                        </div>
+                        <div class="d-flex flex-column g-1">
+                          <button class="btn btn-success mt-3" onclick="showBusiness('${encodeURIComponent(JSON.stringify(business))}')">Business Details
+                          <button class="btn btn-success mt-3" onclick="selectBusiness('${encodeURIComponent(JSON.stringify(business))}')">Book Appointment
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
                 resultsSection.appendChild(businessdiv);
             });
         }
     }
 
-    function selectBusiness(business) {
-        document.getElementById('companyname').value = business.companyname;
-        document.getElementById('bookingFormSection').style.display = 'block';
-        document.getElementById('address').value = business.address;
-        document.getElementById('admin_email').value = business.admin_email;
+    function showBusiness(businessJson){
+      const business = JSON.parse(decodeURIComponent(businessJson));
+      document.getElementById('business-name').innerText = business.companyname || 'N/A';
+      document.getElementById('business-sector').innerText = business.sector || 'N/A';
+      document.getElementById('business-contact').innerText = business.mno || 'N/A';
+      document.getElementById('business-email').innerText = business.admin_email || 'N/A';
+      document.getElementById('business-address').innerText = (business.address + ' ' + business.state + ' ' + business.country + ' ' + business.pincode)  || 'N/A';
+      document.getElementById('business-hours').innerText = (business.start_time + ' to ' + business.end_time ) || 'N/A';
+      document.getElementById('business-service').innerText = business.service || 'N/A';
+      document.getElementById('business-website').innerText = business.website || 'N/A';
+      $('#show-business-modal').modal('show');
+    }
+
+    function selectBusiness(businessJson) {
+        const business_book = JSON.parse(decodeURIComponent(businessJson));
+
+        const timeSelect = document.getElementById('time');
+        timeSelect.innerHTML = '<option value="" disabled selected>Select a time slot</option>';
+
+        const start_time = business_book.start_time;
+        const end_time = business_book.end_time;
+        const totalslots = business_book.totalslots;
+
+        const slotDuration = (new Date(`1970-01-01T${end_time}`) - new Date(`1970-01-01T${start_time}`)) / totalslots / 60000; // Duration in minutes
+
+        let currentTime = new Date(`1970-01-01T${start_time}`);
+        const endTimeObj = new Date(`1970-01-01T${end_time}`);
+
+        while (currentTime < endTimeObj) {
+          const startTimeString = currentTime.toTimeString().slice(0, 5);
+
+          // Increment currentTime by slot duration to get the end time of the range
+          const endTimeRange = new Date(currentTime.getTime() + slotDuration * 60000);
+          const endTimeString = endTimeRange.toTimeString().slice(0, 5);
+
+          const option = document.createElement('option');
+          option.value = `${startTimeString} - ${endTimeString}`;
+          option.textContent = `${startTimeString} - ${endTimeString}`;
+          timeSelect.appendChild(option);
+
+          // Move to the next slot's start time
+          currentTime = endTimeRange;
+        }
+
+        document.getElementById('companyname').value = business_book.companyname;
+        document.getElementById('address').value = business_book.address;
+        document.getElementById('admin_email').value = business_book.admin_email;
+        $('#book-modal').modal('show');
     }
 
     // Handle booking form submission
@@ -571,6 +710,22 @@
         });
     });
 
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set the min attribute to today's date to disable past dates
+    document.getElementById('date').setAttribute('min', today);
+
+    // Add an event listener to disable Sundays
+    document.getElementById('date').addEventListener('input', function() {
+      const selectedDate = new Date(this.value);
+      const dayOfWeek = selectedDate.getUTCDay();
+      
+      // If the selected date is a Sunday (0 represents Sunday)
+      if (dayOfWeek === 0) {
+        alert('Sundays are not selectable. Please choose another day.');
+        this.value = ''; // Clear the input value
+      }
+    });
   </script>
 </body>
 

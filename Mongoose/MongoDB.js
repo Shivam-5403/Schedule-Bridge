@@ -22,8 +22,8 @@ const AdminSchema = new mongoose.Schema({
     pincode: { type: String, required: true },
     mno: { type: String, required: true, unique: true },
     total_workhours: { type: Number, required: true },
-    start_time: { type: Number, required: true},
-    end_time: { type: Number, required: true},
+    start_time: { type: String, required: true},
+    end_time: { type: String, required: true},
     totalslots: { type: Number, required: true },
     website: { type: String },
     service : { type: String, required: true}
