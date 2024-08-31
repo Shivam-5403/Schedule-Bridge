@@ -167,7 +167,7 @@ const book_appointment = async (req, res) => {
             status
         });
 
-        await booking.save();
+        const Booked = await booking.save();
         res.json({ message: 'Appointment Request booked successfully! See The Status of Appointment in View Booked Appointment Section. You wil Be Notified After...' });
     } catch (error) {
         console.error('Error booking appointment:', error);

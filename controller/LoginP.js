@@ -34,13 +34,13 @@ const ViewApp = (req, res) => {
 const Info = async (req, res) => {
     try {
         const result = await Admin.find();
-        console.log("Database result: ", result);
+        // console.log("Database result: ", result);
 
         if (result.length > 0) {
             let Table = "";
 
             result.forEach(r => {
-                console.log("Processing user: ", r.admin);
+                // console.log("Processing user: ", r.admin);
                 Table += `
                     <div style="width: 370px" class="card m-4">
                         <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
