@@ -216,7 +216,7 @@
           <a class="nav-link" href="/BookApp">Book An Appointment</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">View Booked Appoinment</a>
+          <a class="nav-link active" href="/ViewApp">View Booked Appoinment</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/About">About Us</a>
@@ -262,6 +262,167 @@
       </div>
     </div>
   </nav>
+
+  <main>
+    <div class="mycontainer">
+      <div class="pending-apoointment">
+        <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+          <a href="#" class="btn btn-my" data-toggle="modal" data-target="#add-modal">
+            Search Your Pending Appointments
+          </a>
+          <div class="modal fade text-dark" id="add-modal">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                  <div class="w-100 d-flex justify-content-between align-content-center">
+                    <h5 class="modal-title" id="viewAppointmentModalLabel">Appointment Details</h5>
+                  </div>
+                  <input class="mr-2" type="text" name="searchQuery" id="searchQuery"
+                    placeholder="Person's First Name" />
+                  <input class="mr-2" type="text" name="searchQuery2" id="searchQuery2"
+                    placeholder="Person's Last Name" />
+                  <button class="btn btn-success mr-2" id="searchButton">Search</button>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div id="searchResults" class="results-section">
+                  <!-- Business results will be displayed here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade text-dark" id="show-appointment-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="showAppointmentModalLabel">Appointment Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>Business Name:</h6>
+                  <p id="business-name"></p>
+
+                  <h6>Address:</h6>
+                  <p id="business-address"></p>
+
+                  <h6>Business Email:</h6>
+                  <p id="business-email"></p>
+                  
+                  <h6>First Name:</h6>
+                  <p id="uf-name"></p>
+
+                  <h6>Last Name:</h6>
+                  <p id="ul-name"></p>
+
+                  <h6>User Email:</h6>
+                  <p id="u-email"></p>
+
+                  <h6>User Mobile No. :</h6>
+                  <p id="u-mno"></p>
+
+                  <h6>Meeting Date:</h6>
+                  <p id="meet-date"></p>
+
+                  <h6>Meeting Time:</h6>
+                  <p id="meet-time"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scheduled-apoointment">
+        <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+          <a href="#" class="btn btn-my" data-toggle="modal" data-target="#add-modal2">
+            Search Your Scheduled Appointments
+          </a>
+          <div class="modal fade text-dark" id="add-modal2">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                  <div class="w-100 d-flex justify-content-between align-content-center">
+                    <h5 class="modal-title" id="viewAppointmentModalLabel">Enter Appointment Details</h5>
+                  </div>
+                  <input class="mr-2" type="text" name="searchQuery3" id="searchQuery3"
+                    placeholder="Person's First Name" />
+                  <input class="mr-2" type="text" name="searchQuery4" id="searchQuery4"
+                    placeholder="Person's Last Name" />
+                  <button class="btn btn-success mr-2" id="searchButton2">Search</button>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div id="searchResults2" class="results-section2">
+                  <!-- Business results will be displayed here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade text-dark" id="show-appointment-modal2">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="showAppointmentModalLabel2">Appointment Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>Business Name:</h6>
+                  <p id="business-name2"></p>
+
+                  <h6>Address:</h6>
+                  <p id="business-address2"></p>
+
+                  <h6>Business Email:</h6>
+                  <p id="business-email2"></p>
+                  
+                  <h6>First Name:</h6>
+                  <p id="uf-name2"></p>
+
+                  <h6>Last Name:</h6>
+                  <p id="ul-name2"></p>
+
+                  <h6>User Email:</h6>
+                  <p id="u-email2"></p>
+
+                  <h6>User Mobile No. :</h6>
+                  <p id="u-mno2"></p>
+
+                  <h6>Meeting Date:</h6>
+                  <p id="meet-date2"></p>
+
+                  <h6>Meeting Time:</h6>
+                  <p id="meet-time2"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Scheduled appointment -->
+      <h2 class="m-4">Your Pending appointments</h2>
+      <div class="scheduled-appoinment" id="pendingAppointmentsSection">
+      </div>
+      <h2 class="m-4">Your Scheduled appointments</h2>
+      <div class="scheduled-appoinment" id="scheduledAppointmentsSection">
+      </div>
+    </div>
+  </main>
+
 
 
   <footer class="dark-theme-footer foot-theme p-0">
@@ -442,6 +603,239 @@
       });
     });
 
+    document.getElementById('searchButton').addEventListener('click', searchAppointment);
+
+    function searchAppointment() {
+        const f_name = document.getElementById('searchQuery').value;
+        const l_name = document.getElementById('searchQuery2').value;
+        fetch(`/search-appointment?first_name=${encodeURIComponent(f_name)}&last_name=${encodeURIComponent(l_name)}`)
+            .then(response => response.json())
+            .then(data => {
+                displaySearchResults(data);
+            })
+            .catch(error => {
+                console.error('Error searching appointment:', error);
+            });
+    }
+
+    function displaySearchResults(data) {
+        if (data.length === 0) {
+          console.log('No appointments found');
+        } else {
+            console.log('Appointments found:', data);
+            const resultsSection = document.getElementById('searchResults');
+            resultsSection.innerHTML = ''; // Clear previous results
+            resultsSection.style.display = 'block'; // Show results section
+            data.forEach(appointment => {
+                const appointmentdiv = document.createElement('appointmentdiv');
+                const appointmentDate = new Date(appointment.date);
+                const formattedDate = appointmentDate.toLocaleDateString('en-GB');
+                appointmentdiv.innerHTML = `
+                  <div class="modal-body">
+                  <div class="cards d-flex flex-wrap">
+                    <div style="width: 370px" class="card">
+                      <div class="card-body text-dark">
+                        <h4 class="card-title"> ${appointment.companyname}</h4>
+                        <div class="card-text2">
+                          Date : ${formattedDate} <br>
+                          Time : ${appointment.time} <br>
+                          Status : ${appointment.status}
+                        </div>
+                        <div class="d-flex flex-column g-1">
+                            <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details
+                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+                resultsSection.appendChild(appointmentdiv);
+            });
+        }
+    }
+
+    function showFullAppointment(appointmentJson){
+      const appointment = JSON.parse(decodeURIComponent(appointmentJson));
+      const appointmentDate = new Date(appointment.date);
+      const formattedDate = appointmentDate.toLocaleDateString('en-GB');
+      document.getElementById('business-name').innerText = appointment.companyname || 'N/A';
+      document.getElementById('business-address').innerText = appointment.address || 'N/A';
+      document.getElementById('business-email').innerText = appointment.admin_email || 'N/A';
+      document.getElementById('uf-name').innerText = appointment.first_name || 'N/A';
+      document.getElementById('ul-name').innerText = appointment.last_name || 'N/A';
+      document.getElementById('u-email').innerText = appointment.email || 'N/A';
+      document.getElementById('u-mno').innerText = appointment.mno || 'N/A';
+      document.getElementById('meet-date').innerText = formattedDate || 'N/A';
+      document.getElementById('meet-time').innerText = appointment.time || 'N/A';
+      $('#show-appointment-modal').modal('show');
+    }
+
+    document.getElementById('searchButton2').addEventListener('click', searchAppointment2);
+
+    function searchAppointment2() {
+        const f2_name = document.getElementById('searchQuery3').value;
+        const l2_name = document.getElementById('searchQuery4').value;
+        fetch(`/search-appointment2?first_name=${encodeURIComponent(f2_name)}&last_name=${encodeURIComponent(l2_name)}`)
+            .then(response => response.json())
+            .then(data => {
+                displaySearchResults2(data);
+            })
+            .catch(error => {
+                console.error('Error searching appointment:', error);
+            });
+    }
+
+    function displaySearchResults2(data) {
+        if (data.length === 0) {
+          console.log('No appointments found');
+          alert("No Appointment Found.");
+        } else {
+            console.log('Appointments found:', data);
+            const resultsSection2 = document.getElementById('searchResults2');
+            resultsSection2.innerHTML = ''; // Clear previous results
+            resultsSection2.style.display = 'block'; // Show results section
+            data.forEach(appointment => {
+                const appointmentdiv2 = document.createElement('appointmentdiv2');
+                const appointmentDate2 = new Date(appointment.date);
+                const formattedDate2 = appointmentDate2.toLocaleDateString('en-GB');
+                appointmentdiv2.innerHTML = `
+                  <div class="modal-body">
+                  <div class="cards d-flex flex-wrap">
+                    <div style="width: 370px" class="card">
+                      <div class="card-body text-dark">
+                        <h4 class="card-title"> ${appointment.companyname}</h4>
+                        <div class="card-text2">
+                          Date : ${formattedDate2} <br>
+                          Time : ${appointment.time} <br>
+                          Status : ${appointment.status}
+                        </div>
+                        <div class="d-flex flex-column g-1">
+                            <button class="btn btn-success mt-3" onclick="showFullAppointment2('${encodeURIComponent(JSON.stringify(appointment))}')">Details
+                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+                resultsSection2.appendChild(appointmentdiv2);
+            });
+        }
+    }
+
+    function showFullAppointment2(appointmentJson){
+      const appointment = JSON.parse(decodeURIComponent(appointmentJson));
+      const appointmentDate = new Date(appointment.date);
+      const formattedDate = appointmentDate.toLocaleDateString('en-GB');
+      document.getElementById('business-name2').innerText = appointment.companyname || 'N/A';
+      document.getElementById('business-address2').innerText = appointment.address || 'N/A';
+      document.getElementById('business-email2').innerText = appointment.admin_email || 'N/A';
+      document.getElementById('uf-name2').innerText = appointment.first_name || 'N/A';
+      document.getElementById('ul-name2').innerText = appointment.last_name || 'N/A';
+      document.getElementById('u-email2').innerText = appointment.email || 'N/A';
+      document.getElementById('u-mno2').innerText = appointment.mno || 'N/A';
+      document.getElementById('meet-date2').innerText = formattedDate || 'N/A';
+      document.getElementById('meet-time2').innerText = appointment.time || 'N/A';
+      $('#show-appointment-modal2').modal('show');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAppointments);
+
+    function loadAppointments(){
+      fetch('/view-appointments') 
+        .then(response => response.json())
+        .then(data => {
+            displayPendingAppointments(data.pendingAppointments);
+            displayScheduledAppointments(data.scheduledAppointments);
+        })
+        .catch(error => {
+            console.error('Error loading appointments:', error);
+        });
+    }
+
+    function displayPendingAppointments(appointments) {
+      const pendingSection = document.getElementById('pendingAppointmentsSection');
+      
+      pendingSection.innerHTML = ''; 
+
+      appointments.forEach(appointment => {
+          const appointmentDiv = document.createElement('div');
+          const appointmentDate3 = new Date(appointment.date);
+          const formattedDate3 = appointmentDate3.toLocaleDateString('en-GB');
+          appointmentDiv.innerHTML =`
+                    <div class="cards d-flex flex-wrap">
+                      <div class="card m-4" style="width: 370px">
+                        <div class="card-body text-dark">
+                          <h4 class="card-title">${appointment.companyname}</h4>
+                          <p class="card-text">
+                          Customer Name : ${appointment.first_name} ${appointment.last_name} <br>
+                          Time: ${appointment.time} <br>
+                          Date: ${formattedDate3} <br>
+                          Status : ${appointment.status}
+                          </p>
+                          <div class="d-flex flex-column">
+                            <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details
+                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
+                          </div>
+                        </div>
+                      </div>
+                    </div>`;
+      pendingSection.appendChild(appointmentDiv);
+      });
+    }
+
+    function displayScheduledAppointments(appointments) {
+      const scheduledSection = document.getElementById('scheduledAppointmentsSection');
+      scheduledSection.innerHTML = '';
+
+      appointments.forEach(appointment => {
+        const appointmentDiv = document.createElement('div');
+        const appointmentDate4 = new Date(appointment.date);
+        const formattedDate4 = appointmentDate4.toLocaleDateString('en-GB');
+        appointmentDiv.innerHTML = `
+            <div class="cards d-flex flex-wrap">
+                      <div class="card m-4" style="width: 370px">
+                        <div class="card-body text-dark">
+                          <h4 class="card-title">${appointment.companyname}</h4>
+                          <p class="card-text">
+                          Customer Name : ${appointment.first_name} ${appointment.last_name} <br>
+                          Time: ${appointment.time} <br>
+                          Date: ${formattedDate4} <br>
+                          Status : ${appointment.status}
+                          </p>
+                          <div class="d-flex flex-column">
+                            <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details
+                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+        `;
+        scheduledSection.appendChild(appointmentDiv);
+      });
+    }
+
+    function cancelAppointment(appointmentId){
+      if (confirm('Are you sure you want to cancel this appointment?')) {
+        fetch(`/cancel-appointment/${appointmentId}`,{
+          method: 'PUT'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert('Failed to cancel appointment: ' + data.error);
+            } else {
+                alert('Appointment cancelled successfully.');
+                loadAppointments(); // Reload the appointments to reflect the change
+            }
+        })
+        .catch(error => {
+            console.error('Error cancelling appointment:', error);
+            alert('An error occurred while cancelling the appointment.');
+        });
+    }
+    }
   </script>
 </body>
 

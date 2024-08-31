@@ -58,6 +58,90 @@ const search_business = async (req, res) => {
     }
 };
 
+const search_appointment = async (req, res) => {
+    const uf_name = req.query.first_name;
+    const ul_name = req.query.last_name;
+    const userId = req.session.name;
+    try{
+        const appointments = await Booking.find({
+            customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
+            first_name: { $regex: new RegExp(uf_name, 'i') },  // Case-insensitive search
+            last_name: { $regex: new RegExp(ul_name, 'i') } , // Case-insensitive search
+            status : "Pending"
+        });
+        console.log(userId);
+        console.log(appointments);
+        res.json(appointments);
+    }catch (error) {
+        console.error('Error searching appointment:', error);
+        res.status(500).json({ error: 'An error occurred while searching for appointment.' });
+    }
+};
+
+const search_appointment2 = async (req, res) => {
+    const uf_name = req.query.first_name;
+    const ul_name = req.query.last_name;
+    const userId = req.session.name;
+    try{
+        const appointments = await Booking.find({
+            customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
+            first_name: { $regex: new RegExp(uf_name, 'i') },  // Case-insensitive search
+            last_name: { $regex: new RegExp(ul_name, 'i') } , // Case-insensitive search
+            status : "Booked"
+        });
+        console.log(userId);
+        console.log(appointments);
+        res.json(appointments);
+    }catch (error) {
+        console.error('Error searching appointment:', error);
+        res.status(500).json({ error: 'An error occurred while searching for appointment.' });
+    }
+};
+
+const view_appointments = async (req, res) => {
+    const userId = req.session.name;
+    try {
+        const pendingAppointments = await Booking.find({
+            customer_name: { $regex: new RegExp(userId, 'i') }, 
+            status: "Pending"                                   
+        });
+
+        const scheduledAppointments = await Booking.find({
+            customer_name: { $regex: new RegExp(userId, 'i') }, 
+            status: "Booked"                                 
+        });
+
+        res.json({
+            pendingAppointments,
+            scheduledAppointments
+        });
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        res.status(500).json({ error: 'An error occurred while fetching appointments.' });
+    }
+};
+
+const cancel_appointment = async (req, res) => {
+    const appointmentId = req.params.id.trim();
+    console.log('Appointment ID:', appointmentId);
+    try {
+        const updatedAppointment = await Booking.findByIdAndUpdate(
+            appointmentId,
+            { status: "Cancelled" } 
+        );
+
+        if (!updatedAppointment) {
+            return res.status(404).json({ error: 'Appointment not found.' });
+        }
+
+        res.json({ message: 'Appointment cancelled successfully.', appointment: updatedAppointment });
+    } catch (error) {
+        console.error('Error cancelling appointment:', error);
+        res.status(500).json({ error: 'An error occurred while cancelling the appointment.' });
+    }
+};
+
+
 module.exports = {
     Login,
     G_signup,
@@ -68,5 +152,9 @@ module.exports = {
     adminG_verification,
     adminG_changepassword,
     G_verification,
-    search_business
+    search_business,
+    search_appointment,
+    search_appointment2,
+    view_appointments,
+    cancel_appointment
 };

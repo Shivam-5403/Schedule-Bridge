@@ -399,6 +399,25 @@
               </div>
             </div>
           </div>
+          <div class="modal fade text-dark" id="book-confirmation-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmtion">Booking Successful</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Appointment Request booked successfully!
+                  </div>    
+                  <button type="button" class="btn btn-success" id="goHome">Home</button>              
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -703,7 +722,8 @@
         })
         .then(response => response.json())
         .then(data => {
-            alert(data.message);
+            // alert(data.message);
+            $('#book-confirmation-modal').modal('show');
         })
         .catch(error => {
             console.error('Error booking appointment:', error);
@@ -725,6 +745,10 @@
         alert('Sundays are not selectable. Please choose another day.');
         this.value = ''; // Clear the input value
       }
+    });
+
+    document.getElementById('goHome').addEventListener('click',function(){
+      window.location.href='/Home';
     });
   </script>
 </body>
