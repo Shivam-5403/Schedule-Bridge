@@ -31,22 +31,19 @@ const ViewApp = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/View_appointment.html'));
 };
 
-const Info = async (req, res) => {
+const fetch_admins = async (req, res) => {
     try {
-        const result = await Admin.find();
-        // console.log("Database result: ", result);
+        const admins = await Admin.find();
 
-        if (result.length > 0) {
+        if (admins.length > 0) {
             let Table = "";
-
-            result.forEach(r => {
-                // console.log("Processing user: ", r.admin);
+            admins.forEach(admin => {
+                console.log("Processing user: ", admin.admin);
                 Table += `
                     <div style="width: 370px" class="card m-4">
-                        <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
                         <div class="card-body text-dark">
-                            <h4 class="card-title">${r.admin}</h4>
-                            <p class="card-text">${r.admin_email}</p>
+                            <h4 class="card-title">${admin.admin}</h4>
+                            <p class="card-text">${admin.admin_email}</p>
                             <div class="d-flex flex-column g-1">
                                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#profile-modal">
                                     See Profile
@@ -59,14 +56,28 @@ const Info = async (req, res) => {
                     </div>`;
             });
 
-            res.send({ html: Table });
+            res.json({ html: Table });
         } else {
             console.log("No users found in the database.");
-            res.send({ html: "No users found." });
+            res.json({ html: "No users found." });
         }
     } catch (err) {
-        console.log("Error fetching users: ", err);
-        res.status(500).send("Internal Server Error");
+        console.error("Error fetching users: ", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+const pending = async (req, res) => {
+    try {
+        const Company = await Admin.findOne({ admin: req.session.admin });
+        if (!Company) {
+            return res.status(404).json({ error: 'Admin not found.' });
+        }
+        const pendingAppointments = await Booking.find({ status: "Pending", companyname: Company.companyname });
+        res.json(pendingAppointments);
+    } catch (error) {
+        console.error('Error fetching pending appointments:', error);
+        res.status(500).json({ error: 'An error occurred while fetching pending appointments.' });
     }
 };
 
@@ -77,5 +88,6 @@ module.exports = {
     Members,
     BookApp,
     ViewApp,
-    Info
+    fetch_admins,
+    pending
 }

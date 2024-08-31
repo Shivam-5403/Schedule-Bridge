@@ -50,6 +50,8 @@ const admin_login = async (req, res) => {
     try {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_password, ad.admin_password)) {
+            req.session.admin = admin;  // Replace 'adminUsername' with the actual variable containing the admin's username.
+            res.cookie('adminId', admin, { httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         } else {
             res.redirect('./admin/?error=Invalid%20credentials%2C%20please%20try%20again.');
@@ -72,7 +74,7 @@ const adminP_signup = async (req, res) => {
 
 const adminP_changepassword = async (req, res) => {
     const { newpassword, newreckey } = req.body;
-    const admin = req.session.adm;
+    const admin = req.session.admin;
 
     if (!admin) {
         return res.redirect('../admin_verification/?error=Session%20expired,%20please%20try%20again.');
@@ -97,7 +99,7 @@ const adminP_verification = async (req, res) => {
     try {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_reckey, ad.admin_reckey)) {
-            req.session.adm = admin;
+            req.session.admin = admin;
             res.sendFile(path.join(__dirname, '../admin_changepassword.html'));
         }
         else {
@@ -167,7 +169,7 @@ const book_appointment = async (req, res) => {
             status
         });
 
-        const Booked = await booking.save();
+        await booking.save();
         res.json({ message: 'Appointment Request booked successfully! See The Status of Appointment in View Booked Appointment Section. You wil Be Notified After...' });
     } catch (error) {
         console.error('Error booking appointment:', error);
