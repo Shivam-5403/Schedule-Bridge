@@ -46,15 +46,7 @@ const G_verification = (req, res) => {
 
 const search_business = async (req, res) => {
     const query = req.query.query;
-    // try {
-    //     const businesses = await Admin.find({ companyname: new RegExp(query, 'i') });
-    //     res.json(businesses);
-    // } catch (error) {
-    //     console.error('Error searching business:', error);
-    //     res.status(500).json({ error: 'An error occurred while searching for businesses.' });
-    // }
     try {
-        // Assuming you are searching in the companyname field
         const businesses = await Admin.find({
             companyname: { $regex: new RegExp(query, 'i') }  // Case-insensitive search
         });
