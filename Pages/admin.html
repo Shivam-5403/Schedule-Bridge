@@ -251,8 +251,10 @@
 
       <!-- Booked appointment -->
       <h2 class="m-4">Your Booked appointments</h2>
-      <div class="booked-appoinment">
-        <div class="cards d-flex flex-wrap">
+      <div class="booked-appointment"></div>
+      <h2 class="m-4">Your Rejected appointments</h2>
+      <div class="rejected-appointment">
+        <!--  <div class="cards d-flex flex-wrap">
           <div class="card m-4" style="width: 370px">
             <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
             <div class="card-body text-dark">
@@ -264,10 +266,10 @@
               <div class="d-flex flex-column">
                 <a href="#" class="btn btn-primary" data-toggle="modal"
                   data-target="#scheduled-details-modal">Details</a>
-                <!-- <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
+                <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
                   data-target="#scheduled-edit-modal">Edit</a>
                 <a href="#" class="btn btn-danger mt-3" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Cancel</a> -->
+                  data-target="#scheduled-edit-modal">Cancel</a>
 
               </div>
             </div>
@@ -284,10 +286,10 @@
               <div class="d-flex flex-column">
                 <a href="#" class="btn btn-primary" data-toggle="modal"
                   data-target="#scheduled-details-modal">Details</a>
-                <!-- <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
+                <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
                   data-target="#scheduled-edit-modal">Edit</a>
                 <a href="#" class="btn btn-danger mt-3" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Cancel</a> -->
+                  data-target="#scheduled-edit-modal">Cancel</a>
 
               </div>
             </div>
@@ -295,7 +297,7 @@
 
         </div>
 
-        <!-- View scheduled-appointment details -->
+        View scheduled-appointment details
         <div class="modal fade text-dark" id="scheduled-details-modal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -333,7 +335,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
 
       </div>
@@ -688,31 +690,48 @@
     };
 
     document.addEventListener('DOMContentLoaded', () => {
-      const cardsContainer = document.querySelector('.pending-appointment');
+      const pendingContainer = document.querySelector('.pending-appointment');
+      const bookedContainer = document.querySelector('.booked-appointment');
+      const rejectedContainer = document.querySelector('.rejected-appointment');
 
       const createAppointmentCard = (data) => {
         const card = document.createElement('div');
         card.className = 'card m-4';
         card.style.width = '370px';
-        card.dataset.date = data.date;
+        card.dataset.customerName = data.customer_name;
+        card.dataset.date = new Date(data.date).toISOString().split('T')[0]; // Format date for comparison
 
-        const modalId = `details-modal-${data.id}`;
+        const modalId = `details-modal-${data._id}`;
 
         card.innerHTML = `
             <div class="card-body text-dark">
                 <h4 class="card-title">${data.customer_name}</h4>
-                <p class="card-text">Pending..</p>
-                <p class="card-text">Date: ${data.date}</p>
+                <p class="card-text">${data.status}</p>
+                <p class="card-text">Date: ${new Date(data.date).toISOString().split('T')[0]}</p>
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-primary details-btn" data-toggle="modal" data-target="#${modalId}">Details</a>
-                    <a href="#" class="btn btn-success mt-3 accept-btn">Accept</a>
-                    <a href="#" class="btn btn-danger mt-3 reject-btn">Reject</a>
+                    ${data.status === 'Pending' ? `
+                        <a href="#" class="btn btn-success mt-3 accept-btn">Accept</a>
+                        <a href="#" class="btn btn-danger mt-3 reject-btn">Reject</a>
+                    ` : ''}
                 </div>
             </div>
         `;
 
-        cardsContainer.appendChild(card);
+        // Append the card to the correct container based on its status
+        switch (data.status) {
+          case 'Pending':
+            pendingContainer.appendChild(card);
+            break;
+          case 'Booked':
+            bookedContainer.appendChild(card);
+            break;
+          case 'Rejected':
+            rejectedContainer.appendChild(card);
+            break;
+        }
 
+        // Create and append modal (unchanged)
         const modal = document.createElement('div');
         modal.className = 'modal fade text-dark';
         modal.id = modalId;
@@ -751,28 +770,54 @@
         `;
 
         document.body.appendChild(modal);
-
-        card.querySelector('.accept-btn').addEventListener('click', () => {
-          if (confirm('Are you sure you want to accept this appointment?')) {
-            card.remove();
-            modal.remove();
-          }
-        });
-
-        card.querySelector('.reject-btn').addEventListener('click', () => {
-          if (confirm('Are you sure you want to reject this appointment?')) {
-            card.remove();
-            modal.remove();
-          }
-        });
       };
 
-      fetch('/pending')
+      const updateAppointmentStatus = async (customerName, date, status) => {
+        try {
+          await fetch('/update-appointment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ customer_name: customerName, date, status })
+          });
+        } catch (error) {
+          console.error('Error updating appointment status:', error);
+        }
+      };
+
+      const handleButtonClick = async (event) => {
+        if (event.target.classList.contains('accept-btn') || event.target.classList.contains('reject-btn')) {
+          event.preventDefault();
+
+          const button = event.target;
+          const action = button.classList.contains('accept-btn') ? 'Accept' : 'Reject';
+          const confirmation = action === 'Accept' ? 'accept' : 'reject';
+
+          if (confirm(`Are you sure you want to ${confirmation} this appointment?`)) {
+            const card = button.closest('.card');
+            const customerName = card.dataset.customerName;
+            const date = card.dataset.date;
+            const status = action === 'Accept' ? 'Booked' : 'Rejected';
+
+            // Update status in MongoDB
+            await updateAppointmentStatus(customerName, date, status);
+
+            // Reload the page to fetch updated data
+            window.location.reload();
+          }
+        }
+      };
+
+      document.addEventListener('click', handleButtonClick);
+
+      // Fetch and create cards
+      fetch('/appointments')
         .then(response => response.json())
         .then(appointments => {
           appointments.forEach(createAppointmentCard);
         })
-        .catch(error => console.error('Error fetching pending appointments:', error));
+        .catch(error => console.error('Error fetching appointments:', error));
     });
 
   </script>

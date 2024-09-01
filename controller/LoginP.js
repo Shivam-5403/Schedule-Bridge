@@ -94,11 +94,25 @@ const pending = async (req, res) => {
         if (!Company) {
             return res.status(404).json({ error: 'Admin not found.' });
         }
-        const pendingAppointments = await Booking.find({ status: "Pending", companyname: Company.companyname });
-        res.json(pendingAppointments);
+        const Appointments = await Booking.find({ companyname: Company.companyname });
+        res.json(Appointments);
     } catch (error) {
         console.error('Error fetching pending appointments:', error);
         res.status(500).json({ error: 'An error occurred while fetching pending appointments.' });
+    }
+};
+
+const Update = async (req, res) => {
+    try {
+        const { customer_name, date, status } = req.body;
+        await Booking.updateOne(
+            { customer_name, date },
+            { $set: { status } }
+        );
+        res.status(200).json({ message: 'Appointment updated successfully' });
+    } catch (err) {
+        console.error('Error updating appointment status:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -110,5 +124,6 @@ module.exports = {
     BookApp,
     ViewApp,
     fetch_admins,
-    pending
+    pending,
+    Update
 }

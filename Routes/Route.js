@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const { Home, fetch_admins, pending, About, Contact, Members, BookApp, ViewApp } = require('../controller/LoginP');
+const { Home, fetch_admins, Update, About, Contact, Members, BookApp, ViewApp, pending } = require('../controller/LoginP');
 
 router.get('/Home', Home);
-router.get('/pending', pending);
+router.post('/update-appointment', Update);
+router.get('/appointments', pending);
 router.post('/Info', fetch_admins);
 router.get('/About', About);
 router.get('/Contact', Contact);
