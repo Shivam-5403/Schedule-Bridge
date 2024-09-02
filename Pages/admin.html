@@ -738,36 +738,38 @@
         modal.tabIndex = -1;
         modal.role = 'dialog';
         modal.innerHTML = `
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Appointment Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>Emp Id:</h6>
-                        <p>${data.customer_name}</p>
-                        <h6>Name:</h6>
-                        <p>${data.first_name || 'N/A'}</p>
-                        <h6>Contact Number:</h6>
-                        <p>${data.mno || 'N/A'}</p>
-                        <h6>Email:</h6>
-                        <p>${data.admin_email}</p>
-                        <h6>Position:</h6>
-                        <p>${data.position || 'N/A'}</p>
-                        <h6>Date:</h6>
-                        <p>${data.date}</p>
-                        <h6>Time:</h6>
-                        <p>${data.time}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Appointment Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Business Name:</h6>
+                    <p id="business-name2">${data.companyname || 'N/A'}</p>
+                    <h6>Business Address:</h6>
+                    <p id="business-address2">${data.address || 'N/A'}</p>
+                    <h6>Email:</h6>
+                    <p id="business-email2">${data.admin_email || 'N/A'}</p>
+                    <h6>First Name:</h6>
+                    <p id="uf-name2">${data.first_name || 'N/A'}</p>
+                    <h6>Last Name:</h6>
+                    <p id="ul-name2">${data.last_name || 'N/A'}</p>
+                    <h6>Contact Number:</h6>
+                    <p id="u-mno2">${data.mno || 'N/A'}</p>
+                    <h6>Date:</h6>
+                    <p id="meet-date2">${new Date(data.date).toLocaleDateString('en-GB') || 'N/A'}</p>
+                    <h6>Time:</h6>
+                    <p id="meet-time2">${data.time || 'N/A'}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
-        `;
+        </div>
+    `;
 
         document.body.appendChild(modal);
       };
