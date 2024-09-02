@@ -31,6 +31,10 @@ const ViewApp = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/View_appointment.html'));
 };
 
+const User_Profile = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/user_profile.html'));
+};
+
 const fetch_admins = async (req, res) => {
     try {
         const admins = await Admin.find();
@@ -125,5 +129,6 @@ module.exports = {
     ViewApp,
     fetch_admins,
     pending,
-    Update
+    Update,
+    User_Profile
 }

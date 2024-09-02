@@ -44,6 +44,17 @@ const G_verification = (req, res) => {
     res.sendFile(path.join(__dirname, '../verification.html')); 
 };
 
+const logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).send('Error logging out, please try again.');
+        }
+        res.clearCookie('session.name', { path: '/' });
+        res.redirect('/'); 
+    });
+};
+
 const search_business = async (req, res) => {
     const query = req.query.query;
     try {
@@ -141,6 +152,18 @@ const cancel_appointment = async (req, res) => {
     }
 };
 
+const view_profile = async (req, res) => {
+    const userId = req.session.name;
+    try{
+        const profile = await User.find({
+            username: { $regex: new RegExp(userId, 'i') }
+        });
+        res.json(profile);
+    }catch (error) {
+        console.error('Error searching appointment:', error);
+        res.status(500).json({ error: 'An error occurred while searching for appointment.' });
+    }
+};
 
 module.exports = {
     Login,
@@ -156,5 +179,7 @@ module.exports = {
     search_appointment,
     search_appointment2,
     view_appointments,
-    cancel_appointment
+    cancel_appointment,
+    logout,
+    view_profile
 };

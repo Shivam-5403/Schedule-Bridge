@@ -26,15 +26,6 @@ const login = async (req, res) => {
     }
 };
 
-const logout = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Error destroying session:', err);
-            return res.status(500).send('Error logging out, please try again.');
-        }
-        res.redirect('/'); // Redirect to login page after logout
-    });
-};
 
 const P_signup = async (req, res) => {
     const { username, email, password, reckey } = req.body;
@@ -179,7 +170,6 @@ const book_appointment = async (req, res) => {
 
 module.exports = {
     login,
-    logout,
     admin_login,
     P_signup,
     adminP_signup,
