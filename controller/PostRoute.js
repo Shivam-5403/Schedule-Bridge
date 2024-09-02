@@ -168,6 +168,32 @@ const book_appointment = async (req, res) => {
     }
 };
 
+const change_pass = async (req, res) => {
+    const { username, password} = req.body;
+    try{
+        const hashedPassword = bcrypt.hashSync(password, 8);
+
+        await User.updateOne({ username }, { password: hashedPassword});
+
+        res.json({ message: 'Password Changed.' });
+    } catch (error) {
+        console.error('Error Changing Password:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Password.' });
+    }
+};
+
+const change_prof = async (req, res) => {
+    const { oldId, username, email} = req.body;
+    try{
+        await User.updateOne({ oldId }, {username: username, email: email});
+
+        res.json({ message: 'Profile Changed.' });
+    } catch (error) {
+        console.error('Error Changing Profile:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Profile.' });
+    }
+};
+
 module.exports = {
     login,
     admin_login,
@@ -177,5 +203,7 @@ module.exports = {
     adminP_changepassword,
     P_verification,
     P_changepassword,
-    book_appointment
+    book_appointment,
+    change_pass,
+    change_prof
 }
