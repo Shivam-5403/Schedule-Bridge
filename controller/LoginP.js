@@ -40,11 +40,12 @@ const fetch_admins = async (req, res) => {
         const admins = await Admin.find();
 
         if (admins.length > 0) {
-            let Table = "";
+            let Table = `<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">`;
+
             admins.forEach(admin => {
                 const modalId = `profile-modal-${admin._id}`;
                 Table += `
-                <div style="width: 370px" class="card m-4">
+                <div style="width: 370px; margin: 15px;" class="card">
                     <div class="card-body text-dark">
                         <h4 class="card-title">${admin.admin}</h4>
                         <p class="card-text">${admin.admin_email}</p>
@@ -80,6 +81,8 @@ const fetch_admins = async (req, res) => {
                 </div>`;
             });
 
+            Table += `</div>`; // Close the flex container
+
             res.json({ html: Table });
         } else {
             console.log("No admins found in the database.");
@@ -89,8 +92,8 @@ const fetch_admins = async (req, res) => {
         console.error("Error fetching admins: ", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
-
 };
+
 
 const pending = async (req, res) => {
     try {
