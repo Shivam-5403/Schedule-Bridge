@@ -662,42 +662,25 @@
       });
     });
     //filter script for pending appointment
-    document.getElementById('filter-button').addEventListener('click', function () {
-      const selectedDate = document.getElementById('filter-date').value;
-      const appointmentCards = document.querySelectorAll('.pending-appointment .card');
-      let count = 0;
-
-      appointmentCards.forEach(function (card) {
-        const dateElement = card.querySelector('.card-text:nth-of-type(2)');
-        if (dateElement) {
-          const appointmentDate = formatDate(dateElement.innerText.replace('Date: ', '').trim());
-          if (appointmentDate === selectedDate) {
-            card.style.display = 'block';
-            count++;
-          } else {
-            card.style.display = 'none';
-          }
-        }
-      });
-
-      const resultText = count > 0 ? `Found ${count} appointment(s) on ${selectedDate}` : `No appointments found on ${selectedDate}`;
-      document.getElementById('filter-result').innerText = resultText;
-    });
-
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toISOString().split('T')[0];
-    };
-
     document.addEventListener('DOMContentLoaded', () => {
       const pendingContainer = document.querySelector('.pending-appointment');
       const bookedContainer = document.querySelector('.booked-appointment');
       const rejectedContainer = document.querySelector('.rejected-appointment');
 
+      // Ensure the containers are flex containers with horizontal scrolling
+      [pendingContainer, bookedContainer, rejectedContainer].forEach(container => {
+        container.style.display = 'flex';
+        container.style.flexWrap = 'nowrap'; // No wrapping
+        container.style.overflowX = 'auto'; // Horizontal scroll
+        container.style.overflowY = 'hidden'; // Prevent vertical scroll
+        container.style.whiteSpace = 'nowrap'; // Keep items on a single line
+      });
+
       const createAppointmentCard = (data) => {
         const card = document.createElement('div');
         card.className = 'card m-4';
         card.style.width = '370px';
+        card.style.flexShrink = '0'; // Prevent shrinking of cards
         card.dataset.customerName = data.customer_name;
         card.dataset.date = new Date(data.date).toISOString().split('T')[0]; // Format date for comparison
 
