@@ -47,7 +47,7 @@ const fetch_admins = async (req, res) => {
                 Table += `
                 <div style="width: 370px; margin: 15px;" class="card">
                     <div class="card-body text-dark">
-                        <h4 class="card-title">${admin.admin}</h4>
+                        <h4 class="card-title">${admin.companyname}</h4>
                         <p class="card-text">${admin.admin_email}</p>
                         <div class="d-flex flex-column g-1">
                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#${modalId}">
@@ -64,7 +64,7 @@ const fetch_admins = async (req, res) => {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Profile of ${admin.admin}</h5>
+                                <h5 class="modal-title">Profile of ${admin.companyname}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
