@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
 
-const { User, Admin, Booking } = require('../Mongoose/MongoDB');
+const { User, Admin, Booking, Contact } = require('../Mongoose/MongoDB');
 
 const login = async (req, res) => {
     const { username, password } = req.body;
@@ -168,6 +168,20 @@ const book_appointment = async (req, res) => {
     }
 };
 
+const contactUs_req = async (req, res) => {
+    const { name, email, details} = req.body;
+    try{
+        const contact = new Contact({
+            name,email,details
+        });
+        await contact.save();
+        res.json({ message: 'Sending Confirmed.'});
+    } catch (error) {
+        console.error('Error sending message.',error);
+        res.status(500).json({ error: 'An error occurred while sending the msg.' });
+    }
+};
+
 const change_pass = async (req, res) => {
     const { username, password} = req.body;
     try{
@@ -205,5 +219,6 @@ module.exports = {
     P_changepassword,
     book_appointment,
     change_pass,
-    change_prof
+    change_prof,
+    contactUs_req
 }

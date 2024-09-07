@@ -43,12 +43,20 @@ const BookingSchema = new mongoose.Schema({
     status: { type: String, enum: ['Pending', 'Booked', 'Rejected', 'Cancelled','Done'], default: 'Pending' }    
 });
 
+const ContactUs = new mongoose.Schema({
+    name : { type: String, required: true},
+    email : { type: String, required: true},
+    details : { type: String, required: true}
+});
+
 const User = mongoose.model('User', UserSchema);
 const Admin = mongoose.model('Admin', AdminSchema);
 const Booking = mongoose.model('Booking', BookingSchema);
-    
+const Contact = mongoose.model('ContactUs', ContactUs);
+
 module.exports = {
     User,
     Admin,
-    Booking
+    Booking,
+    Contact
 }

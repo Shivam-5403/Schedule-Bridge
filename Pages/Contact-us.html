@@ -269,15 +269,10 @@
           <a class="nav-link active" href="/Contact">Contact Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Members">Team Members</a>
+          <a class="nav-link" href="/Members">Developers</a>
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <form action="" class="form-inline">
-          <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" />
-          <button class="btn btn-success mr-2" type="submit">Search</button>
-        </form>
-
         <li class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
@@ -290,17 +285,22 @@
             <a id="light-theme" class="dropdown-item" href="#">Light</a>
           </div>
         </li>
-
+        <li class="nav-item d-flex justify-content-center align-items-center"></li>
+          <a href="/Notifications">
+            <img src="../Pages/Images/Notifi3.png" height="50px" alt="notification" />
+          </a>
+        </li>
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
           <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
             <!-- Profile -->
 
             <img id="profile-invert" style="filter: invert(1);" class="" height="50px" src="../Pages/Images/peofile.png"
-              alt="sdfds" />
+              alt="profile" />
 
           </a>
           <div class="dropdown-menu profile mt-3">
-            <a href="#" class="dropdown-item">Profile section</a>
+            <a href="/User-Profile" class="dropdown-item">Profile section</a>
+            <a href="/logout" class="dropdown-item">Log Out</a>
           </div>
         </li>
       </div>
@@ -309,27 +309,28 @@
 
 
   <main>
-
     <div id="change-bg2" class="mycontainer-contact-us py-4 row m-4 px-2 px-sm-4 py-4 text-center">
       <div class="col-12 col-sm-6">
+        <form id="contactForm">
         <div class="form-group">
 
-          <input class="form-color form-control form-control-lg" type="text" name="Name" id="Name" placeholder="Name">
+          <input class="form-color form-control form-control-lg" type="text" name="name" id="name" placeholder="Name" required />
         </div>
         <div class="form-group">
 
           <input class="form-color form-control form-control-lg " type="email" name="email" id="email"
-            placeholder="Email">
+            placeholder="Email" required />
         </div>
         <div class="form-group">
 
-          <textarea class="form-color form-control form-control-lg" name="" id="" cols="30" rows="10"
-            placeholder="Enter text here"></textarea>
+          <textarea class="form-color form-control form-control-lg" name="details" id="details" cols="30" rows="10"
+            placeholder="Enter text here" required></textarea>
         </div>
 
         <div class="form-group">
           <button class="form-control form-control-lg btn btn-success" type="submit">Send</button>
         </div>
+      </form>
       </div>
 
       <div class="col-12 col-sm-6 text-center my-auto">
@@ -387,9 +388,31 @@
 
       </div>
     </div>
-
-
-
+    <div class="mycontainer">
+      <div class="new-appointment">
+      <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+        <div class="modal fade text-dark" id="book-confirmation-modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmtion">Sending Message Successful</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-success alert-dismissible">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <strong>Success!</strong> Message Sended successfully!
+                </div>    
+                <button type="button" class="btn btn-success" id="goHome">Home</button>              
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+    
 
 
   </main>
@@ -496,8 +519,8 @@
       <div class="col-12 col-sm-4 my-4 text-start text-center ">
         <div class="sites d-flex gap-2 flex-column">
           <div class="cur-p cr">SB Webmail</div>
-          <div class="cur-p cr">About Us</div>
-          <div class="cur-p cr">Contact Us</div>
+          <div class="cur-p cr"><a href="/About">About Us</a></div>
+          <div class="cur-p cr"><a href="/Contact">Contact Us</a></div>
         </div>
       </div>
       <div>
@@ -519,12 +542,6 @@
         <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
-      <!-- <svg class="change-bg" style="height: 74px;
-    width: 92px; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-            color="white" fill="none">
-            <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg> -->
     </a>
 
 
@@ -582,29 +599,32 @@
       });
     });
 
-    function addNewPerson() {
-      console.log("lets");
+    document.getElementById('contactForm').addEventListener('submit', function(event){
+      event.preventDefault();
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        details: document.getElementById('details').value
+      };
 
-      let temp = "new";
-
-      document.getElementById('add-new-cards').innerHTML += `<div style="width: 370px" class="card m-4">
-            <img style="width: 100%" src="Images/person-1.png" alt="" class="card-img-top" />
-            <div class="card-body text-dark">
-              <h4 class="card-title">Mr. New Scheduler</h4>
-              <p class="card-text">
-                Some example text some example text. Jane Doe is an architect
-                and engineer
-              </p>
-              <div class="d-flex flex-column g-1">
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#profile-modal">See Profile</a>
-                <a href="#" class="btn btn-success mt-3" data-toggle="modal" data-target="#book-modal">Book
-                  Appoinment</a>
-
-              </div>
-            </div>
-          </div>`
-    }
-
+      fetch('/contactUs-req', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#book-confirmation-modal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error sending msg:', error);
+        });
+    });
+    document.getElementById('goHome').addEventListener('click',function(){
+      window.location.href='/Home';
+    });
   </script>
 </body>
 

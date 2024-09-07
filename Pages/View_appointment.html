@@ -226,15 +226,10 @@
           <a class="nav-link" href="/Contact">Contact Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Members">Team Members</a>
+          <a class="nav-link" href="/Members">Developers</a>
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <form action="" class="form-inline">
-          <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" />
-          <button class="btn btn-success mr-2" type="submit">Search</button>
-        </form>
-
         <li class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
@@ -248,6 +243,12 @@
           </div>
         </li>
 
+        <li class="nav-item d-flex justify-content-center align-items-center"></li>
+          <a href="/Notifications">
+            <img src="../Pages/Images/Notifi3.png" height="50px" alt="notification" />
+          </a>
+        </li>
+
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
           <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
             <!-- Profile -->
@@ -256,8 +257,9 @@
               alt="sdfds" />
 
           </a>
-          <div class="dropdown-menu profile mt-3">
-            <a href="#" class="dropdown-item">Profile section</a>
+          <div class="dropdown-menu profile mt-3" style="left: -80px;">
+            <a href="/User-Profile" class="dropdown-item">Profile section</a>
+            <a href="/logout" class="dropdown-item">Log Out</a>
           </div>
         </li>
       </div>
@@ -530,8 +532,8 @@
       <div class="col-12 col-sm-4 my-4 text-start text-center ">
         <div class="sites d-flex gap-2 flex-column">
           <div class="cur-p cr">SB Webmail</div>
-          <div class="cur-p cr">About Us</div>
-          <div class="cur-p cr">Contact Us</div>
+          <div class="cur-p cr"><a href="/About">About Us</a></div>
+          <div class="cur-p cr"><a href="/Contact">Contact Us</a></div>
         </div>
       </div>
       <div>
