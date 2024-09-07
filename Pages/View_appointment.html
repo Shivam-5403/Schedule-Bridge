@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewpor
+  t" content="width=device-width, initial-scale=1.0" />
   <title>Schedule Bridge</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
@@ -311,7 +312,7 @@
 
                   <h6>Business Email:</h6>
                   <p id="business-email"></p>
-                  
+
                   <h6>First Name:</h6>
                   <p id="uf-name"></p>
 
@@ -384,7 +385,7 @@
 
                   <h6>Business Email:</h6>
                   <p id="business-email2"></p>
-                  
+
                   <h6>First Name:</h6>
                   <p id="uf-name2"></p>
 
@@ -414,6 +415,9 @@
 
 
       <!-- Scheduled appointment -->
+      <h2 class="m-4">Your Booked appointments</h2>
+      <div class="scheduled-appoinment" id="doneAppointmentsSection">
+      </div>
       <h2 class="m-4">Your Pending appointments</h2>
       <div class="scheduled-appoinment" id="pendingAppointmentsSection">
       </div>
@@ -606,31 +610,31 @@
     document.getElementById('searchButton').addEventListener('click', searchAppointment);
 
     function searchAppointment() {
-        const f_name = document.getElementById('searchQuery').value;
-        const l_name = document.getElementById('searchQuery2').value;
-        fetch(`/search-appointment?first_name=${encodeURIComponent(f_name)}&last_name=${encodeURIComponent(l_name)}`)
-            .then(response => response.json())
-            .then(data => {
-                displaySearchResults(data);
-            })
-            .catch(error => {
-                console.error('Error searching appointment:', error);
-            });
+      const f_name = document.getElementById('searchQuery').value;
+      const l_name = document.getElementById('searchQuery2').value;
+      fetch(`/search-appointment?first_name=${encodeURIComponent(f_name)}&last_name=${encodeURIComponent(l_name)}`)
+        .then(response => response.json())
+        .then(data => {
+          displaySearchResults(data);
+        })
+        .catch(error => {
+          console.error('Error searching appointment:', error);
+        });
     }
 
     function displaySearchResults(data) {
-        if (data.length === 0) {
-          console.log('No appointments found');
-        } else {
-            console.log('Appointments found:', data);
-            const resultsSection = document.getElementById('searchResults');
-            resultsSection.innerHTML = ''; // Clear previous results
-            resultsSection.style.display = 'block'; // Show results section
-            data.forEach(appointment => {
-                const appointmentdiv = document.createElement('appointmentdiv');
-                const appointmentDate = new Date(appointment.date);
-                const formattedDate = appointmentDate.toLocaleDateString('en-GB');
-                appointmentdiv.innerHTML = `
+      if (data.length === 0) {
+        console.log('No appointments found');
+      } else {
+        console.log('Appointments found:', data);
+        const resultsSection = document.getElementById('searchResults');
+        resultsSection.innerHTML = ''; // Clear previous results
+        resultsSection.style.display = 'block'; // Show results section
+        data.forEach(appointment => {
+          const appointmentdiv = document.createElement('appointmentdiv');
+          const appointmentDate = new Date(appointment.date);
+          const formattedDate = appointmentDate.toLocaleDateString('en-GB');
+          appointmentdiv.innerHTML = `
                   <div class="modal-body">
                   <div class="cards d-flex flex-wrap">
                     <div style="width: 370px" class="card">
@@ -650,12 +654,12 @@
                   </div>
                 </div>
                 `;
-                resultsSection.appendChild(appointmentdiv);
-            });
-        }
+          resultsSection.appendChild(appointmentdiv);
+        });
+      }
     }
 
-    function showFullAppointment(appointmentJson){
+    function showFullAppointment(appointmentJson) {
       const appointment = JSON.parse(decodeURIComponent(appointmentJson));
       const appointmentDate = new Date(appointment.date);
       const formattedDate = appointmentDate.toLocaleDateString('en-GB');
@@ -674,32 +678,32 @@
     document.getElementById('searchButton2').addEventListener('click', searchAppointment2);
 
     function searchAppointment2() {
-        const f2_name = document.getElementById('searchQuery3').value;
-        const l2_name = document.getElementById('searchQuery4').value;
-        fetch(`/search-appointment2?first_name=${encodeURIComponent(f2_name)}&last_name=${encodeURIComponent(l2_name)}`)
-            .then(response => response.json())
-            .then(data => {
-                displaySearchResults2(data);
-            })
-            .catch(error => {
-                console.error('Error searching appointment:', error);
-            });
+      const f2_name = document.getElementById('searchQuery3').value;
+      const l2_name = document.getElementById('searchQuery4').value;
+      fetch(`/search-appointment2?first_name=${encodeURIComponent(f2_name)}&last_name=${encodeURIComponent(l2_name)}`)
+        .then(response => response.json())
+        .then(data => {
+          displaySearchResults2(data);
+        })
+        .catch(error => {
+          console.error('Error searching appointment:', error);
+        });
     }
 
     function displaySearchResults2(data) {
-        if (data.length === 0) {
-          console.log('No appointments found');
-          alert("No Appointment Found.");
-        } else {
-            console.log('Appointments found:', data);
-            const resultsSection2 = document.getElementById('searchResults2');
-            resultsSection2.innerHTML = ''; // Clear previous results
-            resultsSection2.style.display = 'block'; // Show results section
-            data.forEach(appointment => {
-                const appointmentdiv2 = document.createElement('appointmentdiv2');
-                const appointmentDate2 = new Date(appointment.date);
-                const formattedDate2 = appointmentDate2.toLocaleDateString('en-GB');
-                appointmentdiv2.innerHTML = `
+      if (data.length === 0) {
+        console.log('No appointments found');
+        alert("No Appointment Found.");
+      } else {
+        console.log('Appointments found:', data);
+        const resultsSection2 = document.getElementById('searchResults2');
+        resultsSection2.innerHTML = ''; // Clear previous results
+        resultsSection2.style.display = 'block'; // Show results section
+        data.forEach(appointment => {
+          const appointmentdiv2 = document.createElement('appointmentdiv2');
+          const appointmentDate2 = new Date(appointment.date);
+          const formattedDate2 = appointmentDate2.toLocaleDateString('en-GB');
+          appointmentdiv2.innerHTML = `
                   <div class="modal-body">
                   <div class="cards d-flex flex-wrap">
                     <div style="width: 370px" class="card">
@@ -719,12 +723,12 @@
                   </div>
                 </div>
                 `;
-                resultsSection2.appendChild(appointmentdiv2);
-            });
-        }
+          resultsSection2.appendChild(appointmentdiv2);
+        });
+      }
     }
 
-    function showFullAppointment2(appointmentJson){
+    function showFullAppointment2(appointmentJson) {
       const appointment = JSON.parse(decodeURIComponent(appointmentJson));
       const appointmentDate = new Date(appointment.date);
       const formattedDate = appointmentDate.toLocaleDateString('en-GB');
@@ -742,99 +746,156 @@
 
     document.addEventListener('DOMContentLoaded', loadAppointments);
 
-    function loadAppointments(){
-      fetch('/view-appointments') 
+    function loadAppointments() {
+      fetch('/view-appointments')
         .then(response => response.json())
         .then(data => {
-            displayPendingAppointments(data.pendingAppointments);
-            displayScheduledAppointments(data.scheduledAppointments);
+          displayPendingAppointments(data.pendingAppointments);
+          displayScheduledAppointments(data.scheduledAppointments);
+          displayDoneAppointments(data.doneAppointments);
         })
         .catch(error => {
-            console.error('Error loading appointments:', error);
+          console.error('Error loading appointments:', error);
         });
     }
 
     function displayPendingAppointments(appointments) {
       const pendingSection = document.getElementById('pendingAppointmentsSection');
-      
-         
+      pendingSection.innerHTML = ''; // Clear previous content
+
+      // Create a flexbox container
+      const flexContainer = document.createElement('div');
+      flexContainer.style.display = 'flex';
+      flexContainer.style.flexWrap = 'wrap'; // Ensure wrapping if needed
+      flexContainer.style.justifyContent = 'flex-start'; // Align cards in one row
 
       appointments.forEach(appointment => {
-          const appointmentDiv = document.createElement('div');
-          const appointmentDate3 = new Date(appointment.date);
-          const formattedDate3 = appointmentDate3.toLocaleDateString('en-GB');
-          appointmentDiv.innerHTML =`
-                    <div class="cards d-flex flex-wrap">
-                      <div class="card m-4" style="width: 370px">
-                        <div class="card-body text-dark">
-                          <h4 class="card-title">${appointment.companyname}</h4>
-                          <p class="card-text">
-                          Customer Name : ${appointment.first_name} ${appointment.last_name} <br>
-                          Time: ${appointment.time} <br>
-                          Date: ${formattedDate3} <br>
-                          Status : ${appointment.status}
-                          </p>
-                          <div class="d-flex flex-column">
-                            <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details
-                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
-                          </div>
-                        </div>
-                      </div>
-                    </div>`;
-      pendingSection.appendChild(appointmentDiv);
+        const appointmentDiv = document.createElement('div');
+        appointmentDiv.style.width = '370px'; // Set the width of each card
+        appointmentDiv.style.margin = '15px'; // Add margin between cards
+
+        const appointmentDate3 = new Date(appointment.date);
+        const formattedDate3 = appointmentDate3.toLocaleDateString('en-GB');
+        appointmentDiv.innerHTML = `
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h4 class="card-title">${appointment.companyname}</h4>
+                    <p class="card-text">
+                    Customer Name: ${appointment.first_name} ${appointment.last_name} <br>
+                    Time: ${appointment.time} <br>
+                    Date: ${formattedDate3} <br>
+                    Status: ${appointment.status}
+                    </p>
+                    <div class="d-flex flex-column">
+                        <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details</button>
+                        <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel</button>
+                    </div>
+                </div>
+            </div>`;
+
+        flexContainer.appendChild(appointmentDiv);
       });
+
+      pendingSection.appendChild(flexContainer); // Append the flexbox container to the section
     }
 
     function displayScheduledAppointments(appointments) {
       const scheduledSection = document.getElementById('scheduledAppointmentsSection');
-      scheduledSection.innerHTML = '';
+      scheduledSection.innerHTML = ''; // Clear previous content
+
+      const flexContainer = document.createElement('div');
+      flexContainer.style.display = 'flex';
+      flexContainer.style.flexWrap = 'wrap'; // Ensure wrapping if needed
+      flexContainer.style.justifyContent = 'flex-start'; // Align cards in one row
 
       appointments.forEach(appointment => {
         const appointmentDiv = document.createElement('div');
+        appointmentDiv.style.width = '370px'; // Set the width of each card
+        appointmentDiv.style.margin = '15px'; // Add margin between cards
+
         const appointmentDate4 = new Date(appointment.date);
         const formattedDate4 = appointmentDate4.toLocaleDateString('en-GB');
         appointmentDiv.innerHTML = `
-            <div class="cards d-flex flex-wrap">
-                      <div class="card m-4" style="width: 370px">
-                        <div class="card-body text-dark">
-                          <h4 class="card-title">${appointment.companyname}</h4>
-                          <p class="card-text">
-                          Customer Name : ${appointment.first_name} ${appointment.last_name} <br>
-                          Time: ${appointment.time} <br>
-                          Date: ${formattedDate4} <br>
-                          Status : ${appointment.status}
-                          </p>
-                          <div class="d-flex flex-column">
-                            <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details
-                            <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel
-                          </div>
-                        </div>
-                      </div>
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h4 class="card-title">${appointment.companyname}</h4>
+                    <p class="card-text">
+                    Customer Name: ${appointment.first_name} ${appointment.last_name} <br>
+                    Time: ${appointment.time} <br>
+                    Date: ${formattedDate4} <br>
+                    Status: ${appointment.status}
+                    </p>
+                    <div class="d-flex flex-column">
+                        <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details</button>
+                        <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel</button>
                     </div>
-        `;
-        scheduledSection.appendChild(appointmentDiv);
+                </div>
+            </div>`;
+
+        flexContainer.appendChild(appointmentDiv);
       });
+      scheduledSection.appendChild(flexContainer);
     }
 
-    function cancelAppointment(appointmentId){
+    function displayDoneAppointments(appointments) {
+      const doneSection = document.getElementById('doneAppointmentsSection');
+      doneSection.innerHTML = ''; // Clear previous content
+
+      // Create a flexbox container
+      const flexContainer = document.createElement('div');
+      flexContainer.style.display = 'flex';
+      flexContainer.style.flexWrap = 'wrap'; // Ensure wrapping if needed
+      flexContainer.style.justifyContent = 'flex-start'; // Align cards in one row
+
+      appointments.forEach(appointment => {
+        const appointmentDiv = document.createElement('div');
+        appointmentDiv.style.width = '370px'; // Set the width of each card
+        appointmentDiv.style.margin = '15px'; // Add margin between cards
+
+        const appointmentDate3 = new Date(appointment.date);
+        const formattedDate3 = appointmentDate3.toLocaleDateString('en-GB');
+        appointmentDiv.innerHTML = `
+            <div class="card">
+                <div class="card-body text-dark">
+                    <h4 class="card-title">${appointment.companyname}</h4>
+                    <p class="card-text">
+                    Customer Name: ${appointment.first_name} ${appointment.last_name} <br>
+                    Time: ${appointment.time} <br>
+                    Date: ${formattedDate3} <br>
+                    Status: ${appointment.status}
+                    </p>
+                    <div class="d-flex flex-column">
+                        <button class="btn btn-success mt-3" onclick="showFullAppointment('${encodeURIComponent(JSON.stringify(appointment))}')">Details</button>
+                        <button class="btn btn-danger mt-3" onclick="cancelAppointment('${appointment._id}')">Cancel</button>
+                    </div>
+                </div>
+            </div>`;
+
+        flexContainer.appendChild(appointmentDiv);
+      });
+
+      doneSection.appendChild(flexContainer); // Append the flexbox container to the section
+    }
+
+    function cancelAppointment(appointmentId) {
       if (confirm('Are you sure you want to cancel this appointment?')) {
-        fetch(`/cancel-appointment/${appointmentId}`,{
+        fetch(`/cancel-appointment/${appointmentId}`, {
           method: 'PUT'
         })
-        .then(response => response.json())
-        .then(data => {
+          .then(response => response.json())
+          .then(data => {
             if (data.error) {
-                alert('Failed to cancel appointment: ' + data.error);
+              alert('Failed to cancel appointment: ' + data.error);
             } else {
-                alert('Appointment cancelled successfully.');
-                loadAppointments(); // Reload the appointments to reflect the change
+              alert('Appointment cancelled successfully.');
+              loadAppointments(); // Reload the appointments to reflect the change
             }
-        })
-        .catch(error => {
+          })
+          .catch(error => {
             console.error('Error cancelling appointment:', error);
             alert('An error occurred while cancelling the appointment.');
-        });
-    }
+          });
+      }
     }
   </script>
 </body>

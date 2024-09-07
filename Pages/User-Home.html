@@ -444,8 +444,6 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      console.log("Page is ready, sending fetch request.");
-
       fetch('/Info', {
         method: 'POST',
         headers: {
@@ -454,7 +452,6 @@
       })
         .then(response => response.json())
         .then(result => {
-          console.log("Received response from server:", result);
           document.getElementById("add-new-cards").innerHTML = result.html;
         })
         .catch(err => {
