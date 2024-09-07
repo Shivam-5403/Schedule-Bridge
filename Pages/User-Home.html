@@ -229,11 +229,6 @@
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <form action="" class="form-inline">
-          <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" />
-          <button class="btn btn-success mr-2" type="submit">Search</button>
-        </form>
-
         <li class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
@@ -272,7 +267,93 @@
 
   <main>
     <div id="add-new-cards"></div>
-    <!-- Write Some diifrent over here -->
+    <div class="mycontainer">
+      <div class="new-appointment">
+        <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+          <div class="modal fade text-dark" id="book-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addAppointmentModalLabel">Book Appointment</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form id="bookingForm">
+                    <div class="form-group">
+                      <label for="companyname">Business Name :</label>
+                      <input type="text" class="form-control" id="companyname" name="companyname" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Business Address :</label>
+                      <input type="text" class="form-control" id="address" name="address" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="admin_email">Business Email :</label>
+                      <input type="text" class="form-control" id="admin_email" name="admin_email" readonly />
+                    </div>
+                    <div class="form-group">
+                      <label for="first_name">First Name :</label>
+                      <input type="text" class="form-control" id="first_name" name="first_name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="last_name">Last Name :</label>
+                      <input type="text" class="form-control" id="last_name" name="last_name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email :</label>
+                      <input type="text" class="form-control" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="date">Date : </label>
+                      <input type="date" class="form-control" id="date" name="date" required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="time">Time : </label>
+                      <select class="form-control" id="time" required>
+                        <option value="" disabled selected>Select a time slot</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="mno">Mobile No :</label>
+                      <input type="tel" class="form-control" id="mno" name="mno" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="status">Booking Status :</label>
+                      <input type="text" class="form-control" id="status" name="status" value="Pending" readonly />
+                    </div>
+                    <button type="submit" class="btn btn-success">Book</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade text-dark" id="book-confirmation-modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmtion">Booking Successful</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Appointment Request booked successfully!
+                  </div>    
+                  <button type="button" class="btn btn-success" id="goHome">Home</button>              
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+      <button class="btn btn-success mt-3" onclick="window.location.href='/BookApp'">Explore More Businesses
+    </div>
   </main>
 
 
@@ -465,6 +546,96 @@
         top: 0,
         behavior: 'smooth' // This makes the scroll smooth
       });
+    });
+
+    function selectBusiness(businessJson) {
+        const business_book = JSON.parse(decodeURIComponent(businessJson));
+
+        const timeSelect = document.getElementById('time');
+        timeSelect.innerHTML = '<option value="" disabled selected>Select a time slot</option>';
+
+        const start_time = business_book.start_time;
+        const end_time = business_book.end_time;
+        const totalslots = business_book.totalslots;
+
+        const slotDuration = (new Date(`1970-01-01T${end_time}`) - new Date(`1970-01-01T${start_time}`)) / totalslots / 60000; // Duration in minutes
+
+        let currentTime = new Date(`1970-01-01T${start_time}`);
+        const endTimeObj = new Date(`1970-01-01T${end_time}`);
+
+        while (currentTime < endTimeObj) {
+          const startTimeString = currentTime.toTimeString().slice(0, 5);
+
+          // Increment currentTime by slot duration to get the end time of the range
+          const endTimeRange = new Date(currentTime.getTime() + slotDuration * 60000);
+          const endTimeString = endTimeRange.toTimeString().slice(0, 5);
+
+          const option = document.createElement('option');
+          option.value = `${startTimeString} - ${endTimeString}`;
+          option.textContent = `${startTimeString} - ${endTimeString}`;
+          timeSelect.appendChild(option);
+
+          // Move to the next slot's start time
+          currentTime = endTimeRange;
+        }
+
+        document.getElementById('companyname').value = business_book.companyname;
+        document.getElementById('address').value = business_book.address;
+        document.getElementById('admin_email').value = business_book.admin_email;
+        $('#book-modal').modal('show');
+    }
+
+    // Handle booking form submission
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = {
+            companyname: document.getElementById('companyname').value,
+            address : document.getElementById('address').value,
+            first_name : document.getElementById('first_name').value,
+            last_name : document.getElementById('last_name').value,
+            email : document.getElementById('email').value,
+            admin_email : document.getElementById('admin_email').value,
+            mno : document.getElementById('mno').value,
+            time: document.getElementById('time').value,
+            date: document.getElementById('date').value,
+            status : document.getElementById('status').value
+        };
+
+        fetch('/book-appointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#book-confirmation-modal').modal('show');
+        })
+        .catch(error => {
+            console.error('Error booking appointment:', error);
+        });
+    });
+
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set the min attribute to today's date to disable past dates
+    document.getElementById('date').setAttribute('min', today);
+
+    // Add an event listener to disable Sundays
+    document.getElementById('date').addEventListener('input', function() {
+      const selectedDate = new Date(this.value);
+      const dayOfWeek = selectedDate.getUTCDay();
+      
+      // If the selected date is a Sunday (0 represents Sunday)
+      if (dayOfWeek === 0) {
+        alert('Sundays are not selectable. Please choose another day.');
+        this.value = ''; // Clear the input value
+      }
+    });
+    document.getElementById('goHome').addEventListener('click',function(){
+      window.location.href='/Home';
     });
   </script>
 </body>

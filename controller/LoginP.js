@@ -38,7 +38,7 @@ const User_Profile = (req, res) => {
 
 const fetch_admins = async (req, res) => {
     try {
-        const admins = await Admin.find();
+        const admins = await Admin.find().limit(9);
 
         if (admins.length > 0) {
             let Table = `<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">`;
@@ -52,11 +52,9 @@ const fetch_admins = async (req, res) => {
                         <p class="card-text">${admin.admin_email}</p>
                         <div class="d-flex flex-column g-1">
                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#${modalId}">
-                                See Profile
+                                Business Details
                             </a>
-                            <a href="/BookApp" class="btn btn-success mt-3">
-                                Book Appointment
-                            </a>
+                            <button class="btn btn-success mt-3" onclick="selectBusiness('${encodeURIComponent(JSON.stringify(admin))}')">Book Appointment
                         </div>
                     </div>
                 </div>
@@ -65,15 +63,20 @@ const fetch_admins = async (req, res) => {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Profile of ${admin.companyname}</h5>
+                                <h5 class="modal-title">Details of ${admin.companyname}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p><strong>Email:</strong> ${admin.admin_email}</p>
-                                <!-- Add more admin details here if needed -->
-                            </div>
+                                <p><strong>Sector :</strong> ${admin.sector}</p>
+                                <p><strong>Address :</strong> ${admin.address} ${admin.state} ${admin.country} ${admin.pincode}</p>
+                                <p><strong>Email :</strong> ${admin.admin_email}</p>
+                                <p><strong>Contact No. :</strong> ${admin.mno}</p>
+                                <p><strong>Business Hours :</strong> ${admin.start_time} AM to ${admin.end_time} PM </p>
+                                <p><strong>Services :</strong> ${admin.service || 'N/A'}</p>
+                                <p><strong>Website :</strong> ${admin.website || 'N/A'}</p>
+                                </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
