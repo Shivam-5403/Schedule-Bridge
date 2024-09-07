@@ -40,7 +40,7 @@ const BookingSchema = new mongoose.Schema({
     mno: { type: Number, required: true},
     time: { type: String, required: true},
     date: { type: Date, required: true},
-    status: { type: String, enum: ['Pending', 'Booked', 'Rejected', 'Cancelled'], default: 'Pending' }    
+    status: { type: String, enum: ['Pending', 'Booked', 'Rejected', 'Cancelled','Done'], default: 'Pending' }    
 });
 
 const User = mongoose.model('User', UserSchema);

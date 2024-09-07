@@ -131,7 +131,6 @@ const view_appointments = async (req, res) => {
             status: "Done"
         });
 
-
         res.json({
             pendingAppointments,
             scheduledAppointments,
