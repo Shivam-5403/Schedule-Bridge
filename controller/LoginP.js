@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cron = require('node-cron');
 
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
@@ -122,6 +123,70 @@ const Update = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+function combineDateAndTime(date, time) {
+    console.log("Date:", date);
+    console.log("Time:", time);
+
+    const [startTime] = time.split(' - ');
+
+    if (!startTime || !startTime.includes(':')) {
+        console.error("Invalid time format:", time);
+        return new Date('Invalid');
+    }
+
+    const [hours, minutes] = startTime.split(':').map(Number);
+
+    if (isNaN(hours) || isNaN(minutes)) {
+        console.error("Invalid time values:", { hours, minutes });
+        return new Date('Invalid');
+    }
+
+    const combinedDate = new Date(date); // Clone the date
+    combinedDate.setHours(hours, minutes, 0, 0); // Set the hours and minutes
+    return combinedDate;
+}
+
+cron.schedule('* * * * *', async () => {
+    const currentTime = new Date();
+
+    try {
+        const appointments = await Booking.find({ status: { $in: ['Booked', 'Pending'] } });
+        let bookedToDoneCount = 0;
+        let pendingToRejectedCount = 0;
+        for (let appointment of appointments) {
+            const appointmentTime = combineDateAndTime(appointment.date, appointment.time);
+            console.log("Combined DateTime:", appointmentTime);
+
+            if (appointmentTime == 'Invalid Date') {
+                console.error(`Invalid appointment time for appointment ID: ${appointment._id}`);
+                continue;
+            }
+            if (currentTime > appointmentTime) {
+
+                if (appointment.status === 'Booked') {
+                    bookedToDoneCount++;
+                }
+
+                else if (appointment.status === 'Pending') {
+                    pendingToRejectedCount++;
+                }
+
+                if (bookedToDoneCount > 0) {
+                    await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Done' } });
+                    console.log(`Appointment ${appointment._id} marked as Done`);
+                } else if (pendingToRejectedCount > 0) {
+                    await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Rejected' } });
+                    console.log(`Appointment ${appointment._id} marked as Rejected`);
+                }
+            }
+        }
+
+        console.log('Appointment statuses checked and updated.');
+    } catch (err) {
+        console.error('Error updating appointment statuses:', err);
+    }
+});
 
 module.exports = {
     Home,
