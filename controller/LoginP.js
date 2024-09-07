@@ -124,26 +124,23 @@ const Update = async (req, res) => {
     }
 };
 
-function combineDateAndTime(date, time) {
-    console.log("Date:", date);
-    console.log("Time:", time);
+function combineDateAndEndTime(date, time) {
+    const [, endTime] = time.split(' - ');
 
-    const [startTime] = time.split(' - ');
-
-    if (!startTime || !startTime.includes(':')) {
+    if (!endTime || !endTime.includes(':')) {
         console.error("Invalid time format:", time);
         return new Date('Invalid');
     }
 
-    const [hours, minutes] = startTime.split(':').map(Number);
+    const [hours, minutes] = endTime.split(':').map(Number);
 
     if (isNaN(hours) || isNaN(minutes)) {
         console.error("Invalid time values:", { hours, minutes });
         return new Date('Invalid');
     }
 
-    const combinedDate = new Date(date); // Clone the date
-    combinedDate.setHours(hours, minutes, 0, 0); // Set the hours and minutes
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours, minutes, 0, 0);
     return combinedDate;
 }
 
@@ -155,8 +152,7 @@ cron.schedule('* * * * *', async () => {
         let bookedToDoneCount = 0;
         let pendingToRejectedCount = 0;
         for (let appointment of appointments) {
-            const appointmentTime = combineDateAndTime(appointment.date, appointment.time);
-            console.log("Combined DateTime:", appointmentTime);
+            const appointmentTime = combineDateAndEndTime(appointment.date, appointment.time);
 
             if (appointmentTime == 'Invalid Date') {
                 console.error(`Invalid appointment time for appointment ID: ${appointment._id}`);
