@@ -96,7 +96,7 @@ const fetch_admins = async (req, res) => {
 };
 
 
-const pending = async (req, res) => {
+const appointment = async (req, res) => {
     try {
         const Company = await Admin.findOne({ admin: req.session.admin });
         if (!Company) {
@@ -196,7 +196,7 @@ module.exports = {
     BookApp,
     ViewApp,
     fetch_admins,
-    pending,
+    appointment,
     Update,
     User_Profile
 }

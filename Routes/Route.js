@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { Home, fetch_admins, Update, About, Contact, Members, BookApp, ViewApp, pending, User_Profile } = require('../controller/LoginP');
+const { Home, fetch_admins, Update, About, Contact, Members, BookApp, ViewApp, appointment, User_Profile } = require('../controller/LoginP');
 
 router.get('/Home', Home);
 router.post('/update-appointment', Update);
-router.get('/appointments', pending);
+router.get('/appointments', appointment);
 router.post('/Info', fetch_admins);
 router.get('/About', About);
 router.get('/Contact', Contact);

@@ -248,99 +248,13 @@
 
   <main>
     <div class="mycontainer">
-
-      <!-- Booked appointment -->
+      <!--Appointmenta -->
+      <h2 class="m-4">Your Done appointments</h2>
+      <div class="done-appointment"></div>
       <h2 class="m-4">Your Booked appointments</h2>
       <div class="booked-appointment"></div>
       <h2 class="m-4">Your Rejected appointments</h2>
-      <div class="rejected-appointment">
-        <!--  <div class="cards d-flex flex-wrap">
-          <div class="card m-4" style="width: 370px">
-            <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
-            <div class="card-body text-dark">
-              <h4 class="card-title">Mr. Scheduler</h4>
-              <p class="card-text">
-                Time: 12:05:00<br>
-                Date: 18-08-2025
-              </p>
-              <div class="d-flex flex-column">
-                <a href="#" class="btn btn-primary" data-toggle="modal"
-                  data-target="#scheduled-details-modal">Details</a>
-                <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Edit</a>
-                <a href="#" class="btn btn-danger mt-3" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Cancel</a>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="card m-4" style="width: 370px">
-            <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
-            <div class="card-body text-dark">
-              <h4 class="card-title">Mr. Scheduler</h4>
-              <p class="card-text">
-                Time: 12:05:00<br>
-                Date: 18-08-2025
-              </p>
-              <div class="d-flex flex-column">
-                <a href="#" class="btn btn-primary" data-toggle="modal"
-                  data-target="#scheduled-details-modal">Details</a>
-                <a href="#" class="btn btn-primary mt-3 disabled" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Edit</a>
-                <a href="#" class="btn btn-danger mt-3" data-toggle="modal"
-                  data-target="#scheduled-edit-modal">Cancel</a>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        View scheduled-appointment details
-        <div class="modal fade text-dark" id="scheduled-details-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addAppointmentModalLabel">Appointment Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <h6>Emp Id:</h6>
-                <p id="details-id">123456</p>
-
-                <h6>Name:</h6>
-                <p id="details-name">John Doe</p>
-
-                <h6>Contact Number:</h6>
-                <p id="details-contact">+1234567890</p>
-
-                <h6>Email:</h6>
-                <p id="details-email">scheduler@example.com</p>
-
-                <h6>Position:</h6>
-                <p id="details-position">Software Engineer</p>
-
-                <h6>Date:</h6>
-                <p id="details-date">22-08-2024</p>
-                <h6>Time:</h6>
-                <p id="details-time">18:18:18</p>
-
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>-->
-
-
-      </div>
-
-      <!-- Pending appointments -->
+      <div class="rejected-appointment"></div>
       <h2 class="m-4">Your Pending appointments</h2>
       <!-- Filter by Date -->
       <div class="filter-date m-4">
@@ -350,135 +264,7 @@
         </div>
         <p id="filter-result" class="mt-2"></p>
       </div>
-
-      <div class="pending-appointment">
-        <!-- <div class="cards d-flex flex-wrap">
-          <div class="card m-4" style="width: 370px" data-date="2024-08-22">
-            <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
-            <div class="card-body text-dark">
-              <h4 class="card-title">Mr. Scheduler</h4>
-              <p class="card-text">
-                Pending..
-              </p>
-              <p class="card-text">Date: 22-08-2024</p>
-              <div class="d-flex flex-column">
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#details-modal">Details</a>
-
-                <a href="#" class="btn btn-success mt-3">Accept</a>
-
-                <a href="#" class="btn btn-danger mt-3">Reject</a>
-              </div>
-            </div>
-          </div>
-          View appointment detail
-        <div class="modal fade text-dark" id="details-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addAppointmentModalLabel">Appointment Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <h6>Emp Id:</h6>
-                <p id="details-id">123456</p>
-                <h6>Name:</h6>
-                <p id="details-name">John Doe</p>
-                <h6>Contact Number:</h6>
-                <p id="details-contact">+1234567890</p>
-                <h6>Email:</h6>
-                <p id="details-email">scheduler@example.com</p>
-                <h6>Position:</h6>
-                <p id="details-position">Software Engineer</p>
-                <h6>Date:</h6>
-                <p id="details-date">22-08-2024</p>
-                <h6>Time:</h6>
-                <p id="details-time">18:18:18</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card m-4" style="width: 370px" data-date="2024-06-02">
-            <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
-            <div class="card-body text-dark">
-              <h4 class="card-title">Mr. Scheduler</h4>
-              <p class="card-text">
-                Pending..
-              </p>
-              <p class="card-text">Date: 02-06-2024</p>
-              <div class="d-flex flex-column">
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#details2-modal">Details</a>
-
-                <a href="#" class="btn btn-success mt-3">Accept</a>
-
-                <a href="#" class="btn btn-danger mt-3">Reject</a>
-              </div>
-            </div>
-          </div>
-          View appointment details
-        <div class="modal fade text-dark" id="details2-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addAppointmentModalLabel">Appointment Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <h6>Emp Id:</h6>
-                <p id="details-id">123456</p>
-
-                <h6>Name:</h6>
-                <p id="details-name">John Doe</p>
-
-                <h6>Contact Number:</h6>
-                <p id="details-contact">+1234567890</p>
-
-                <h6>Email:</h6>
-                <p id="details-email">scheduler@example.com</p>
-
-                <h6>Position:</h6>
-                <p id="details-position">Software Engineer</p>
-
-                <h6>Date:</h6>
-                <p id="details-date">02-06-2024</p>
-                <h6>Time:</h6>
-                <p id="details-time">18:18:18</p>
-
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card m-4" style="width: 370px" data-date="2024-08-22">
-          <img style="width: 100%" src="../Pages/Images/person-1.png" alt="" class="card-img-top" />
-          <div class="card-body text-dark">
-            <h4 class="card-title">Mr. Scheduler</h4>
-            <p class="card-text">Pending..</p>
-            <p class="card-text">Date: 12-08-2024</p>
-            <div class="d-flex flex-column">
-              <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#details-modal">Details</a>
-              <a href="#" class="btn btn-success mt-3">Accept</a>
-              <a href="#" class="btn btn-danger mt-3">Reject</a>
-            </div>
-          </div>
-        </div>
-
-
-      </div> -->
-
-      </div>
-    </div>
+      <div class="pending-appointment"></div>
     </div>
   </main>
 
@@ -666,6 +452,7 @@
       const pendingContainer = document.querySelector('.pending-appointment');
       const bookedContainer = document.querySelector('.booked-appointment');
       const rejectedContainer = document.querySelector('.rejected-appointment');
+      const doneContainer = document.querySelector('.done-appointment');
 
       // Ensure the containers are flex containers with horizontal scrolling
       [pendingContainer, bookedContainer, rejectedContainer].forEach(container => {
@@ -709,6 +496,9 @@
             break;
           case 'Rejected':
             rejectedContainer.appendChild(card);
+            break;
+          case 'Done':
+            doneContainer.appendChild(card);
             break;
         }
 
