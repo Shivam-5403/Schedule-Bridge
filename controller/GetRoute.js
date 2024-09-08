@@ -170,8 +170,21 @@ const view_profile = async (req, res) => {
         });
         res.json(profile);
     } catch (error) {
-        console.error('Error searching appointment:', error);
-        res.status(500).json({ error: 'An error occurred while searching for appointment.' });
+        console.error('Error searching user:', error);
+        res.status(500).json({ error: 'An error occurred while searching for user.' });
+    }
+};
+
+const view_admin_profile = async (req, res) => {
+    const adminId = req.session.admin;
+    try{
+        const profile = await Admin.find({
+            admin: { $regex: new RegExp(adminId, 'i') }
+        });
+        res.json(profile);
+    } catch (error) {
+        console.error('Error searching admin:', error);
+        res.status(500).json({ error: 'An error occurred while searching for admin.' });
     }
 };
 
@@ -191,5 +204,6 @@ module.exports = {
     view_appointments,
     cancel_appointment,
     logout,
-    view_profile
+    view_profile,
+    view_admin_profile
 };

@@ -196,6 +196,20 @@ const change_pass = async (req, res) => {
     }
 };
 
+const change_pass_admin = async (req, res) => {
+    const { admin, admin_password} = req.body;
+    try{
+        const hashedPassword_admin = bcrypt.hashSync(admin_password, 8);
+
+        await Admin.updateOne({ admin }, { admin_password: hashedPassword_admin});
+
+        res.json({ message: 'Password Changed.' });
+    } catch (error) {
+        console.error('Error Changing Password:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Password.' });
+    }
+};
+
 const change_prof = async (req, res) => {
     const { oldId, username, email} = req.body;
     try{
@@ -219,6 +233,7 @@ module.exports = {
     P_changepassword,
     book_appointment,
     change_pass,
+    change_pass_admin,
     change_prof,
     contactUs_req
 }

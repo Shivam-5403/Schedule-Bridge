@@ -40,6 +40,10 @@ const Admin_Members = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Admin-Team-members.html'));
 };
 
+const Admin_Profile = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin_profile.html'));
+};
+
 const BookApp = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Book_appointment.html'));
 };
@@ -212,6 +216,7 @@ module.exports = {
     Admin_About,
     Admin_Contact,
     Admin_Members,
+    Admin_Profile,
     BookApp,
     ViewApp,
     fetch_admins,
