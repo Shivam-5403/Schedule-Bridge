@@ -24,6 +24,22 @@ const Members = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Team-members.html'));
 };
 
+const Admin_Home = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/admin.html'));
+};
+
+const Admin_About = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-About-Us.html'));
+};
+
+const Admin_Contact = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-Contact-Us.html'));
+};
+
+const Admin_Members = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-Team-members.html'));
+};
+
 const BookApp = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Book_appointment.html'));
 };
@@ -192,6 +208,10 @@ module.exports = {
     About,
     Contact,
     Members,
+    Admin_Home,
+    Admin_About,
+    Admin_Contact,
+    Admin_Members,
     BookApp,
     ViewApp,
     fetch_admins,

@@ -4,14 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Appointments</title>
-  <link rel="icon" href="Images/favicon.ico" type="image/x-icon">
+  <title>Schedule Bridge</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
   <style>
     body.dark-theme {
       background-color: black;
@@ -39,6 +40,7 @@
       color: black !important;
     }
 
+
     .hover-change:hover {
       background-color: rgba(99, 99, 99, 0.5);
     }
@@ -52,19 +54,20 @@
     }
 
     .mycontainer {
-      margin: 25px 30px;
+      /* margin: 25px 30px; */
+      margin-top: 125px;
+      margin-bottom: 0;
     }
 
-    .card {
-      margin: 38px;
+    .btn-my {
+      background-color: white;
+      border: 2px solid black;
     }
 
-    .card:hover {
-      transform: scale(1.05);
-      /* Increases the size to 110% on hover */
-      background-color: rgb(233, 231, 231);
-      border: 2px solid #007bff;
-
+    .btn-my:hover {
+      background-color: #007bff;
+      transform: scale(1.10);
+      color: white;
     }
 
     .profile-invert3 {
@@ -177,12 +180,34 @@
     .overlay:hover {
       cursor: pointer;
     }
+
+    .card {
+      margin: 38px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      /* Increases the size to 110% on hover */
+      background-color: rgb(233, 231, 231);
+      border: 2px solid #007bff;
+
+    }
+
+
+
+    .mycontainer2 {
+      margin: 0 25px;
+    }
+
+    .pera {
+      /* color: red; */
+      font-size: larger;
+      line-height: 1.6;
+    }
   </style>
 </head>
 
 <body class="dark-theme">
-
-
 
   <nav class="navbar p-0 p-sm-2 navbar-expand-xl dark-theme navbar-dark sticky-top ">
 
@@ -198,24 +223,19 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Admin Dashboard</a>
+          <a class="nav-link" href="/Admin_Home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Admin_About">About Us</a>
+          <a class="nav-link active" href="#">About Us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Admin_Contact">Contact Us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Admin_Members">Team Members</a>
+          <a class="nav-link" href="/Admin_Members">Developers</a>
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <form action="" class="form-inline">
-          <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" />
-          <button class="btn btn-success mr-2" type="submit">Search</button>
-        </form>
-
         <li class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
@@ -228,7 +248,11 @@
             <a id="light-theme" class="dropdown-item" href="#">Light</a>
           </div>
         </li>
-
+        <li class="nav-item d-flex justify-content-center align-items-center"></li>
+          <a href="/Notifications">
+            <img src="../Pages/Images/Notifi3.png" height="50px" alt="notification" />
+          </a>
+        </li>
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
           <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
             <!-- Profile -->
@@ -237,8 +261,9 @@
               alt="sdfds" />
 
           </a>
-          <div class="dropdown-menu profile mt-3">
-            <a href="#" class="dropdown-item">Profile section</a>
+          <div class="dropdown-menu profile mt-3" style="left: -80px;">
+            <a href="/User-Profile" class="dropdown-item">Profile section</a>
+            <a href="/logout" class="dropdown-item">Log Out</a>
           </div>
         </li>
       </div>
@@ -247,26 +272,92 @@
 
 
   <main>
-    <div class="mycontainer">
-      <!--Appointmenta -->
-      <h2 class="m-4">Your Done appointments</h2>
-      <div class="done-appointment"></div>
-      <h2 class="m-4">Your Booked appointments</h2>
-      <div class="booked-appointment"></div>
-      <h2 class="m-4">Your Rejected appointments</h2>
-      <div class="rejected-appointment"></div>
-      <h2 class="m-4">Your Pending appointments</h2>
-      <!-- Filter by Date -->
-      <div class="filter-date m-4">
-        <div class="form-inline">
-          <input type="date" id="filter-date" class="form-control mr-2" />
-          <button class="btn btn-primary" id="filter-button">Filter</button>
+    <section id="about-us">
+      <div class="mycontainer2 ">
+
+        <div class="row mb-4 p-0 p-sm-4">
+          <div class="col">
+            <h3>Who We Are</h3>
+            <p class="pera">At <strong>Schedule-Bridge</strong> , we are passionate about making your business
+              operations more efficient and effective. Our mission is to provide tools that help you save time and focus
+              on what truly matters-growing your business.</p>
+          </div>
+          <div class="col-lg-6">
+            <!-- Image Placeholder -->
+            <img width="80%" src="../Pages/Images/about1.png" alt="Team working collaboratively"
+              class="img-fluid rounded">
+          </div>
         </div>
-        <p id="filter-result" class="mt-2"></p>
+
+        <hr class="bg-white">
+
+
+        <div class="row mb-4 p-0 p-sm-4">
+          <div class="col-lg-6 order-lg-2">
+            <h3>Our Product: Scheduler-Bridge</h3>
+            <p class="pera">Scheduler-Bridge is a powerful tool designed to streamline the process of scheduling
+              appointments and meetings. Whether you're managing a small business or a large enterprise, our solution
+              helps you stay organized and on top of your schedule.</p>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <!-- Image Placeholder -->
+            <img src="../Pages/Images/about2.png" alt="Time Scheduler Interface" class="img-fluid rounded">
+          </div>
+        </div>
+
+        <hr class="bg-white">
+
+        <div class="row mb-4 p-0 p-sm-4">
+          <div class="col-lg-6">
+            <h3>Why Choose Us?</h3>
+            <p class="pera">We understand that time is your most valuable resource. With Time Scheduler, you can
+              efficiently manage your time, ensuring that you never miss an important meeting or appointment. By
+              reducing the hassle of manual scheduling, our tool enables your business to run smoothly and grow faster.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <!-- Image Placeholder -->
+            <img src="../Pages/Images/about3.png" alt="Time Management" class="img-fluid rounded">
+          </div>
+        </div>
+
+        <hr class="bg-white">
+
+        <div class="row mb-4 p-0 p-sm-4">
+          <div class="col-lg-6 order-lg-2">
+            <h3>Our Vision</h3>
+            <p class="pera">We believe in a future where technology simplifies life. Our vision is to continue
+              developing solutions that make day-to-day business tasks more manageable, allowing you to focus on what's
+              important—achieving your business goals.</p>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <!-- Image Placeholder -->
+            <img src="../Pages/Images/about4.png" alt="Vision of Future Technology" class="img-fluid rounded">
+          </div>
+        </div>
+
+        <hr class="bg-white">
+
+        <div class="row p-0 p-sm-4">
+          <div class="col-lg-6">
+            <h3>Our Commitment</h3>
+            <p class="pera">We are committed to providing exceptional customer support and continually improving our
+              product based on your feedback. Your success is our success, and we are here to support you every step of
+              the way.</p>
+          </div>
+          <div class="col-lg-6">
+            <!-- Image Placeholder -->
+            <img src="../Pages/Images/about5.png" alt="Customer Support" class="img-fluid rounded">
+          </div>
+        </div>
       </div>
-      <div class="pending-appointment"></div>
-    </div>
+    </section>
+
+
+
+
   </main>
+
 
   <footer class="dark-theme-footer foot-theme p-0">
     <div class="row m-0 m-sm-4 ">
@@ -369,8 +460,8 @@
       <div class="col-12 col-sm-4 my-4 text-start text-center ">
         <div class="sites d-flex gap-2 flex-column">
           <div class="cur-p cr">SB Webmail</div>
-          <div class="cur-p cr">About Us</div>
-          <div class="cur-p cr">Contact Us</div>
+          <div class="cur-p cr"><a href="/About">About Us</a></div>
+          <div class="cur-p cr"><a href="/Contact">Contact Us</a></div>
         </div>
       </div>
       <div>
@@ -392,13 +483,18 @@
         <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
+      <!-- <svg class="change-bg" style="height: 74px;
+    width: 92px; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+            color="white" fill="none">
+            <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg> -->
     </a>
 
 
   </footer>
 
   <script>
-    // Theme toggle script
     document.getElementById('dark-theme').addEventListener('click', function () {
       document.body.classList.add('dark-theme');
       document.body.classList.remove('light-theme');
@@ -414,6 +510,8 @@
       document.querySelector('.foot-theme').classList.remove('light-theme-footer');
       document.querySelector('.foot-theme').classList.add('dark-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(1)';
+
+
     });
 
     document.getElementById('light-theme').addEventListener('click', function () {
@@ -432,7 +530,10 @@
       document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
       document.querySelector('.foot-theme').classList.add('light-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(0)';
+
+
     });
+
 
     document.getElementById('scroll-to-top').addEventListener('click', function (event) {
       event.preventDefault(); // Prevent the default action if the element is an anchor
@@ -441,151 +542,29 @@
         behavior: 'smooth' // This makes the scroll smooth
       });
     });
-    //filter script for pending appointment
-    document.addEventListener('DOMContentLoaded', () => {
-      const pendingContainer = document.querySelector('.pending-appointment');
-      const bookedContainer = document.querySelector('.booked-appointment');
-      const rejectedContainer = document.querySelector('.rejected-appointment');
-      const doneContainer = document.querySelector('.done-appointment');
 
-      // Ensure the containers are flex containers with horizontal scrolling
-      [pendingContainer, bookedContainer, rejectedContainer].forEach(container => {
-        container.style.display = 'flex';
-        container.style.flexWrap = 'wrap';
-        container.style.gap = '16px';
-      });
+    function addNewPerson() {
+      console.log("lets");
 
-      const createAppointmentCard = (data) => {
-        const card = document.createElement('div');
-        card.className = 'card m-4';
-        card.style.width = '370px';
-        card.style.flexShrink = '0'; // Prevent shrinking of cards
-        card.dataset.customerName = data.customer_name;
-        card.dataset.date = new Date(data.date).toISOString().split('T')[0]; // Format date for comparison
+      let temp = "new";
 
-        const modalId = `details-modal-${data._id}`;
-
-        card.innerHTML = `
+      document.getElementById('add-new-cards').innerHTML += `<div style="width: 370px" class="card m-4">
+            <img style="width: 100%" src="Images/person-1.png" alt="" class="card-img-top" />
             <div class="card-body text-dark">
-                <h4 class="card-title">${data.customer_name}</h4>
-                <p class="card-text">${data.status}</p>
-                <p class="card-text">Date: ${new Date(data.date).toISOString().split('T')[0]}</p>
-                <div class="d-flex flex-column">
-                    <a href="#" class="btn btn-primary details-btn" data-toggle="modal" data-target="#${modalId}">Details</a>
-                    ${data.status === 'Pending' ? `
-                        <a href="#" class="btn btn-success mt-3 accept-btn">Accept</a>
-                        <a href="#" class="btn btn-danger mt-3 reject-btn">Reject</a>
-                    ` : ''}
-                </div>
+              <h4 class="card-title">Mr. New Scheduler</h4>
+              <p class="card-text">
+                Some example text some example text. Jane Doe is an architect
+                and engineer
+              </p>
+              <div class="d-flex flex-column g-1">
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#profile-modal">See Profile</a>
+                <a href="#" class="btn btn-success mt-3" data-toggle="modal" data-target="#book-modal">Book
+                  Appoinment</a>
+
+              </div>
             </div>
-        `;
-
-        // Append the card to the correct container based on its status
-        switch (data.status) {
-          case 'Pending':
-            pendingContainer.appendChild(card);
-            break;
-          case 'Booked':
-            bookedContainer.appendChild(card);
-            break;
-          case 'Rejected':
-            rejectedContainer.appendChild(card);
-            break;
-          case 'Done':
-            doneContainer.appendChild(card);
-            break;
-        }
-
-        // Create and append modal (unchanged)
-        const modal = document.createElement('div');
-        modal.className = 'modal fade text-dark';
-        modal.id = modalId;
-        modal.tabIndex = -1;
-        modal.role = 'dialog';
-        modal.innerHTML = `
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Appointment Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6>Business Name:</h6>
-                    <p id="business-name2">${data.companyname || 'N/A'}</p>
-                    <h6>Business Address:</h6>
-                    <p id="business-address2">${data.address || 'N/A'}</p>
-                    <h6>Email:</h6>
-                    <p id="business-email2">${data.admin_email || 'N/A'}</p>
-                    <h6>First Name:</h6>
-                    <p id="uf-name2">${data.first_name || 'N/A'}</p>
-                    <h6>Last Name:</h6>
-                    <p id="ul-name2">${data.last_name || 'N/A'}</p>
-                    <h6>Contact Number:</h6>
-                    <p id="u-mno2">${data.mno || 'N/A'}</p>
-                    <h6>Date:</h6>
-                    <p id="meet-date2">${new Date(data.date).toLocaleDateString('en-GB') || 'N/A'}</p>
-                    <h6>Time:</h6>
-                    <p id="meet-time2">${data.time || 'N/A'}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-        document.body.appendChild(modal);
-      };
-
-      const updateAppointmentStatus = async (customerName, date, status) => {
-        try {
-          await fetch('/update-appointment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ customer_name: customerName, date, status })
-          });
-        } catch (error) {
-          console.error('Error updating appointment status:', error);
-        }
-      };
-
-      const handleButtonClick = async (event) => {
-        if (event.target.classList.contains('accept-btn') || event.target.classList.contains('reject-btn')) {
-          event.preventDefault();
-
-          const button = event.target;
-          const action = button.classList.contains('accept-btn') ? 'Accept' : 'Reject';
-          const confirmation = action === 'Accept' ? 'accept' : 'reject';
-
-          if (confirm(`Are you sure you want to ${confirmation} this appointment?`)) {
-            const card = button.closest('.card');
-            const customerName = card.dataset.customerName;
-            const date = card.dataset.date;
-            const status = action === 'Accept' ? 'Booked' : 'Rejected';
-
-            // Update status in MongoDB
-            await updateAppointmentStatus(customerName, date, status);
-
-            // Reload the page to fetch updated data
-            window.location.reload();
-          }
-        }
-      };
-
-      document.addEventListener('click', handleButtonClick);
-
-      // Fetch and create cards
-      fetch('/appointments')
-        .then(response => response.json())
-        .then(appointments => {
-          appointments.forEach(createAppointmentCard);
-        })
-        .catch(error => console.error('Error fetching appointments:', error));
-    });
+          </div>`
+    }
 
   </script>
 </body>
