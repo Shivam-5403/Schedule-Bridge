@@ -113,7 +113,7 @@ const view_appointments = async (req, res) => {
     const userId = req.session.name;
     try {
         if (!userId) {
-            // return res.status(401).json({ error: 'User not logged in.' });
+            return res.status(401).json({ error: 'User not logged in.' });
         }
 
         const pendingAppointments = await Booking.find({
