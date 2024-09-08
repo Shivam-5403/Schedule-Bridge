@@ -421,10 +421,38 @@
                               <label for="oldservice">Services :</label>
                               <input type="text" class="form-control" id="oldservice" name="oldservice" readonly/>
                               <h1>Fill New Details :</h1>
-                              <label for="eadminname">New Admin name :</label>
+                              <h4>To Change Few Details, Want Load Above Then Press The Button</h4>
+                              <button class="btn btn-success" id="loadabove">Load</button><br>
+                              <label for="eadminname">Admin name :</label>
                               <input type="text" class="form-control" id="eadminname" name="eadminname" required/>
-                              <label for="eemail">New Email :</label>
-                              <input type="text" class="form-control" id="eemail" name="eemail" />
+                              <label for="eemail">Email :</label>
+                              <input type="text" class="form-control" id="eemail" name="eemail" required/>
+                              <label for="ecompanyname">Company Name :</label>
+                              <input type="text" class="form-control" id="ecompanyname" name="ecompanyname" required/>
+                              <label for="esector">Sector :</label>
+                              <input type="text" class="form-control" id="esector" name="esector" required/>
+                              <label for="eaddress">Address :</label>
+                              <input type="text" class="form-control" id="eaddress" name="eaddress" required/>
+                              <label for="estate">State :</label>
+                              <input type="text" class="form-control" id="estate" name="estate" required/>
+                              <label for="ecountry">Country :</label>
+                              <input type="text" class="form-control" id="ecountry" name="ecountry" required/>
+                              <label for="epincode">Pincode :</label>
+                              <input type="text" class="form-control" id="epincode" name="epincode" required/>
+                              <label for="emno">Mobile No. :</label>
+                              <input type="text" class="form-control" id="emno" name="emno" required/>
+                              <label for="etotal_workhours">Total Working Hours :</label>
+                              <input type="number" class="form-control" id="etotal_workhours" name="etotal_workhours" min="1" max="24" required/>
+                              <label for="estart_time">Business Start Hours :</label>
+                              <input type="text" class="form-control" id="estart_time" name="estart_time" placeholder="HH:MM ex.: 08:30 or 14:15" required/>
+                              <label for="eend_time">Business End Hours :</label>
+                              <input type="text" class="form-control" id="eend_time" name="eend_time" placeholder="HH:MM ex.: 08:30 or 14:15" required/>
+                              <label for="etotalslots">Total Slots Per Day :</label>
+                              <input type="number" class="form-control" id="etotalslots" name="etotalslots" required/>
+                              <label for="ewebsite">Website :</label>
+                              <input type="text" class="form-control" id="ewebsite" name="ewebsite" value="N/A"/>
+                              <label for="eservice">Services :</label>
+                              <input type="text" class="form-control" id="eservice" name="eservice" required/>
                               <button class="btn btn-success" id="esubmitbtn">Submit</button>
                             </div>
                           </form>
@@ -437,7 +465,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="econfirmtion">Profile Changing Successful</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/`">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
@@ -454,11 +482,10 @@
               </div>
             </div>
         </div>
-
         <div id="change-bg2" class="flex-column  mycontainer-contact-us m-4 px-2 py-4 text-center">
             <h2>Your Profile</h2>
             <div class="team row py-4 justify-content-center">
-                <div id="sumit" class="member col-12 col-md-4  py-4">
+                <div class="member col-12 col-md-4  py-4">
 
                     <img class="img-set member-photo img-fluid mt-3" height="400px" width="400px"
                         src="../Pages/Images/peofile.png" alt="Member 1">
@@ -686,9 +713,32 @@
 
         function editprofile(proJson){
             const eprof = JSON.parse(decodeURIComponent(proJson));
-            document.getElementById('olduname').value = eprof.username;
-            document.getElementById('oldemail').value = eprof.email;
+            document.getElementById('oldadminname').value = eprof.admin;
+            document.getElementById('oldemail').value = eprof.admin_email;
+            document.getElementById('oldsector').value = eprof.sector;
+            document.getElementById('oldaddress').value = (eprof.address + eprof.state + eprof.country + eprof.pincode);
+            document.getElementById('oldmno').value = eprof.mno;
+            document.getElementById('oldtime').value = ("Total " + eprof.total_workhours + " from " + eprof.start_time + " AM " + " to " + eprof.end_time + " PM");
+            document.getElementById('oldslots').value = eprof.totalslots;
+            document.getElementById('oldweb').value = eprof.website || 'N/A';
+            document.getElementById('oldservice').value = eprof.service;
             $('#ep-modal').modal('show');
+            $('#loadabove').click(function(){
+                document.getElementById('eadminname').value = eprof.admin;
+                document.getElementById('eemail').value = eprof.admin_email;
+                document.getElementById('ecompanyname').value = eprof.companyname;
+                document.getElementById('esector').value = eprof.sector;
+                document.getElementById('eaddress').value = eprof.address;
+                document.getElementById('estate').value = eprof.state;
+                document.getElementById('ecountry').value = eprof.country;
+                document.getElementById('epincode').value = eprof.pincode;
+                document.getElementById('emno').value = eprof.mno;
+                document.getElementById('etotal_workhours').value = eprof.total_workhours;
+                document.getElementById('estart_time').value = eprof.start_time;
+                document.getElementById('eend_time').value = eprof.end_time;
+                document.getElementById('ewebsite').value = eprof.website;
+                document.getElementById('eservice').value = eprof.service;
+            });
         }
         
         document.getElementById('submitbtn').addEventListener('click', function(event) {
@@ -746,12 +796,25 @@
             event.preventDefault();
 
             const formData = {
-                ousername : document.getElementById('olduname').value,
-                username : document.getElementById('euname').value,
-                email : document.getElementById('eemail').value
+                oadmin : document.getElementById('oldadminname').value,
+                admin : document.getElementById('eadminname').value,
+                admin_email : document.getElementById('eemail').value,
+                companyname : document.getElementById('ecompanyname').value,
+                sector : document.getElementById('esector').value,
+                address : document.getElementById('eaddress').value,
+                state : document.getElementById('estate').value,
+                country : document.getElementById('ecountry').value,
+                pipncode : document.getElementById('epincode').value,
+                mno : document.getElementById('emno').value,
+                total_workhours : document.getElementById('etotal_workhours').value,
+                start_time : document.getElementById('estart_time').value,
+                end_time : document.getElementById('eend_time').value,
+                totalslots : document.getElementById('etotalslots').value,
+                website : document.getElementById('ewebsite').value,
+                service : document.getElementById('eservice').value,
             };
 
-            fetch('/change-prof', {
+            fetch('/change-admin-prof', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

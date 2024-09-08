@@ -222,6 +222,18 @@ const change_prof = async (req, res) => {
     }
 };
 
+const change_admin_prof = async (req, res) => {
+    const { oldAdminId, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service} = req.body;
+    try{
+        await Admin.updateOne({ oldAdminId }, {admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service});
+
+        res.json({ message : 'Profile Changed.'});
+    } catch (error) {
+        console.error('Error Changing Profile:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Profile.' });
+    }
+}
+
 module.exports = {
     login,
     admin_login,
@@ -235,5 +247,6 @@ module.exports = {
     change_pass,
     change_pass_admin,
     change_prof,
-    contactUs_req
+    contactUs_req,
+    change_admin_prof
 }
