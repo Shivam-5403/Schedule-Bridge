@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cron = require('node-cron');
+const { transporter, emailTemplate } = require('./Mail');
 
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
@@ -147,6 +148,26 @@ const Update = async (req, res) => {
     }
 };
 
+function combineDateAndStartTime(date, time) {
+    const [startTime] = time.split(' - '); // Get the start time of the meeting
+
+    if (!startTime || !startTime.includes(':')) {
+        console.error("Invalid time format:", time);
+        return new Date('Invalid');
+    }
+
+    const [hours, minutes] = startTime.split(':').map(Number);
+
+    if (isNaN(hours) || isNaN(minutes)) {
+        console.error("Invalid time values:", { hours, minutes });
+        return new Date('Invalid');
+    }
+
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours, minutes, 0, 0);
+    return combinedDate;
+};
+
 function combineDateAndEndTime(date, time) {
     const [, endTime] = time.split(' - ');
 
@@ -165,7 +186,7 @@ function combineDateAndEndTime(date, time) {
     const combinedDate = new Date(date);
     combinedDate.setHours(hours, minutes, 0, 0);
     return combinedDate;
-}
+};
 
 cron.schedule('* * * * *', async () => {
     const currentTime = new Date();
@@ -176,8 +197,9 @@ cron.schedule('* * * * *', async () => {
         let pendingToRejectedCount = 0;
         for (let appointment of appointments) {
             const appointmentTime = combineDateAndEndTime(appointment.date, appointment.time);
-
-            if (appointmentTime == 'Invalid Date') {
+            const appointmentStartTime = combineDateAndStartTime(appointment.date, appointment.time);
+            
+            if (appointmentTime == 'Invalid Date' || appointmentStartTime == 'Invalid Date') {
                 console.error(`Invalid appointment time for appointment ID: ${appointment._id}`);
                 continue;
             }
@@ -199,9 +221,25 @@ cron.schedule('* * * * *', async () => {
                     console.log(`Appointment ${appointment._id} marked as Rejected`);
                 }
             }
-        }
 
-        console.log('Appointment statuses checked and updated.');
+            const timeDiff = Math.floor((appointmentStartTime - currentTime) / (1000 * 60));
+
+            if (timeDiff >= 40 && timeDiff <= 50) {
+                const message = {
+                    from: appointment.email,
+                    to: appointment.admin_email,
+                    subject: "Meeting Reminder",
+                    html: emailTemplate,
+                };
+
+                try {
+                    const sentMessage = await transporter.sendMail(message);
+                    console.log("Email sent:", sentMessage.messageId);
+                } catch (error) {
+                    console.error("Error sending email:", error);
+                }
+            }
+        }
     } catch (err) {
         console.error('Error updating appointment statuses:', err);
     }
