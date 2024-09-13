@@ -1,0 +1,19 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  /* Main content should expand to fill available space */
+  main {
+    flex-grow: 1;
+  }
+  
+  /* Footer styling */
+  footer {
+    background-color: #f8f9fa; /* Customize as needed */
+    padding: 10px;
+    text-align: center;
+  }
+  

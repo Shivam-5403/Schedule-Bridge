@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
     <style>
         body.dark-theme {
             background-color: black;
@@ -162,6 +163,10 @@
             cursor: pointer;
             color: white;
         }
+
+        .cur-p{
+            color:gray;
+        }   
 
         .light-theme-footer .cur-p:hover {
             color: black;
@@ -574,8 +579,8 @@
             <div class="col-12 col-sm-4 my-4 text-start text-center ">
                 <div class="sites d-flex gap-2 flex-column">
                     <div class="cur-p cr">SB Webmail</div>
-                    <div class="cur-p cr">About Us</div>
-                    <div class="cur-p cr">Contact Us</div>
+                    <div ><a style="text-decoration: none;" class="cur-p cr" href="/About">About Us</a></div>
+          <div ><a style="text-decoration: none;" class="cur-p cr" href="/Contact">Contact Us</a></div>
                 </div>
             </div>
             <div>
