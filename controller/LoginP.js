@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const cron = require('node-cron');
+const { transporter, emailTemplate } = require('./Mail');
 
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
@@ -23,6 +25,26 @@ const Members = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Team-members.html'));
 };
 
+const Admin_Home = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/admin.html'));
+};
+
+const Admin_About = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-About-Us.html'));
+};
+
+const Admin_Contact = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-Contact-Us.html'));
+};
+
+const Admin_Members = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin-Team-members.html'));
+};
+
+const Admin_Profile = (req, res) => {
+    res.sendFile(path.join(__dirname, '../Pages/Admin_profile.html'));
+};
+
 const BookApp = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/Book_appointment.html'));
 };
@@ -37,7 +59,7 @@ const User_Profile = (req, res) => {
 
 const fetch_admins = async (req, res) => {
     try {
-        const admins = await Admin.find();
+        const admins = await Admin.find().limit(9);
 
         if (admins.length > 0) {
             let Table = `<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">`;
@@ -47,15 +69,13 @@ const fetch_admins = async (req, res) => {
                 Table += `
                 <div style="width: 370px; margin: 15px;" class="card">
                     <div class="card-body text-dark">
-                        <h4 class="card-title">${admin.admin}</h4>
+                        <h4 class="card-title">${admin.companyname}</h4>
                         <p class="card-text">${admin.admin_email}</p>
                         <div class="d-flex flex-column g-1">
                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#${modalId}">
-                                See Profile
+                                Business Details
                             </a>
-                            <a href="/BookApp" class="btn btn-success mt-3">
-                                Book Appointment
-                            </a>
+                            <button class="btn btn-success mt-3" onclick="selectBusiness('${encodeURIComponent(JSON.stringify(admin))}')">Book Appointment
                         </div>
                     </div>
                 </div>
@@ -64,15 +84,20 @@ const fetch_admins = async (req, res) => {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Profile of ${admin.admin}</h5>
+                                <h5 class="modal-title">Details of ${admin.companyname}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p><strong>Email:</strong> ${admin.admin_email}</p>
-                                <!-- Add more admin details here if needed -->
-                            </div>
+                                <p><strong>Sector :</strong> ${admin.sector}</p>
+                                <p><strong>Address :</strong> ${admin.address} ${admin.state} ${admin.country} ${admin.pincode}</p>
+                                <p><strong>Email :</strong> ${admin.admin_email}</p>
+                                <p><strong>Contact No. :</strong> ${admin.mno}</p>
+                                <p><strong>Business Hours :</strong> ${admin.start_time} AM to ${admin.end_time} PM </p>
+                                <p><strong>Services :</strong> ${admin.service || 'N/A'}</p>
+                                <p><strong>Website :</strong> ${admin.website || 'N/A'}</p>
+                                </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
@@ -95,7 +120,7 @@ const fetch_admins = async (req, res) => {
 };
 
 
-const pending = async (req, res) => {
+const appointment = async (req, res) => {
     try {
         const Company = await Admin.findOne({ admin: req.session.admin });
         if (!Company) {
@@ -123,15 +148,117 @@ const Update = async (req, res) => {
     }
 };
 
+function combineDateAndStartTime(date, time) {
+    const [startTime] = time.split(' - '); // Get the start time of the meeting
+
+    if (!startTime || !startTime.includes(':')) {
+        console.error("Invalid time format:", time);
+        return new Date('Invalid');
+    }
+
+    const [hours, minutes] = startTime.split(':').map(Number);
+
+    if (isNaN(hours) || isNaN(minutes)) {
+        console.error("Invalid time values:", { hours, minutes });
+        return new Date('Invalid');
+    }
+
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours, minutes, 0, 0);
+    return combinedDate;
+};
+
+function combineDateAndEndTime(date, time) {
+    const [, endTime] = time.split(' - ');
+
+    if (!endTime || !endTime.includes(':')) {
+        console.error("Invalid time format:", time);
+        return new Date('Invalid');
+    }
+
+    const [hours, minutes] = endTime.split(':').map(Number);
+
+    if (isNaN(hours) || isNaN(minutes)) {
+        console.error("Invalid time values:", { hours, minutes });
+        return new Date('Invalid');
+    }
+
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours, minutes, 0, 0);
+    return combinedDate;
+};
+
+cron.schedule('* * * * *', async () => {
+    const currentTime = new Date();
+
+    try {
+        const appointments = await Booking.find({ status: { $in: ['Booked', 'Pending'] } });
+        let bookedToDoneCount = 0;
+        let pendingToRejectedCount = 0;
+        for (let appointment of appointments) {
+            const appointmentTime = combineDateAndEndTime(appointment.date, appointment.time);
+            const appointmentStartTime = combineDateAndStartTime(appointment.date, appointment.time);
+            
+            if (appointmentTime == 'Invalid Date' || appointmentStartTime == 'Invalid Date') {
+                console.error(`Invalid appointment time for appointment ID: ${appointment._id}`);
+                continue;
+            }
+            if (currentTime > appointmentTime) {
+
+                if (appointment.status === 'Booked') {
+                    bookedToDoneCount++;
+                }
+
+                else if (appointment.status === 'Pending') {
+                    pendingToRejectedCount++;
+                }
+
+                if (bookedToDoneCount > 0) {
+                    await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Done' } });
+                    console.log(`Appointment ${appointment._id} marked as Done`);
+                } else if (pendingToRejectedCount > 0) {
+                    await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Rejected' } });
+                    console.log(`Appointment ${appointment._id} marked as Rejected`);
+                }
+            }
+
+            const timeDiff = Math.floor((appointmentStartTime - currentTime) / (1000 * 60));
+
+            if (timeDiff >= 40 && timeDiff <= 50) {
+                const message = {
+                    from: appointment.email,
+                    to: appointment.admin_email,
+                    subject: "Meeting Reminder",
+                    html: emailTemplate,
+                };
+
+                try {
+                    const sentMessage = await transporter.sendMail(message);
+                    console.log("Email sent:", sentMessage.messageId);
+                } catch (error) {
+                    console.error("Error sending email:", error);
+                }
+            }
+        }
+    } catch (err) {
+        console.error('Error updating appointment statuses:', err);
+    }
+});
+
 module.exports = {
     Home,
     About,
     Contact,
     Members,
+    Admin_Home,
+    Admin_About,
+    Admin_Contact,
+    Admin_Members,
+    Admin_Profile,
     BookApp,
     ViewApp,
     fetch_admins,
-    pending,
+    appointment,
     Update,
     User_Profile
 }

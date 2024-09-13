@@ -309,15 +309,10 @@
                     <a class="nav-link" href="/Contact">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Members">Team Members</a>
+                    <a class="nav-link" href="/Members">Developers</a>
                 </li>
             </ul>
             <div class="search-theme ml-auto d-flex navbar-nav">
-                <form action="" class="form-inline">
-                    <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search" />
-                    <button class="btn btn-success mr-2" type="submit">Search</button>
-                </form>
-
                 <li class="hover-change nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#"
                         id="theme-toggle">
@@ -331,7 +326,6 @@
                         <a id="light-theme" class="dropdown-item" href="#">Light</a>
                     </div>
                 </li>
-
                 <li class="nav-item dropdown d-flex justify-content-center align-items-center">
                     <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
                         <!-- Profile -->
@@ -353,108 +347,113 @@
     <main>
         <div class="mycontainer">
             <div class="changepassword">
-              <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
-                <div class="modal fade text-dark" id="cp-modal">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="cpModalLabel">Change Password</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form id="cpForm">
-                            <div class="form-group">
-                              <label for="uname">Username :</label>
-                              <input type="text" class="form-control" id="uname" name="uname" readonly />
-                              <label for="newp">New Password :</label>
-                              <input type="password" class="form-control" id="newp" name="newp" />
+                <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
+                    <div class="modal fade text-dark" id="cp-modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cpModalLabel">Change Password</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="cpForm">
+                                        <div class="form-group">
+                                            <label for="uname">Username :</label>
+                                            <input type="text" class="form-control" id="uname" name="uname" readonly />
+                                            <label for="newp">New Password :</label>
+                                            <input type="password" class="form-control" id="newp" name="newp" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cnewp">Confirm New Password :</label>
+                                            <input type="password" class="form-control" id="cnewp" name="cnewp" />
+                                        </div>
+                                        <button type="button" class="btn btn-success" onclick="verify()">Change</button>
+                                        <button type="submit" id="submitbtn" style="display: none;">Submit</button>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="form-group">
-                              <label for="cnewp">Confirm New Password :</label>
-                              <input type="password" class="form-control" id="cnewp" name="cnewp" />
+                        </div>
+                    </div>
+                    <div class="modal fade text-dark" id="cp-confirmation-modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmtion">Password Changing Successful</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                        onclick="window.location.href=`/Home`">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-success alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Success!</strong>Your Password is successfully changed! Explore More...
+                                    </div>
+                                    <button type="button" class="btn btn-success" id="goHome">Home</button>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-success" onclick="verify()">Change</button>
-                            <button type="submit" id="submitbtn" style="display: none;">Submit</button>
-                          </form>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <div class="modal fade text-dark" id="cp-confirmation-modal">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="confirmtion">Password Changing Successful</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="alert alert-success alert-dismissible">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Success!</strong>Your Password is successfully changed! Explore More...
-                          </div>    
-                          <button type="button" class="btn btn-success" id="goHome">Home</button>              
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal fade text-dark" id="ep-modal">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="epModalLabel">Edit Profile</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <form id="epForm">
-                            <div class="form-group">
-                              <label for="olduname">Old Username :</label>
-                              <input type="text" class="form-control" id="olduname" name="olduname" readonly/>
-                              <label for="oldemail">Old Email :</label>
-                              <input type="text" class="form-control" id="oldemail" name="oldemail" readonly/>
-                              <label for="euname">New Username :</label>
-                              <input type="text" class="form-control" id="euname" name="euname" />
-                              <label for="eemail">New Email :</label>
-                              <input type="text" class="form-control" id="eemail" name="eemail" />
-                              <button class="btn btn-success" id="esubmitbtn">Submit</button>
+                    <div class="modal fade text-dark" id="ep-modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="epModalLabel">Edit Profile</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="epForm">
+                                        <div class="form-group">
+                                            <label for="olduname">Old Username :</label>
+                                            <input type="text" class="form-control" id="olduname" name="olduname"
+                                                readonly />
+                                            <label for="oldemail">Old Email :</label>
+                                            <input type="text" class="form-control" id="oldemail" name="oldemail"
+                                                readonly />
+                                            <label for="euname">New Username :</label>
+                                            <input type="text" class="form-control" id="euname" name="euname" />
+                                            <label for="eemail">New Email :</label>
+                                            <input type="text" class="form-control" id="eemail" name="eemail" />
+                                            <button class="btn btn-success" id="esubmitbtn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                          </form>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  <div class="modal fade text-dark" id="ep-confirmation-modal">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="econfirmtion">Profile Changing Successful</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                    <div class="modal fade text-dark" id="ep-confirmation-modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="econfirmtion">Profile Changing Successful</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                        onclick="window.location.href=`/Home`">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-success alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Success! </strong> Your Profile is successfully changed! Login again and
+                                        Explore More...
+                                    </div>
+                                    <button type="button" class="btn btn-success" id="goHome2">Home</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                          <div class="alert alert-success alert-dismissible">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Success! </strong> Your Profile is successfully changed! Login again and Explore More...
-                          </div>    
-                          <button type="button" class="btn btn-success" id="goHome2">Home</button>              
-                        </div>
-                      </div>
                     </div>
-                  </div>
-              </div>
+                </div>
             </div>
         </div>
 
         <div id="change-bg2" class="flex-column  mycontainer-contact-us m-4 px-2 py-4 text-center">
             <h2>Your Profile</h2>
             <div class="team row py-4 justify-content-center">
-                <div id="sumit" class="member col-12 col-md-4  py-4">
+                <div class="member col-12 col-md-4  py-4">
 
                     <img class="img-set member-photo img-fluid mt-3" height="400px" width="400px"
                         src="../Pages/Images/peofile.png" alt="Member 1">
@@ -636,9 +635,9 @@
         });
 
         document.addEventListener('DOMContentLoaded', loadProfile);
-        
-        function loadProfile(){
-            fetch('/view-profile') 
+
+        function loadProfile() {
+            fetch('/view-profile')
                 .then(response => response.json())
                 .then(data => {
                     displayProfile(data);
@@ -648,7 +647,7 @@
                 });
         }
 
-        function displayProfile(profile){
+        function displayProfile(profile) {
             const userProfile = document.getElementById('profile-section');
             userProfile.innerHTML = '';
 
@@ -664,25 +663,25 @@
             });
         }
 
-        function changepassword(proJson){
+        function changepassword(proJson) {
             const prof = JSON.parse(decodeURIComponent(proJson));
             document.getElementById('uname').value = prof.username;
             $('#cp-modal').modal('show');
         }
 
-        function editprofile(proJson){
+        function editprofile(proJson) {
             const eprof = JSON.parse(decodeURIComponent(proJson));
             document.getElementById('olduname').value = eprof.username;
             document.getElementById('oldemail').value = eprof.email;
             $('#ep-modal').modal('show');
         }
-        
-        document.getElementById('submitbtn').addEventListener('click', function(event) {
+
+        document.getElementById('submitbtn').addEventListener('click', function (event) {
             event.preventDefault();
 
             const formData = {
-                username : document.getElementById('uname').value,
-                password : document.getElementById('newp').value
+                username: document.getElementById('uname').value,
+                password: document.getElementById('newp').value
             };
 
             fetch('/change-pass', {
@@ -692,49 +691,49 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                $('#cp-confirmation-modal').modal('show');
-            })
-            .catch(error => {
-                console.error('Error changin password:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    $('#cp-confirmation-modal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Error changin password:', error);
+                });
         });
 
         function verify() {
-        var un = document.getElementById('newp').value;
-        var ln = document.getElementById('cnewp').value;
+            var un = document.getElementById('newp').value;
+            var ln = document.getElementById('cnewp').value;
 
-        if (un == "") {
-            document.getElementById('newp').style.borderColor = "red";
-            window.alert('Fill the require fields!');
+            if (un == "") {
+                document.getElementById('newp').style.borderColor = "red";
+                window.alert('Fill the require fields!');
+            }
+            else if (ln == "") {
+                document.getElementById('cnewp').style.borderColor = "red";
+                window.alert('Fill the require fields!');
+            }
+            else if (un != ln) {
+                document.getElementById('newp').style.borderColor = "red";
+                document.getElementById('cnewp').style.borderColor = "red";
+                window.alert('Confirm Password is Wrong!');
+            }
+            else {
+                document.getElementById('submitbtn').click();
+            }
         }
-        else if (ln == "") {
-            document.getElementById('cnewp').style.borderColor = "red";
-            window.alert('Fill the require fields!');
-        }
-        else if (un != ln) {
-            document.getElementById('newp').style.borderColor = "red";
-            document.getElementById('cnewp').style.borderColor = "red";
-            window.alert('Confirm Password is Wrong!');
-        }
-        else {
-            document.getElementById('submitbtn').click();
-        }
-    }
-    document.getElementById('goHome').addEventListener('click',function(){
-      window.location.href='/Home';
-    });
-    document.getElementById('goHome2').addEventListener('click',function(){
-      window.location.href='/';
-    });
-    document.getElementById('esubmitbtn').addEventListener('click', function(event) {
+        document.getElementById('goHome').addEventListener('click', function () {
+            window.location.href = '/Home';
+        });
+        document.getElementById('goHome2').addEventListener('click', function () {
+            window.location.href = '/';
+        });
+        document.getElementById('esubmitbtn').addEventListener('click', function (event) {
             event.preventDefault();
 
             const formData = {
-                ousername : document.getElementById('olduname').value,
-                username : document.getElementById('euname').value,
-                email : document.getElementById('eemail').value
+                ousername: document.getElementById('olduname').value,
+                username: document.getElementById('euname').value,
+                email: document.getElementById('eemail').value
             };
 
             fetch('/change-prof', {
@@ -744,13 +743,13 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                $('#ep-confirmation-modal').modal('show');
-            })
-            .catch(error => {
-                console.error('Error changing profile:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    $('#ep-confirmation-modal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Error changing profile:', error);
+                });
         });
     </script>
 </body>

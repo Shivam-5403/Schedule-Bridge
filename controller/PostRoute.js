@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
 
-const { User, Admin, Booking } = require('../Mongoose/MongoDB');
+const { User, Admin, Booking, Contact } = require('../Mongoose/MongoDB');
 
 const login = async (req, res) => {
     const { username, password } = req.body;
@@ -168,12 +168,40 @@ const book_appointment = async (req, res) => {
     }
 };
 
+const contactUs_req = async (req, res) => {
+    const { name, email, details} = req.body;
+    try{
+        const contact = new Contact({
+            name,email,details
+        });
+        await contact.save();
+        res.json({ message: 'Sending Confirmed.'});
+    } catch (error) {
+        console.error('Error sending message.',error);
+        res.status(500).json({ error: 'An error occurred while sending the msg.' });
+    }
+};
+
 const change_pass = async (req, res) => {
     const { username, password} = req.body;
     try{
         const hashedPassword = bcrypt.hashSync(password, 8);
 
         await User.updateOne({ username }, { password: hashedPassword});
+
+        res.json({ message: 'Password Changed.' });
+    } catch (error) {
+        console.error('Error Changing Password:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Password.' });
+    }
+};
+
+const change_pass_admin = async (req, res) => {
+    const { admin, admin_password} = req.body;
+    try{
+        const hashedPassword_admin = bcrypt.hashSync(admin_password, 8);
+
+        await Admin.updateOne({ admin }, { admin_password: hashedPassword_admin});
 
         res.json({ message: 'Password Changed.' });
     } catch (error) {
@@ -194,6 +222,18 @@ const change_prof = async (req, res) => {
     }
 };
 
+const change_admin_prof = async (req, res) => {
+    const { oldAdminId, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service} = req.body;
+    try{
+        await Admin.updateOne({ oldAdminId }, {admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service});
+
+        res.json({ message : 'Profile Changed.'});
+    } catch (error) {
+        console.error('Error Changing Profile:', error);
+        res.status(500).json({ error: 'An error occurred while Changing Profile.' });
+    }
+}
+
 module.exports = {
     login,
     admin_login,
@@ -205,5 +245,8 @@ module.exports = {
     P_changepassword,
     book_appointment,
     change_pass,
-    change_prof
+    change_pass_admin,
+    change_prof,
+    contactUs_req,
+    change_admin_prof
 }

@@ -2,46 +2,46 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static(__dirname)); 
-app.use(express.static(path.join(__dirname, '../public/Pages'))); 
-app.use(express.static(path.join(__dirname, '../public'))); 
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../public/Pages')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 const { User, Admin, Booking } = require('../Mongoose/MongoDB');
 
 const Login = (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html')); 
+    res.sendFile(path.join(__dirname, '../index.html'));
 };
 
 const G_signup = (req, res) => {
-    res.sendFile(path.join(__dirname, '../signup.html')); 
+    res.sendFile(path.join(__dirname, '../signup.html'));
 };
 
 const admin = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_login.html')); 
+    res.sendFile(path.join(__dirname, '../admin_login.html'));
 };
 
 const adminG_signup = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_signup.html')); 
+    res.sendFile(path.join(__dirname, '../admin_signup.html'));
 };
 
 const forgot_password = (req, res) => {
-    res.sendFile(path.join(__dirname, '../verification.html')); 
+    res.sendFile(path.join(__dirname, '../verification.html'));
 };
 
 const forgot_admin_password = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_verification.html')); 
+    res.sendFile(path.join(__dirname, '../admin_verification.html'));
 };
 
 const adminG_verification = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_verification.html')); 
+    res.sendFile(path.join(__dirname, '../admin_verification.html'));
 };
 
 const adminG_changepassword = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_changepassword.html')); 
+    res.sendFile(path.join(__dirname, '../admin_changepassword.html'));
 };
 
 const G_verification = (req, res) => {
-    res.sendFile(path.join(__dirname, '../verification.html')); 
+    res.sendFile(path.join(__dirname, '../verification.html'));
 };
 
 const logout = (req, res) => {
@@ -51,7 +51,7 @@ const logout = (req, res) => {
             return res.status(500).send('Error logging out, please try again.');
         }
         res.clearCookie('session.name', { path: '/' });
-        res.redirect('/'); 
+        res.redirect('/');
     });
 };
 
@@ -73,17 +73,17 @@ const search_appointment = async (req, res) => {
     const uf_name = req.query.first_name;
     const ul_name = req.query.last_name;
     const userId = req.session.name;
-    try{
+    try {
         const appointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
             first_name: { $regex: new RegExp(uf_name, 'i') },  // Case-insensitive search
-            last_name: { $regex: new RegExp(ul_name, 'i') } , // Case-insensitive search
-            status : "Pending"
+            last_name: { $regex: new RegExp(ul_name, 'i') }, // Case-insensitive search
+            status: "Pending"
         });
         console.log(userId);
         console.log(appointments);
         res.json(appointments);
-    }catch (error) {
+    } catch (error) {
         console.error('Error searching appointment:', error);
         res.status(500).json({ error: 'An error occurred while searching for appointment.' });
     }
@@ -93,17 +93,17 @@ const search_appointment2 = async (req, res) => {
     const uf_name = req.query.first_name;
     const ul_name = req.query.last_name;
     const userId = req.session.name;
-    try{
+    try {
         const appointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
             first_name: { $regex: new RegExp(uf_name, 'i') },  // Case-insensitive search
-            last_name: { $regex: new RegExp(ul_name, 'i') } , // Case-insensitive search
-            status : "Booked"
+            last_name: { $regex: new RegExp(ul_name, 'i') }, // Case-insensitive search
+            status: "Booked"
         });
         console.log(userId);
         console.log(appointments);
         res.json(appointments);
-    }catch (error) {
+    } catch (error) {
         console.error('Error searching appointment:', error);
         res.status(500).json({ error: 'An error occurred while searching for appointment.' });
     }
@@ -112,19 +112,29 @@ const search_appointment2 = async (req, res) => {
 const view_appointments = async (req, res) => {
     const userId = req.session.name;
     try {
+        if (!userId) {
+            return res.status(401).json({ error: 'User not logged in.' });
+        }
+
         const pendingAppointments = await Booking.find({
-            customer_name: { $regex: new RegExp(userId, 'i') }, 
-            status: "Pending"                                   
+            customer_name: { $regex: new RegExp(userId, 'i') },
+            status: "Pending"
         });
 
         const scheduledAppointments = await Booking.find({
-            customer_name: { $regex: new RegExp(userId, 'i') }, 
-            status: "Booked"                                 
+            customer_name: { $regex: new RegExp(userId, 'i') },
+            status: "Booked"
+        });
+
+        const doneAppointments = await Booking.find({ 
+            customer_name: userId,
+            status: "Done"
         });
 
         res.json({
             pendingAppointments,
-            scheduledAppointments
+            scheduledAppointments,
+            doneAppointments
         });
     } catch (error) {
         console.error('Error fetching appointments:', error);
@@ -138,7 +148,7 @@ const cancel_appointment = async (req, res) => {
     try {
         const updatedAppointment = await Booking.findByIdAndUpdate(
             appointmentId,
-            { status: "Cancelled" } 
+            { status: "Cancelled" }
         );
 
         if (!updatedAppointment) {
@@ -154,14 +164,27 @@ const cancel_appointment = async (req, res) => {
 
 const view_profile = async (req, res) => {
     const userId = req.session.name;
-    try{
+    try {
         const profile = await User.find({
             username: { $regex: new RegExp(userId, 'i') }
         });
         res.json(profile);
-    }catch (error) {
-        console.error('Error searching appointment:', error);
-        res.status(500).json({ error: 'An error occurred while searching for appointment.' });
+    } catch (error) {
+        console.error('Error searching user:', error);
+        res.status(500).json({ error: 'An error occurred while searching for user.' });
+    }
+};
+
+const view_admin_profile = async (req, res) => {
+    const adminId = req.session.admin;
+    try{
+        const profile = await Admin.find({
+            admin: { $regex: new RegExp(adminId, 'i') }
+        });
+        res.json(profile);
+    } catch (error) {
+        console.error('Error searching admin:', error);
+        res.status(500).json({ error: 'An error occurred while searching for admin.' });
     }
 };
 
@@ -181,5 +204,6 @@ module.exports = {
     view_appointments,
     cancel_appointment,
     logout,
-    view_profile
+    view_profile,
+    view_admin_profile
 };
