@@ -13,207 +13,93 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let lightmode = localStorage.getItem('light-mode');
+      const themeSwitch = document.getElementById('theme-switch');
 
-  <style>
-    body.dark-theme {
-      background-color: black;
-      color: white;
-    }
-
-    body.light-theme {
-      background-color: white;
-      color: black;
-    }
-
-    .navbar.dark-theme {
-      background-color: rgb(37, 36, 36) !important;
-    }
-
-    .navbar.light-theme {
-      background-color: rgb(199, 194, 194) !important;
-    }
-
-    .text-dark-theme {
-      color: white !important;
-    }
-
-    .text-light-theme {
-      color: black !important;
-    }
+      // Function to enable light mode
+      const enablelightmode = () => {
+        console.log("light mode on");
+        document.body.classList.add('light-mode');
+        localStorage.setItem('light-mode', 'active');
 
 
-    .hover-change:hover {
-      background-color: rgba(99, 99, 99, 0.5);
-    }
-
-    .nav-item.dropdown:hover .dropdown-menu {
-      display: block;
-    }
-
-    .profile {
-      margin-top: 25px;
-    }
-
-    .mycontainer {
-      /* margin: 25px 30px; */
-      margin-top: 125px;
-      margin-bottom: 0;
-    }
-
-    .btn-my {
-      background-color: white;
-      border: 2px solid black;
-    }
-
-    .btn-my:hover {
-      background-color: #007bff;
-      transform: scale(1.10);
-      color: white;
-    }
-
-    .profile-invert3 {
-      filter: invert(1);
-      /* height: 1px; */
-    }
-
-    #profile-invert4 {
-      filter: invert(1);
-    }
-
-    .dark-theme-footer {
-      background-color: rgb(28, 28, 28);
-      color: gray;
-    }
-
-    .light-theme-footer {
-      background-color: #f7f9fa;
-      color: rgb(83, 83, 83);
-      color: gray;
-    }
-
-    .icons svg:hover {
-      background-color: #5a5959;
-      cursor: pointer;
-      border-radius: 15px;
-      padding: 5px;
-
-    }
-
-    #c1:hover {
-      color: #1b99ee;
-    }
-
-    #c2:hover {
-      color: white;
-    }
-
-    #c3:hover {
-      color: rgba(255, 0, 0, 0.789);
-      border-radius: 15px;
-    }
-
-    #c4:hover {
-      color: #1b99ee;
-    }
-
-    #c5:hover {
-      color: rgb(252, 136, 252);
-    }
-
-    #c6:hover {
-      fill: white;
-    }
-
-    #c7:hover {
-      fill: black;
-    }
-
-    .light-theme-footer .icons svg:hover {
-      background-color: #d0d0d0;
-      cursor: pointer;
-    }
-
-    .image-container {
-      position: relative;
-      display: inline-block;
-    }
-
-    .last-logo {
-      display: block;
-
-    }
-
-    .dark-theme-footer .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(28, 28, 28, 0.1);
-      z-index: 1;
-    }
-
-    .cur-p{
-      color:gray;
-    }
-    .cur-p:hover {
-      cursor: pointer;
-      color: white;
-    }
-
-    
-
-    .light-theme-footer .cur-p:hover {
-      color: black;
-    }
-
-    .change-bg:hover {
-      background-color: #5a5c5e59;
-    }
-
-    .image-container img {
-      display: inline-block;
-      transform: rotate(0deg);
-      transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    .image-container img:hover {
-      cursor: pointer;
-      transform: rotate(-45deg);
-      transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    .overlay:hover {
-      cursor: pointer;
-    }
-
-    .card {
-      margin: 38px;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-      /* Increases the size to 110% on hover */
-      background-color: rgb(233, 231, 231);
-      border: 2px solid #007bff;
-
-    }
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        document.getElementById('main-id').classList.add('light-theme');
+        document.getElementById('main-id').classList.remove('dark-theme');
 
 
+        document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
+        document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
+        document.getElementById('theme-toggle').classList.add('text-light-theme');
+        document.getElementById('theme-toggle').classList.remove('text-dark-theme');
+        document.getElementById('profile-toggle').classList.add('text-light-theme');
+        document.getElementById('profile-toggle').classList.remove('text-dark-theme');
+        document.getElementById('profile-invert').style.filter = 'invert(0)';
+        document.getElementById('profile-invert2').style.filter = 'invert(1)';
+        document.querySelector('.profile-invert3').style.filter = 'invert(0)';
 
-    .mycontainer2 {
-      margin: 0 25px;
-    }
+        document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
+        document.querySelector('.foot-theme').classList.add('light-theme-footer');
+        document.getElementById('profile-invert4').style.filter = 'invert(0)';
 
-    .pera {
-      /* color: red; */
-      font-size: larger;
-      line-height: 1.6;
-    }
-  </style>
+
+        // for scrollbar
+        document.documentElement.setAttribute("data-theme", "light");
+
+      };
+
+      // Function to disable light mode
+      const disablelightmode = () => {
+        console.log("light mode off");
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('light-mode', '');
+
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        document.getElementById('main-id').classList.add('dark-theme');
+        document.getElementById('main-id').classList.remove('light-theme');
+
+        document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
+        document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
+        document.getElementById('theme-toggle').classList.add('text-dark-theme');
+        document.getElementById('theme-toggle').classList.remove('text-light-theme');
+        document.getElementById('profile-toggle').classList.add('text-dark-theme');
+        document.getElementById('profile-toggle').classList.remove('text-light-theme');
+
+        document.getElementById('profile-invert').style.filter = 'invert(1)';
+        document.getElementById('profile-invert2').style.filter = 'invert(0)';
+        document.querySelector('.profile-invert3').style.filter = 'invert(1)';
+        document.querySelector('.foot-theme').classList.remove('light-theme-footer');
+        document.querySelector('.foot-theme').classList.add('dark-theme-footer');
+        document.getElementById('profile-invert4').style.filter = 'invert(1)';
+
+        // for scrollbar
+        document.documentElement.setAttribute("data-theme", "dark");
+
+      };
+
+      // Check if light mode is active on page load
+      if (lightmode === 'active') enablelightmode();
+
+      // Add event listener to themeSwitch button
+      if (themeSwitch) {
+        themeSwitch.addEventListener("click", () => {
+          console.log("Theme switch clicked");
+          lightmode = localStorage.getItem('light-mode');
+          lightmode !== 'active' ? enablelightmode() : disablelightmode();
+        });
+      } else {
+        console.error('themeSwitch button not found');
+      }
+    });
+  </script>
+
 </head>
 
-<body class="dark-theme">
+<body class="">
 
   <nav class="navbar p-0 p-sm-2 navbar-expand-xl dark-theme navbar-dark sticky-top ">
 
@@ -248,18 +134,37 @@
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <li class="hover-change nav-item dropdown">
+        <li style="" class="nav-item d-flex justify-content-center align-items-center">
+          <button id="theme-switch">
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed">
+              <path
+                d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-450H40v-60h160v60Zm720 0H760v-60h160v60ZM450-760v-160h60v160h-60Zm0 720v-160h60v160h-60ZM262-658l-100-97 43-44 96 100-39 41Zm494 496-98-100 41-41 99 98-42 43Zm-99-537 98-99 44 42-99 98-43-41ZM162-205l99-98 42 42-98 99-43-43Z" />
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed">
+              <path
+                d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q8 0 17 .5t23 1.5q-36 32-56 79t-20 99q0 90 63 153t153 63q52 0 99-18.5t79-51.5q1 12 1.5 19.5t.5 14.5q0 150-105 255T480-120Z" />
+            </svg>
+
+          </button>
+        </li>
+
+        <li style="display: none;" class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
-              <img id="profile-invert2" src="../Pages/svg/dark.svg" alt="" />
+              <img id="profile-invert2" src="../Pages/svg/darkd.svg" alt="" />
             </span>
-            Theme
+
+
           </a>
-          <div class="dropdown-menu mt-3">
+          <!-- <div class="dropdown-menu mt-3">
             <a id="dark-theme" class="dropdown-item" href="#">Dark</a>
             <a id="light-theme" class="dropdown-item" href="#">Light</a>
-          </div>
+          </div> -->
         </li>
+
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
           <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
             <!-- Profile -->
@@ -268,7 +173,7 @@
               alt="sdfds" />
 
           </a>
-          <div class="dropdown-menu profile mt-3" style="left: -80px;">
+          <div class="dropdown-menu profile mt-3" style="left: -150px;">
             <a href="/User-Profile" class="dropdown-item">Profile section</a>
             <a href="/logout" class="dropdown-item">Log Out</a>
           </div>
@@ -278,7 +183,7 @@
   </nav>
 
 
-  <main>
+  <main id="main-id" class="dark-theme">
     <section id="about-us">
       <div class="mycontainer2 ">
 
@@ -293,10 +198,11 @@
             <!-- Image Placeholder -->
             <img width="80%" src="../Pages/Images/about1.png" alt="Team working collaboratively"
               class="img-fluid rounded">
+
           </div>
         </div>
 
-        <hr class="bg-white">
+        <hr class="bg-white2">
 
 
         <div class="row mb-4 p-0 p-sm-4">
@@ -312,7 +218,7 @@
           </div>
         </div>
 
-        <hr class="bg-white">
+        <hr class="bg-white2">
 
         <div class="row mb-4 p-0 p-sm-4">
           <div class="col-lg-6">
@@ -328,7 +234,7 @@
           </div>
         </div>
 
-        <hr class="bg-white">
+        <hr class="bg-white2">
 
         <div class="row mb-4 p-0 p-sm-4">
           <div class="col-lg-6 order-lg-2">
@@ -343,7 +249,7 @@
           </div>
         </div>
 
-        <hr class="bg-white">
+        <hr class="bg-white2">
 
         <div class="row p-0 p-sm-4">
           <div class="col-lg-6">
@@ -386,8 +292,9 @@
 
           <div class="text-center">Vadodara, Gujarat-390002</div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined ">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined ">
             call
           </span>
           <span class="white-it cur-p">
@@ -395,8 +302,9 @@
 
           </span>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined">
             mail
           </span>
           <span class="white-it cur-p">
@@ -404,8 +312,9 @@
 
           </span>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined">
             public
           </span>
           <span class="white-it cur-p">
@@ -469,7 +378,7 @@
           <div class="cur-p cr">SB Webmail</div>
           <div><a class="cur-p cr" style="text-decoration: none;" href="/About">About Us</a></div>
           <div><a class="cur-p cr" style="text-decoration: none;" href="/Contact">Contact Us</a></div>
-        </div>  
+        </div>
       </div>
       <div>
 
@@ -496,45 +405,6 @@
   </footer>
 
   <script>
-    document.getElementById('dark-theme').addEventListener('click', function () {
-      document.body.classList.add('dark-theme');
-      document.body.classList.remove('light-theme');
-      document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
-      document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
-      document.getElementById('theme-toggle').classList.add('text-dark-theme');
-      document.getElementById('theme-toggle').classList.remove('text-light-theme');
-      document.getElementById('profile-toggle').classList.add('text-dark-theme');
-      document.getElementById('profile-toggle').classList.remove('text-light-theme');
-      document.getElementById('profile-invert').style.filter = 'invert(1)';
-      document.getElementById('profile-invert2').style.filter = 'invert(0)';
-      document.querySelector('.profile-invert3').style.filter = 'invert(1)';
-      document.querySelector('.foot-theme').classList.remove('light-theme-footer');
-      document.querySelector('.foot-theme').classList.add('dark-theme-footer');
-      document.getElementById('profile-invert4').style.filter = 'invert(1)';
-
-
-    });
-
-    document.getElementById('light-theme').addEventListener('click', function () {
-      document.body.classList.add('light-theme');
-      document.body.classList.remove('dark-theme');
-      document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
-      document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
-      document.getElementById('theme-toggle').classList.add('text-light-theme');
-      document.getElementById('theme-toggle').classList.remove('text-dark-theme');
-      document.getElementById('profile-toggle').classList.add('text-light-theme');
-      document.getElementById('profile-toggle').classList.remove('text-dark-theme');
-      document.getElementById('profile-invert').style.filter = 'invert(0)';
-      document.getElementById('profile-invert2').style.filter = 'invert(1)';
-      document.querySelector('.profile-invert3').style.filter = 'invert(0)';
-
-      document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
-      document.querySelector('.foot-theme').classList.add('light-theme-footer');
-      document.getElementById('profile-invert4').style.filter = 'invert(0)';
-
-
-    });
-
 
     document.getElementById('scroll-to-top').addEventListener('click', function (event) {
       event.preventDefault(); // Prevent the default action if the element is an anchor
