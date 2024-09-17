@@ -13,35 +13,9 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 
   <style>
-    body.dark-theme {
-      background-color: black;
-      color: white;
-    }
-
-    body.light-theme {
-      background-color: white;
-      color: black;
-    }
-
-    .navbar.dark-theme {
-      background-color: rgb(37, 36, 36) !important;
-    }
-
-    .navbar.light-theme {
-      background-color: rgb(199, 194, 194) !important;
-    }
-
-    .text-dark-theme {
-      color: white !important;
-    }
-
-    .text-light-theme {
-      color: black !important;
-    }
-
-
     .hover-change:hover {
       background-color: rgba(99, 99, 99, 0.5);
     }
@@ -80,16 +54,6 @@
       filter: invert(1);
     }
 
-    .dark-theme-footer {
-      background-color: rgb(28, 28, 28);
-      color: gray;
-    }
-
-    .light-theme-footer {
-      background-color: #f7f9fa;
-      color: rgb(83, 83, 83);
-      color: gray;
-    }
 
     .icons svg:hover {
       background-color: #5a5959;
@@ -128,10 +92,6 @@
       fill: black;
     }
 
-    .light-theme-footer .icons svg:hover {
-      background-color: #d0d0d0;
-      cursor: pointer;
-    }
 
     .image-container {
       position: relative;
@@ -143,28 +103,16 @@
 
     }
 
-    .dark-theme-footer .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(28, 28, 28, 0.1);
-      z-index: 1;
-    }
+
 
     .cur-p:hover {
       cursor: pointer;
       color: white;
     }
 
-    .cur-p{
-      color:gray;
+    .cur-p {
+      color: gray;
       text-decoration: none;
-    }
-
-    .light-theme-footer .cur-p:hover {
-      color: black;
     }
 
     .change-bg:hover {
@@ -215,6 +163,7 @@
 
 <body class="dark-theme">
 
+
   <nav class="navbar p-0 p-sm-2 navbar-expand-xl dark-theme navbar-dark sticky-top ">
 
     <a href="#" class="navbar-brand m-0 d-flex align-items-center">
@@ -232,7 +181,7 @@
           <a class="nav-link" href="/Admin_Home">Admin Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">About Us</a>
+          <a class="nav-link active" href="/Admin_About">About Us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Admin_Contact">Contact Us</a>
@@ -242,18 +191,37 @@
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <li class="hover-change nav-item dropdown">
+        <li style="" class="nav-item d-flex justify-content-center align-items-center">
+          <button id="theme-switch">
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed">
+              <path
+                d="M480-280q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-450H40v-60h160v60Zm720 0H760v-60h160v60ZM450-760v-160h60v160h-60Zm0 720v-160h60v160h-60ZM262-658l-100-97 43-44 96 100-39 41Zm494 496-98-100 41-41 99 98-42 43Zm-99-537 98-99 44 42-99 98-43-41ZM162-205l99-98 42 42-98 99-43-43Z" />
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e8eaed">
+              <path
+                d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q8 0 17 .5t23 1.5q-36 32-56 79t-20 99q0 90 63 153t153 63q52 0 99-18.5t79-51.5q1 12 1.5 19.5t.5 14.5q0 150-105 255T480-120Z" />
+            </svg>
+
+          </button>
+        </li>
+
+        <li style="display: none;" class="hover-change nav-item dropdown">
           <a class="nav-link dropdown-toggle text-dark-theme" data-toggle="dropdown" href="#" id="theme-toggle">
             <span>
               <img id="profile-invert2" src="../Pages/svg/dark.svg" alt="" />
             </span>
-            Theme
+
+
           </a>
-          <div class="dropdown-menu mt-3">
+          <!-- <div class="dropdown-menu mt-3">
             <a id="dark-theme" class="dropdown-item" href="#">Dark</a>
             <a id="light-theme" class="dropdown-item" href="#">Light</a>
-          </div>
+          </div> -->
         </li>
+
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
           <a href="#" class="nav-link text-dark-theme" data-toggle="dropdown" id="profile-toggle">
             <!-- Profile -->
@@ -262,8 +230,8 @@
               alt="sdfds" />
 
           </a>
-          <div class="dropdown-menu profile mt-3" style="left: -80px;">
-            <a href="/Admin-Profile" class="dropdown-item">Profile section</a>
+          <div class="dropdown-menu profile mt-3" style="left: -150px;">
+            <a href="/User-Profile" class="dropdown-item">Profile section</a>
             <a href="/logout" class="dropdown-item">Log Out</a>
           </div>
         </li>
@@ -272,7 +240,7 @@
   </nav>
 
 
-  <main>
+  <main id="main-id" class="dark-theme">
     <section id="about-us">
       <div class="mycontainer2 ">
 
@@ -287,10 +255,10 @@
             <!-- Image Placeholder -->
             <img width="80%" src="../Pages/Images/about1.png" alt="Team working collaboratively"
               class="img-fluid rounded">
+
           </div>
         </div>
 
-        <hr class="bg-white">
 
 
         <div class="row mb-4 p-0 p-sm-4">
@@ -306,7 +274,6 @@
           </div>
         </div>
 
-        <hr class="bg-white">
 
         <div class="row mb-4 p-0 p-sm-4">
           <div class="col-lg-6">
@@ -322,7 +289,6 @@
           </div>
         </div>
 
-        <hr class="bg-white">
 
         <div class="row mb-4 p-0 p-sm-4">
           <div class="col-lg-6 order-lg-2">
@@ -337,7 +303,6 @@
           </div>
         </div>
 
-        <hr class="bg-white">
 
         <div class="row p-0 p-sm-4">
           <div class="col-lg-6">
@@ -359,7 +324,6 @@
 
   </main>
 
-
   <footer class="dark-theme-footer foot-theme p-0">
     <div class="row m-0 m-sm-4 ">
 
@@ -380,8 +344,9 @@
 
           <div class="text-center">Vadodara, Gujarat-390002</div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined ">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined ">
             call
           </span>
           <span class="white-it cur-p">
@@ -389,8 +354,9 @@
 
           </span>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined">
             mail
           </span>
           <span class="white-it cur-p">
@@ -398,8 +364,9 @@
 
           </span>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 5px;" class="my-1 text-center">
-          <span style="color:#0098db" class="material-symbols-outlined">
+        <div class="new-hov" style="display: flex; justify-content: center; align-items: center; gap: 5px;"
+          class="my-1 text-center">
+          <span class="new-call material-symbols-outlined">
             public
           </span>
           <span class="white-it cur-p">
@@ -461,8 +428,8 @@
       <div class="col-12 col-sm-4 my-4 text-start text-center ">
         <div class="sites d-flex gap-2 flex-column">
           <div class="cur-p cr">SB Webmail</div>
-          <div ><a style="text-decoration: none;" class="cur-p cr" href="/About">About Us</a></div>
-          <div ><a style="text-decoration: none;" class="cur-p cr" href="/Contact">Contact Us</a></div>
+          <div><a style="text-decoration: none;" class="cur-p cr" href="/Admin_About">About Us</a></div>
+          <div><a style="text-decoration: none;" class="cur-p cr" href="/Admin_Contact">Contact Us</a></div>
         </div>
       </div>
       <div>
@@ -484,17 +451,10 @@
         <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
-      <!-- <svg class="change-bg" style="height: 74px;
-    width: 92px; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-            color="white" fill="none">
-            <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg> -->
     </a>
 
 
   </footer>
-
   <script>
     document.getElementById('dark-theme').addEventListener('click', function () {
       document.body.classList.add('dark-theme');

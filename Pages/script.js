@@ -1,3 +1,8 @@
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     // Check if the scroll-to-top button exists
     const scrollToTopButton = document.getElementById('scroll-to-top');
@@ -16,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     // Existing theme toggle logic and other code goes here...
+
+    
   });
   
 
@@ -52,6 +59,8 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
       document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
       document.querySelector('.foot-theme').classList.add('light-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(0)';
+      document.getElementById('profile-invert5').style.filter = 'invert(0)';
+      document.getElementById('change-bg2').classList.add('light-mycontainer-contact-us');
     };
 
     // Function to disable light mode (enable dark mode)
@@ -79,6 +88,8 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
       document.querySelector('.foot-theme').classList.remove('light-theme-footer');
       document.querySelector('.foot-theme').classList.add('dark-theme-footer');
       document.getElementById('profile-invert4').style.filter = 'invert(1)';
+      document.getElementById('profile-invert5').style.filter = 'invert(1)';
+      document.getElementById('change-bg2').classList.remove('light-mycontainer-contact-us');
     };
 
     // Check if light mode is active on page load
