@@ -68,7 +68,7 @@ const adminP_changepassword = async (req, res) => {
     const admin = req.session.admin;
 
     if (!admin) {
-        return res.redirect('../admin_verification/?error=Session%20expired,%20please%20try%20again.');
+        return res.redirect('../Pages/admin_verification/?error=Session%20expired,%20please%20try%20again.');
     }
 
     try {
@@ -91,7 +91,7 @@ const adminP_verification = async (req, res) => {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_reckey, ad.admin_reckey)) {
             req.session.admin = admin;
-            res.sendFile(path.join(__dirname, '../admin_changepassword.html'));
+            res.sendFile(path.join(__dirname, '../Pages/admin_changepassword.html'));
         }
         else {
             res.redirect('/admin_verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
@@ -109,7 +109,7 @@ const P_verification = async (req, res) => {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(reckey, user.reckey)) {
             req.session.username = username;
-            res.sendFile(path.join(__dirname, '../changepassword.html'));
+            res.sendFile(path.join(__dirname, '../Pages/changepassword.html'));
         } else {
             res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
         }
