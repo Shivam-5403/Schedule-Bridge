@@ -9,39 +9,39 @@ app.use(express.static(path.join(__dirname, '../public')));
 const { User, Admin, Booking } = require('../Mongoose/MongoDB');
 
 const Login = (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.join(__dirname, '../Pages/index.html'));
 };
 
 const G_signup = (req, res) => {
-    res.sendFile(path.join(__dirname, '../signup.html'));
+    res.sendFile(path.join(__dirname, '../Pages/signup.html'));
 };
 
 const admin = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_login.html'));
+    res.sendFile(path.join(__dirname, '../Pages/admin_login.html'));
 };
 
 const adminG_signup = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_signup.html'));
+    res.sendFile(path.join(__dirname, '../Pages/admin_signup.html'));
 };
 
 const forgot_password = (req, res) => {
-    res.sendFile(path.join(__dirname, '../verification.html'));
+    res.sendFile(path.join(__dirname, '../Pages/verification.html'));
 };
 
 const forgot_admin_password = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_verification.html'));
+    res.sendFile(path.join(__dirname, '../Pages/admin_verification.html'));
 };
 
 const adminG_verification = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_verification.html'));
+    res.sendFile(path.join(__dirname, '../Pages/admin_verification.html'));
 };
 
 const adminG_changepassword = (req, res) => {
-    res.sendFile(path.join(__dirname, '../admin_changepassword.html'));
+    res.sendFile(path.join(__dirname, '../Pages/admin_changepassword.html'));
 };
 
 const G_verification = (req, res) => {
-    res.sendFile(path.join(__dirname, '../verification.html'));
+    res.sendFile(path.join(__dirname, '../Pages/verification.html'));
 };
 
 const logout = (req, res) => {
