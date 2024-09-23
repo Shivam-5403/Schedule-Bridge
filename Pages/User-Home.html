@@ -33,6 +33,19 @@
         }
       
         // Existing theme toggle logic and other code goes here...
+        fetch('/Info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(result => {
+          document.getElementById("add-new-cards").innerHTML = result.html;
+        })
+        .catch(err => {
+          console.error("Error in fetch request:", err);
+        });
     
         
       });
@@ -605,29 +618,6 @@
       document.getElementById('profile-invert4').style.filter = 'invert(0)';
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('/Info', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(result => {
-          document.getElementById("add-new-cards").innerHTML = result.html;
-        })
-        .catch(err => {
-          console.error("Error in fetch request:", err);
-        });
-    });
-
-    document.getElementById('scroll-to-top').addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent the default action if the element is an anchor
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // This makes the scroll smooth
-      });
-    });
 
     function selectBusiness(businessJson) {
         const business_book = JSON.parse(decodeURIComponent(businessJson));
