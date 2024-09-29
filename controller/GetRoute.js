@@ -126,7 +126,7 @@ const view_appointments = async (req, res) => {
             status: "Booked"
         });
 
-        const doneAppointments = await Booking.find({ 
+        const doneAppointments = await Booking.find({
             customer_name: userId,
             status: "Done"
         });
@@ -177,8 +177,8 @@ const view_profile = async (req, res) => {
 
 const view_admin_profile = async (req, res) => {
     const adminId = req.session.admin;
-    try{
-        const profile = await Admin.find({
+    try {
+        const profile = await Admin.findOne({
             admin: { $regex: new RegExp(adminId, 'i') }
         });
         res.json(profile);
