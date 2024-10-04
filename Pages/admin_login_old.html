@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Shivam Bhundiya">
+    <title>Admin Login</title>
+    <link rel="icon" type="image/x-icon" href="/icon/book-appointment-5373317-4486818.png">
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .center-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            box-shadow: 30px 30px 15px 0px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body style="background-image: radial-gradient(white, #b3d6e6, white);">
+    <div class="container">
+        <div class="row justify-content-center center-div">
+            <div class="col-lg-5 text-center">
+                <img src="/icon/book-appointment-5373317-4486818.png" alt="Icon">
+                <h3>Schedule-Bridge</h3>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4>Admin Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin_login" method="post">
+                            <div class="mb-3">
+                                <label for="un" class="form-label">Admin</label>
+                                <input type="text" class="form-control" id="un" placeholder="Enter your Admin ID" onblur="bgcolor(event)" name="admin">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pwd" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="pwd" placeholder="Enter your password" onblur="bgcolor(event)" name="admin_password">
+                                <small><a href="/forgot-admin-password">Forgot Password?</a></small>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" onclick="loginbtn()">Login</button>
+                                <button type="submit" class="btn btn-primary" id="submitbtn" style="display: none;">Submit</button>                            
+                                <button type="button" class="btn btn-primary" onclick="document.location='\admin_signup'">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+    function bgcolor(e) {
+        let c = document.getElementById(e.target.id);
+            if (c.value == "") {
+                c.style.borderColor = 'red';
+            } else {
+                c.style.borderColor = 'lightgray';
+            }
+    }
+
+    function loginbtn() {
+        var un = document.getElementById('un').value;
+        var pwd = document.getElementById('pwd').value;
+        if (un == "") {
+            document.getElementById('un').style.borderColor = "red";
+            window.alert('Fill the require fields!');
+        } else if (pwd == "") {
+            document.getElementById('pwd').style.borderColor = "red";
+            window.alert('Fill the require fields!');
+        } else {
+            console.log(un);
+            console.log(pwd);
+            document.getElementById('submitbtn').click();
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const errorMessage = params.get('error');
+        const Message = params.get('message');
+        if (errorMessage) {
+            alert(decodeURIComponent(errorMessage));
+        }
+        else if (Message) {
+            alert(decodeURIComponent(Message));
+        }
+    });
+    </script>
+</body>
+</html>

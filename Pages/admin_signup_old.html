@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page For Admin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Sign Up</h2>
+        <form id="signup-form" action="/admin_signup" method="POST">
+            <input type="text" name="admin" placeholder="Admin" required><br>
+            <input type="password" name="admin_password" placeholder="Password" required><br>
+            <input type="text" name="admin_reckey" placeholder="Password Recovery Key" required><br>
+            <input type="text" name="companyname" placeholder="Company Name" required><br>
+            <input type="text" name="sector" placeholder="Sector Belong to" required><br>
+            <input type="text" name="address" placeholder="Adress" required><br>
+            <input type="email" name="admin_email" placeholder="Admin Email" required><br>
+            <input type="text" name="state" placeholder="State" required><br>
+            <input type="text" name="country" placeholder="Country" required><br>
+            <input type="text" name="pincode" placeholder="Pincode" required><br>
+            <input type="text" name="mno" placeholder="Mobile Number" required><br>
+            <input type="number" name="total_workhours" placeholder="Total Working Hourse" required><br>
+            <input type="text" name="start_time" placeholder="Starting Time" required><br>
+            <input type="text" name="end_time" placeholder="Ending Time" required><br>
+            <input type="number" name="totalslots" placeholder="Available Slots Per day" required><br>
+            <input type="text" name="website" placeholder="Website If Available"><br>
+            <input type="text" name="service" placeholder="List Services here"><br>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+</body>
+
+</html>
