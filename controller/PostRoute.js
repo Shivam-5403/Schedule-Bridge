@@ -111,6 +111,7 @@ const P_verification = async (req, res) => {
             req.session.username = username;
             res.sendFile(path.join(__dirname, '../Pages/changepassword.html'));
         } else {
+            res.sendFile(path.join(__dirname, '../Pages/verification.html'));
             res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
         }
     }
@@ -169,25 +170,25 @@ const book_appointment = async (req, res) => {
 };
 
 const contactUs_req = async (req, res) => {
-    const { name, email, details} = req.body;
-    try{
+    const { name, email, details } = req.body;
+    try {
         const contact = new Contact({
-            name,email,details
+            name, email, details
         });
         await contact.save();
-        res.json({ message: 'Sending Confirmed.'});
+        res.json({ message: 'Sending Confirmed.' });
     } catch (error) {
-        console.error('Error sending message.',error);
+        console.error('Error sending message.', error);
         res.status(500).json({ error: 'An error occurred while sending the msg.' });
     }
 };
 
 const change_pass = async (req, res) => {
-    const { username, password} = req.body;
-    try{
+    const { username, password } = req.body;
+    try {
         const hashedPassword = bcrypt.hashSync(password, 8);
 
-        await User.updateOne({ username }, { password: hashedPassword});
+        await User.updateOne({ username }, { password: hashedPassword });
 
         res.json({ message: 'Password Changed.' });
     } catch (error) {
@@ -197,11 +198,11 @@ const change_pass = async (req, res) => {
 };
 
 const change_pass_admin = async (req, res) => {
-    const { admin, admin_password} = req.body;
-    try{
+    const { admin, admin_password } = req.body;
+    try {
         const hashedPassword_admin = bcrypt.hashSync(admin_password, 8);
 
-        await Admin.updateOne({ admin }, { admin_password: hashedPassword_admin});
+        await Admin.updateOne({ admin }, { admin_password: hashedPassword_admin });
 
         res.json({ message: 'Password Changed.' });
     } catch (error) {
@@ -211,9 +212,9 @@ const change_pass_admin = async (req, res) => {
 };
 
 const change_prof = async (req, res) => {
-    const { oldId, username, email} = req.body;
-    try{
-        await User.updateOne({ oldId }, {username: username, email: email});
+    const { oldId, username, email } = req.body;
+    try {
+        await User.updateOne({ oldId }, { username: username, email: email });
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {
@@ -223,11 +224,11 @@ const change_prof = async (req, res) => {
 };
 
 const change_admin_prof = async (req, res) => {
-    const { oldAdminId, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service} = req.body;
-    try{
-        await Admin.updateOne({ oldAdminId }, {admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service});
+    const { oldAdminId, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
+    try {
+        await Admin.updateOne({ oldAdminId }, { admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
 
-        res.json({ message : 'Profile Changed.'});
+        res.json({ message: 'Profile Changed.' });
     } catch (error) {
         console.error('Error Changing Profile:', error);
         res.status(500).json({ error: 'An error occurred while Changing Profile.' });

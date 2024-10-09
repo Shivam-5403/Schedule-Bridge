@@ -198,7 +198,7 @@ cron.schedule('* * * * *', async () => {
         for (let appointment of appointments) {
             const appointmentTime = combineDateAndEndTime(appointment.date, appointment.time);
             const appointmentStartTime = combineDateAndStartTime(appointment.date, appointment.time);
-            
+
             if (appointmentTime == 'Invalid Date' || appointmentStartTime == 'Invalid Date') {
                 console.error(`Invalid appointment time for appointment ID: ${appointment._id}`);
                 continue;
@@ -224,7 +224,15 @@ cron.schedule('* * * * *', async () => {
 
             const timeDiff = Math.floor((appointmentStartTime - currentTime) / (1000 * 60));
 
-            if (timeDiff >= 40 && timeDiff <= 50) {
+            if (timeDiff >= 40 && timeDiff <= 45) {
+                const emailTemplate = generateEmailTemplate(
+                    appointment.name,
+                    appointment.date,
+                    appointment.time,
+                    "Schedule-Bridge" 
+                );
+
+
                 const message = {
                     from: appointment.email,
                     to: appointment.admin_email,
@@ -239,6 +247,7 @@ cron.schedule('* * * * *', async () => {
                     console.error("Error sending email:", error);
                 }
             }
+
         }
     } catch (err) {
         console.error('Error updating appointment statuses:', err);
