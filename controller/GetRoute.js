@@ -45,6 +45,10 @@ const G_verification = (req, res) => {
 };
 
 const logout = (req, res) => {
+    res.clearCookie('connect.sid');  // Clear the session cookie
+    res.clearCookie('userId');       // Clear the custom cookies
+    res.clearCookie('adminId');
+
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
