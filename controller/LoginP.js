@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cron = require('node-cron');
-const { transporter, emailTemplate } = require('./Mail');
+const { transporter, generateEmailTemplate } = require('./Mail');
 
 app.use(express.static(__dirname)); // Serves static files from the current directory
 app.use(express.static(path.join(__dirname, '../public'))); // Serves static files from the 'public' directory
