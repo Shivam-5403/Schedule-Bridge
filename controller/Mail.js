@@ -1,4 +1,3 @@
-
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 const { EMAIL, PASS } = require('./env');
@@ -20,15 +19,25 @@ const MailGenerator = new Mailgen({
     }
 });
 
-const emailTemplate = MailGenerator.generate({
-    body: {
-        name: "Bhavy Prajapati",
-        intro: "Your meeting reminder",
-        outro: "Looking forward to your participation."
-    }
-});
+const generateEmailTemplate = (recipientName, meetingDate, meetingTime, companyName) => {
+    return MailGenerator.generate({
+        body: {
+            name: recipientName,
+            intro: `Dear ${recipientName}, this is a friendly reminder regarding your upcoming meeting.`,
+            action: {
+                instructions: `The meeting is scheduled for ${meetingDate} at ${meetingTime}. Please ensure you are prepared.`,
+                button: {
+                    color: '#22BC66',
+                    text: 'View Company Website',
+                    link: '#'
+                }
+            },
+            outro: `If you have any questions or need to reschedule, please contact us. We look forward to your participation.\n\nBest regards, \n${companyName}`
+        }
+    });
+};
 
 module.exports = {
     transporter,
-    emailTemplate
+    generateEmailTemplate
 };

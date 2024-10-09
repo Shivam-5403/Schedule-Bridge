@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.use(express.static('public'));
-// for css 
+
 app.use(express.static(__dirname+'/Pages'));
 app.use(session({
     secret: 'Userkey888',
