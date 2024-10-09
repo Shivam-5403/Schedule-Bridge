@@ -581,42 +581,42 @@
   </footer>
 
   <script>
-    document.getElementById('dark-theme').addEventListener('click', function () {
-      document.body.classList.add('dark-theme');
-      document.body.classList.remove('light-theme');
-      document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
-      document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
-      document.getElementById('theme-toggle').classList.add('text-dark-theme');
-      document.getElementById('theme-toggle').classList.remove('text-light-theme');
-      document.getElementById('profile-toggle').classList.add('text-dark-theme');
-      document.getElementById('profile-toggle').classList.remove('text-light-theme');
-      document.getElementById('profile-invert').style.filter = 'invert(1)';
-      document.getElementById('profile-invert2').style.filter = 'invert(0)';
-      document.querySelector('.profile-invert3').style.filter = 'invert(1)';
-      document.querySelector('.foot-theme').classList.remove('light-theme-footer');
-      document.querySelector('.foot-theme').classList.add('dark-theme-footer');
-      document.getElementById('profile-invert4').style.filter = 'invert(1)';
+    // document.getElementById('dark-theme').addEventListener('click', function () {
+    //   document.body.classList.add('dark-theme');
+    //   document.body.classList.remove('light-theme');
+    //   document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
+    //   document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
+    //   document.getElementById('theme-toggle').classList.add('text-dark-theme');
+    //   document.getElementById('theme-toggle').classList.remove('text-light-theme');
+    //   document.getElementById('profile-toggle').classList.add('text-dark-theme');
+    //   document.getElementById('profile-toggle').classList.remove('text-light-theme');
+    //   document.getElementById('profile-invert').style.filter = 'invert(1)';
+    //   document.getElementById('profile-invert2').style.filter = 'invert(0)';
+    //   document.querySelector('.profile-invert3').style.filter = 'invert(1)';
+    //   document.querySelector('.foot-theme').classList.remove('light-theme-footer');
+    //   document.querySelector('.foot-theme').classList.add('dark-theme-footer');
+    //   document.getElementById('profile-invert4').style.filter = 'invert(1)';
 
 
-    });
+    // });
 
-    document.getElementById('light-theme').addEventListener('click', function () {
-      document.body.classList.add('light-theme');
-      document.body.classList.remove('dark-theme');
-      document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
-      document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
-      document.getElementById('theme-toggle').classList.add('text-light-theme');
-      document.getElementById('theme-toggle').classList.remove('text-dark-theme');
-      document.getElementById('profile-toggle').classList.add('text-light-theme');
-      document.getElementById('profile-toggle').classList.remove('text-dark-theme');
-      document.getElementById('profile-invert').style.filter = 'invert(0)';
-      document.getElementById('profile-invert2').style.filter = 'invert(1)';
-      document.querySelector('.profile-invert3').style.filter = 'invert(0)';
+    // document.getElementById('light-theme').addEventListener('click', function () {
+    //   document.body.classList.add('light-theme');
+    //   document.body.classList.remove('dark-theme');
+    //   document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
+    //   document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
+    //   document.getElementById('theme-toggle').classList.add('text-light-theme');
+    //   document.getElementById('theme-toggle').classList.remove('text-dark-theme');
+    //   document.getElementById('profile-toggle').classList.add('text-light-theme');
+    //   document.getElementById('profile-toggle').classList.remove('text-dark-theme');
+    //   document.getElementById('profile-invert').style.filter = 'invert(0)';
+    //   document.getElementById('profile-invert2').style.filter = 'invert(1)';
+    //   document.querySelector('.profile-invert3').style.filter = 'invert(0)';
 
-      document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
-      document.querySelector('.foot-theme').classList.add('light-theme-footer');
-      document.getElementById('profile-invert4').style.filter = 'invert(0)';
-    });
+    //   document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
+    //   document.querySelector('.foot-theme').classList.add('light-theme-footer');
+    //   document.getElementById('profile-invert4').style.filter = 'invert(0)';
+    // });
 
 
     function selectBusiness(businessJson) {
