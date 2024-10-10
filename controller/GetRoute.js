@@ -45,15 +45,14 @@ const G_verification = (req, res) => {
 };
 
 const logout = (req, res) => {
-    res.clearCookie('connect.sid');  // Clear the session cookie
-    res.clearCookie('userId');       // Clear the custom cookies
-    res.clearCookie('adminId');
-
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
             return res.status(500).send('Error logging out, please try again.');
         }
+        res.clearCookie('connect.sid', { path: '/' });
+        res.clearCookie('userId', { path: '/' });
+        res.clearCookie('adminId', { path: '/' });
         res.clearCookie('session.name', { path: '/' });
         res.redirect('/');
     });
