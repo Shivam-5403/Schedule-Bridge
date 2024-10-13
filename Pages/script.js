@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         top: 0,
         behavior: 'smooth' // Smooth scroll to top
       });
-      console.log("Scroll to top button clicked");
     });
   } else {
     console.error("Scroll-to-top button not found");
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to enable light mode
   const enablelightmode = () => {
-    console.log("light mode on");
     document.body.classList.add('light-mode');
     localStorage.setItem('light-mode', 'active');
     document.documentElement.setAttribute("data-theme", "light");
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to disable light mode (enable dark mode)
   const disablelightmode = () => {
-    console.log("light mode off");
     document.body.classList.remove('light-mode');
     localStorage.setItem('light-mode', '');
     document.documentElement.setAttribute("data-theme", "dark");
@@ -88,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add event listener to themeSwitch button
   if (themeSwitch) {
     themeSwitch.addEventListener("click", () => {
-      console.log("Theme switch clicked");
       lightmode = localStorage.getItem('light-mode');
       lightmode !== 'active' ? enablelightmode() : disablelightmode();
     });
@@ -96,30 +92,3 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('themeSwitch button not found');
   }
 });
-
-//   My old code(sr)
-
-// function addNewPerson() {
-//   console.log("lets");
-
-//   let temp = "new";
-
-//   document.getElementById('add-new-cards').innerHTML += `<div style="width: 370px" class="card m-4">
-//         <img style="width: 100%" src="Images/person-1.png" alt="" class="card-img-top" />
-//         <div class="card-body text-dark">
-//           <h4 class="card-title">Mr. New Scheduler</h4>
-//           <p class="card-text">
-//             Some example text some example text. Jane Doe is an architect
-//             and engineer
-//           </p>
-//           <div class="d-flex flex-column g-1">
-//             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#profile-modal">See Profile</a>
-//             <a href="#" class="btn btn-success mt-3" data-toggle="modal" data-target="#book-modal">Book
-//               Appoinment</a>
-
-//           </div>
-//         </div>
-//       </div>`
-// }
-
-

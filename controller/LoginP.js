@@ -110,7 +110,6 @@ const fetch_admins = async (req, res) => {
 
             res.json({ html: Table });
         } else {
-            console.log("No admins found in the database.");
             res.json({ html: "No admins found." });
         }
     } catch (err) {
@@ -215,10 +214,8 @@ cron.schedule('* * * * *', async () => {
 
                 if (bookedToDoneCount > 0) {
                     await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Done' } });
-                    console.log(`Appointment ${appointment._id} marked as Done`);
                 } else if (pendingToRejectedCount > 0) {
                     await Booking.updateOne({ _id: appointment._id }, { $set: { status: 'Rejected' } });
-                    console.log(`Appointment ${appointment._id} marked as Rejected`);
                 }
             }
 
@@ -242,7 +239,6 @@ cron.schedule('* * * * *', async () => {
 
                 try {
                     const sentMessage = await transporter.sendMail(message);
-                    console.log("Email sent:", sentMessage.messageId);
                 } catch (error) {
                     console.error("Error sending email:", error);
                 }

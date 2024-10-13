@@ -165,15 +165,10 @@
               top: 0,
               behavior: 'smooth' // Smooth scroll to top
             });
-            console.log("Scroll to top button clicked");
           });
         } else {
           console.error("Scroll-to-top button not found");
-        }
-      
-        // Existing theme toggle logic and other code goes here...
-    
-        
+        }    
       });
       
     
@@ -187,7 +182,6 @@
     
         // Function to enable light mode
         const enablelightmode = () => {
-          console.log("light mode on");
           document.body.classList.add('light-mode');
           localStorage.setItem('light-mode', 'active');
           document.documentElement.setAttribute("data-theme", "light");
@@ -216,7 +210,6 @@
     
         // Function to disable light mode (enable dark mode)
         const disablelightmode = () => {
-          console.log("light mode off");
           document.body.classList.remove('light-mode');
           localStorage.setItem('light-mode', '');
           document.documentElement.setAttribute("data-theme", "dark");
@@ -249,7 +242,6 @@
         // Add event listener to themeSwitch button
         if (themeSwitch) {
           themeSwitch.addEventListener("click", () => {
-            console.log("Theme switch clicked");
             lightmode = localStorage.getItem('light-mode');
             lightmode !== 'active' ? enablelightmode() : disablelightmode();
           });
@@ -662,9 +654,7 @@
 
     function displaySearchResults(data) {
       if (data.length === 0) {
-        console.log('No appointments found');
       } else {
-        console.log('Appointments found:', data);
         const resultsSection = document.getElementById('searchResults');
         resultsSection.innerHTML = ''; // Clear previous results
         resultsSection.style.display = 'block'; // Show results section
@@ -730,10 +720,8 @@
 
     function displaySearchResults2(data) {
       if (data.length === 0) {
-        console.log('No appointments found');
         alert("No Appointment Found.");
       } else {
-        console.log('Appointments found:', data);
         const resultsSection2 = document.getElementById('searchResults2');
         resultsSection2.innerHTML = ''; // Clear previous results
         resultsSection2.style.display = 'block'; // Show results section

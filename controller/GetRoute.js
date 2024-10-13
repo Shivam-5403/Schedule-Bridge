@@ -64,7 +64,6 @@ const search_business = async (req, res) => {
         const businesses = await Admin.find({
             companyname: { $regex: new RegExp(query, 'i') }  // Case-insensitive search
         });
-        console.log(businesses);
         res.json(businesses);
     } catch (error) {
         console.error('Error searching business:', error);
@@ -83,8 +82,6 @@ const search_appointment = async (req, res) => {
             last_name: { $regex: new RegExp(ul_name, 'i') }, // Case-insensitive search
             status: "Pending"
         });
-        console.log(userId);
-        console.log(appointments);
         res.json(appointments);
     } catch (error) {
         console.error('Error searching appointment:', error);
@@ -103,8 +100,6 @@ const search_appointment2 = async (req, res) => {
             last_name: { $regex: new RegExp(ul_name, 'i') }, // Case-insensitive search
             status: "Booked"
         });
-        console.log(userId);
-        console.log(appointments);
         res.json(appointments);
     } catch (error) {
         console.error('Error searching appointment:', error);

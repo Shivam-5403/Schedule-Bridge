@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
           top: 0,
           behavior: 'smooth' // Smooth scroll to top
         });
-        console.log("Scroll to top button clicked");
       });
     } else {
       console.error("Scroll-to-top button not found");
@@ -51,7 +50,6 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
 
     // Function to enable light mode
     const enablelightmode = () => {
-      console.log("light mode on");
       document.body.classList.add('light-mode');
       localStorage.setItem('light-mode', 'active');
       document.documentElement.setAttribute("data-theme", "light");
@@ -80,7 +78,6 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
 
     // Function to disable light mode (enable dark mode)
     const disablelightmode = () => {
-      console.log("light mode off");
       document.body.classList.remove('light-mode');
       localStorage.setItem('light-mode', '');
       document.documentElement.setAttribute("data-theme", "dark");
@@ -113,7 +110,6 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
     // Add event listener to themeSwitch button
     if (themeSwitch) {
       themeSwitch.addEventListener("click", () => {
-        console.log("Theme switch clicked");
         lightmode = localStorage.getItem('light-mode');
         lightmode !== 'active' ? enablelightmode() : disablelightmode();
       });
