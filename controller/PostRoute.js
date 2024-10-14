@@ -13,19 +13,22 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (user && bcrypt.compareSync(password, user.password)) {
+            const now = Date.now();
+
             req.session.name = username;
-            res.cookie('userId', username, { httpOnly: true, sameSite: 'strict' });
+            req.session.loginTime = now;
+            req.session.lastActive = now;
+
+            res.cookie('userId_', username, { httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         } else {
             res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error during login:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
 };
-
 
 const P_signup = async (req, res) => {
     const { username, email, password, reckey } = req.body;
@@ -41,14 +44,18 @@ const admin_login = async (req, res) => {
     try {
         const ad = await Admin.findOne({ admin });
         if (ad && bcrypt.compareSync(admin_password, ad.admin_password)) {
-            req.session.admin = admin;  // Replace 'adminUsername' with the actual variable containing the admin's username.
-            res.cookie('adminId', admin, { httpOnly: true, sameSite: 'strict' });
+            const now = Date.now();
+
+            req.session.admin = admin;
+            req.session.loginTime = now;
+            req.session.lastActive = now;
+
+            res.cookie('adminId_', admin, { httpOnly: true, sameSite: 'strict' });
             res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         } else {
             res.redirect('./admin/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error during admin login:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
