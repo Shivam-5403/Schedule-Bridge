@@ -45,17 +45,33 @@ const G_verification = (req, res) => {
 };
 
 const logout = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Error destroying session:', err);
-            return res.status(500).send('Error logging out, please try again.');
-        }
-        res.clearCookie('connect.sid', { path: '/' });
-        res.clearCookie('userId', { path: '/' });
-        res.clearCookie('adminId', { path: '/' });
-        res.clearCookie('session.name', { path: '/' });
-        res.redirect('/');
-    });
+    const { role } = req.query;
+
+    if (role === 'admin') {
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Error destroying admin session:', err);
+                return res.status(500).send('Error logging out admin.');
+            }
+            res.clearCookie('admin-session', { path: '/' }); 
+            res.clearCookie('adminId_', { path: '/' }); 
+            console.log('Admin logged out successfully');
+            return res.redirect('/');
+        });
+    } else if (role === 'user') {
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Error destroying user session:', err);
+                return res.status(500).send('Error logging out user.');
+            }
+            res.clearCookie('user-session', { path: '/' }); 
+            res.clearCookie('userId_', { path: '/' }); 
+            console.log('User logged out successfully');
+            return res.redirect('/');
+        });
+    } else {
+        res.redirect('/?error=Invalid%20role%20specified.');
+    }
 };
 
 const search_business = async (req, res) => {
