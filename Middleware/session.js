@@ -1,4 +1,4 @@
-const INACTIVE_LIMIT = 0.5 * 60 * 1000;
+const INACTIVE_LIMIT = 0.5 * 60 * 1000; // 30 seconds
 
 const sessionChecker = (req, res, next) => {
     const now = Date.now();
@@ -9,6 +9,7 @@ const sessionChecker = (req, res, next) => {
         if (inactiveTime > INACTIVE_LIMIT) {
             const adminId = req.session.admin;
             const userId = req.session.name;
+
             req.session.destroy((err) => {
                 if (err) {
                     console.error('Error destroying session:', err);
@@ -16,17 +17,16 @@ const sessionChecker = (req, res, next) => {
                 }
 
                 if (adminId) {
-                    res.clearCookie('adminId_', { path: '/' });
-                    console.log(`Session expired. Cleared cookie for admin: ${adminId}`);
+                    res.clearCookie('adminId_', { path: '/admin_login' });
+                    console.log(`Session expired for admin: ${adminId}`);
                 }
                 if (userId) {
                     res.clearCookie('userId_', { path: '/' });
-                    console.log(`Session expired. Cleared cookie for user: ${userId}`);
+                    console.log(`Session expired for user: ${userId}`);
                 }
-
                 res.clearCookie('connect.sid', { path: '/' });
 
-                return res.redirect('/?error=Session%20expired%2C%20please%20log%20in%20again.');
+                return res.redirect('/?timeout=true');
             });
         } else {
             req.session.lastActive = now;

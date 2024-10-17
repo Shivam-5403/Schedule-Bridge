@@ -13,9 +13,6 @@ const User = require('../Model/User');
 const hashPassword = (password) => bcrypt.hashSync(password, 8);
 
 const Login = (req, res) => {
-    if (req.Cookies.userId_) {
-        return res.redirect('/Home');
-    }
     res.sendFile(path.join(__dirname, '../Pages/index.html'));
 };
 
@@ -78,17 +75,20 @@ const login = async (req, res) => {
         const user = await User.findOne({ username });
 
         if (user && bcrypt.compareSync(password, user.password)) {
-            req.session.name = username; // Store username in session
-            req.session.loginTime = Date.now(); // Store login time
-            req.session.lastActive = Date.now(); // Store last active time
+            const now = Date.now();
 
+            req.session.name = username; // Store username in session
+            req.session.loginTime = now; // Track login time
+            req.session.lastActive = now; // Track activity time
+
+            res.cookie('userId_', username, { httpOnly: true, sameSite: 'strict' });
             return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         }
 
         res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
     } catch (error) {
         console.error('Error during login:', error);
-        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
+        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
 
@@ -157,14 +157,14 @@ const change_pass = async (req, res) => {
 };
 
 const change_prof = async (req, res) => {
-    const { oldId, username, email } = req.body;
+    const { username, email } = req.body;
 
     try {
         const updateFields = {};
         if (username) updateFields.username = username;
         if (email) updateFields.email = email;
 
-        await User.updateOne({ oldId }, updateFields);
+        await User.updateOne(updateFields);
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {

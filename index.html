@@ -113,10 +113,9 @@
             padding: 40px 65px;
         }
 
-        .fc {
-            color: white;
+        .fc{
+            color:white;
         }
-
         @media (max-width:425px) {
 
             /* for phone size */
@@ -294,7 +293,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-whitet" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-expanded="false">
-                                English
+                                English 
                             </a>
                             <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">English</a></li>
@@ -323,28 +322,27 @@
                                         required> -->
                                     <label for="un" class="form-label">Username</label>
                                     <input type="text" class="form-control fc" id="un" placeholder="Username"
-                                        onblur="bgcolor(event)" name="username">
+                                    onblur="bgcolor(event)" name="username">
                                     <!-- <input id="un"  class="form-control fc" placeholder="Email Address"
                                         required> -->
                                 </div>
                                 <div class="mb-3">
                                     <label for="pwd" class="form-label">Password</label>
                                     <input type="password" class="form-control fc" id="pwd" placeholder="Password"
-                                        onblur="bgcolor(event)" name="password">
+                                    onblur="bgcolor(event)" name="password">
                                     <!-- <input id="pwd" type="password" class="form-control fc" placeholder="Password"
                                         required> -->
                                 </div>
                                 <button class="btn btn-custom mb-3" onclick="loginbtn()" type="button">Log In</button>
                                 <button type="button" class="btn btn-custom mb-3 "
-                                    onclick="document.location='\signup'">Sign Up</button>
+                                onclick="document.location='\signup'">Sign Up</button>
                                 <button type="submit" class="btn btn-primary m-1" id="submitbtn"
                                     style="display: none;">Submit</button>
                                 <small class="fp"><a style="" href="\forgot-password">Forgot Password?</a></small>
 
                             </form>
                             <div style="color: white" class="footer-text text-center">
-                                <p style="color:gray;font-size: 18px;">By signing in, you agree to Schedule-Bridge's
-                                    Privacy Statement and Terms of Service.
+                                <p style="color:gray;font-size: 18px;">By signing in, you agree to Schedule-Bridge's Privacy Statement and Terms of Service.
                                 </p>
                             </div>
                         </div>
@@ -413,26 +411,27 @@
                 document.getElementById('pwd').style.borderColor = "red";
                 window.alert('Fill the required fields!');
             } else {
-                // Store credentials in localStorage
+
                 localStorage.setItem('username', un);
                 localStorage.setItem('password', pwd);
 
                 console.log(un);
                 console.log(pwd);
+                
                 document.getElementById('submitbtn').click();
             }
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Check localStorage for saved credentials
+
             const savedUsername = localStorage.getItem('username');
             const savedPassword = localStorage.getItem('password');
 
             if (savedUsername && savedPassword) {
-                // Autofill the username and password fields
+            
                 document.getElementById('un').value = savedUsername;
                 document.getElementById('pwd').value = savedPassword;
-                // Automatically submit the form
+                
                 document.getElementById('submitbtn').click();
             }
 
@@ -446,7 +445,6 @@
                 alert(decodeURIComponent(Message));
             }
 
-            // Add event listeners for input fields to validate background color
             document.getElementById('un').addEventListener('input', bgcolor);
             document.getElementById('pwd').addEventListener('input', bgcolor);
         });

@@ -19,23 +19,34 @@ const appointment = async (req, res) => {
 };
 
 const logout = (req, res) => {
+    const { role } = req.query; 
+
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
             return res.status(500).send('Error logging out.');
         }
 
-        res.clearCookie('userId_');
-        res.send(`
+        if (role === 'user') {
+            res.clearCookie('userId_');
+        } else if (role === 'admin') {
+            res.clearCookie('adminId_');
+        }
+        res.clearCookie('connect.sid'); 
+
+        const redirectUrl = role === 'admin' ? '/admin' : '/';
+
+        return res.send(`
             <script>
-                localStorage.removeItem('username');
-                localStorage.removeItem('password');
-                window.location.href = '/';
+                localStorage.removeItem('${role === 'user' ? 'username' : 'adminUsername'}');
+                localStorage.removeItem('${role === 'user' ? 'password' : 'adminPassword'}');
+                
+                alert('You have been logged out.');
+                window.location.href = '${redirectUrl}';
             </script>
         `);
     });
 };
-
 
 const search_business = async (req, res) => {
     const query = req.query.query;
