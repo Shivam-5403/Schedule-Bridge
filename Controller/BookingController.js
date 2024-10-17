@@ -213,9 +213,9 @@ const fetch_admins = async (req, res) => {
 
 const Update = async (req, res) => {
     try {
-        const { customer_name, date, status } = req.body;
+        const { customer_name, first_name, last_name, date, status } = req.body;
         await Booking.updateOne(
-            { customer_name, date },
+            { customer_name, first_name, last_name, date },
             { $set: { status } }
         );
         res.status(200).json({ message: 'Appointment updated successfully' });

@@ -18,26 +18,21 @@
     .hover-change:hover {
       background-color: rgba(99, 99, 99, 0.5);
     }
-
     .nav-item.dropdown:hover .dropdown-menu {
       display: block;
     }
-
     .profile {
       margin-top: 25px;
     }
-
     .mycontainer {
       /* margin: 25px 30px; */
       /* margin-top: 125px; */
       margin-bottom: 0;
     }
-
     .btn-my {
       background-color: white;
       border: 2px solid black;
     }
-
     .btn-my:hover {
       background-color: #007bff;
       transform: scale(1.10);
@@ -52,9 +47,6 @@
     #profile-invert4 {
       filter: invert(1);
     }
-
-
-
     .icons svg:hover {
       background-color: #5a5959;
       cursor: pointer;
@@ -62,7 +54,6 @@
       padding: 5px;
 
     }
-
     #c1:hover {
       color: #1b99ee;
     }
@@ -91,9 +82,6 @@
     #c7:hover {
       fill: black;
     }
-
-
-
     .image-container {
       position: relative;
       display: inline-block;
@@ -103,9 +91,6 @@
       display: block;
 
     }
-
-
-
     .cur-p:hover {
       cursor: pointer;
       color: white;
@@ -114,9 +99,6 @@
     .cur-p {
       color: gray;
     }
-
-
-
     .change-bg:hover {
       background-color: #5a5c5e59;
     }
@@ -149,108 +131,6 @@
 
     }
   </style>
-  <script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Check if the scroll-to-top button exists
-      const scrollToTopButton = document.getElementById('scroll-to-top');
-      if (scrollToTopButton) {
-        // Add event listener to scroll-to-top button
-        scrollToTopButton.addEventListener('click', function (event) {
-          event.preventDefault(); // Prevent default anchor behavior
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Smooth scroll to top
-          });
-        });
-      } else {
-        console.error("Scroll-to-top button not found");
-      }
-    });
-
-
-
-
-    document.documentElement.setAttribute("data-theme", localStorage.getItem('light-mode') === 'active' ? 'light' : 'dark');
-
-    document.addEventListener("DOMContentLoaded", () => {
-      let lightmode = localStorage.getItem('light-mode');
-      const themeSwitch = document.getElementById('theme-switch');
-
-      // Function to enable light mode
-      const enablelightmode = () => {
-        document.body.classList.add('light-mode');
-        localStorage.setItem('light-mode', 'active');
-        document.documentElement.setAttribute("data-theme", "light");
-
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-        document.getElementById('main-id').classList.add('light-theme');
-        document.getElementById('main-id').classList.remove('dark-theme');
-
-        document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
-        document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
-        document.getElementById('theme-toggle').classList.add('text-light-theme');
-        document.getElementById('theme-toggle').classList.remove('text-dark-theme');
-        document.getElementById('profile-toggle').classList.add('text-light-theme');
-        document.getElementById('profile-toggle').classList.remove('text-dark-theme');
-        document.getElementById('profile-invert').style.filter = 'invert(0)';
-        document.getElementById('profile-invert2').style.filter = 'invert(1)';
-        document.querySelector('.profile-invert3').style.filter = 'invert(0)';
-
-        document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
-        document.querySelector('.foot-theme').classList.add('light-theme-footer');
-        document.getElementById('profile-invert4').style.filter = 'invert(0)';
-        // document.getElementById('profile-invert5').style.filter = 'invert(0)';
-        document.getElementById('change-bg2').classList.add('light-mycontainer-contact-us');
-      };
-
-      // Function to disable light mode (enable dark mode)
-      const disablelightmode = () => {
-        document.body.classList.remove('light-mode');
-        localStorage.setItem('light-mode', '');
-        document.documentElement.setAttribute("data-theme", "dark");
-
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('light-theme');
-        document.getElementById('main-id').classList.add('dark-theme');
-        document.getElementById('main-id').classList.remove('light-theme');
-
-        document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
-        document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
-        document.getElementById('theme-toggle').classList.add('text-dark-theme');
-        document.getElementById('theme-toggle').classList.remove('text-light-theme');
-        document.getElementById('profile-toggle').classList.add('text-dark-theme');
-        document.getElementById('profile-toggle').classList.remove('text-light-theme');
-
-        document.getElementById('profile-invert').style.filter = 'invert(1)';
-        document.getElementById('profile-invert2').style.filter = 'invert(0)';
-        document.querySelector('.profile-invert3').style.filter = 'invert(1)';
-        document.querySelector('.foot-theme').classList.remove('light-theme-footer');
-        document.querySelector('.foot-theme').classList.add('dark-theme-footer');
-        document.getElementById('profile-invert4').style.filter = 'invert(1)';
-        // document.getElementById('profile-invert5').style.filter = 'invert(1)';
-        document.getElementById('change-bg2').classList.remove('light-mycontainer-contact-us');
-      };
-
-      // Check if light mode is active on page load
-      if (lightmode === 'active') enablelightmode();
-
-      // Add event listener to themeSwitch button
-      if (themeSwitch) {
-        themeSwitch.addEventListener("click", () => {
-          lightmode = localStorage.getItem('light-mode');
-          lightmode !== 'active' ? enablelightmode() : disablelightmode();
-        });
-      } else {
-        console.error('themeSwitch button not found');
-      }
-    });
-
-
-
-
-  </script>
 </head>
 
 <body class="dark-theme">
@@ -287,7 +167,7 @@
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <li style="" class="nav-item d-flex justify-content-center align-items-center">
+        <li class="nav-item d-flex justify-content-center align-items-center">
           <button id="theme-switch">
 
 
@@ -633,6 +513,102 @@
   </footer>
 
   <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+      // Check if the scroll-to-top button exists
+      const scrollToTopButton = document.getElementById('scroll-to-top');
+      if (scrollToTopButton) {
+        // Add event listener to scroll-to-top button
+        scrollToTopButton.addEventListener('click', function (event) {
+          event.preventDefault(); // Prevent default anchor behavior
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scroll to top
+          });
+        });
+      } else {
+        console.error("Scroll-to-top button not found");
+      }
+    });
+
+
+
+
+    document.documentElement.setAttribute("data-theme", localStorage.getItem('light-mode') === 'active' ? 'light' : 'dark');
+
+    document.addEventListener("DOMContentLoaded", () => {
+      let lightmode = localStorage.getItem('light-mode');
+      const themeSwitch = document.getElementById('theme-switch');
+
+      // Function to enable light mode
+      const enablelightmode = () => {
+        document.body.classList.add('light-mode');
+        localStorage.setItem('light-mode', 'active');
+        document.documentElement.setAttribute("data-theme", "light");
+
+        document.body.classList.add('light-theme');
+        document.body.classList.remove('dark-theme');
+        document.getElementById('main-id').classList.add('light-theme');
+        document.getElementById('main-id').classList.remove('dark-theme');
+
+        document.querySelector('.navbar').classList.add('navbar-light', 'light-theme');
+        document.querySelector('.navbar').classList.remove('navbar-dark', 'dark-theme');
+        document.getElementById('theme-toggle').classList.add('text-light-theme');
+        document.getElementById('theme-toggle').classList.remove('text-dark-theme');
+        document.getElementById('profile-toggle').classList.add('text-light-theme');
+        document.getElementById('profile-toggle').classList.remove('text-dark-theme');
+        document.getElementById('profile-invert').style.filter = 'invert(0)';
+        document.getElementById('profile-invert2').style.filter = 'invert(1)';
+        document.querySelector('.profile-invert3').style.filter = 'invert(0)';
+
+        document.querySelector('.foot-theme').classList.remove('dark-theme-footer');
+        document.querySelector('.foot-theme').classList.add('light-theme-footer');
+        document.getElementById('profile-invert4').style.filter = 'invert(0)';
+        // document.getElementById('profile-invert5').style.filter = 'invert(0)';
+        document.getElementById('change-bg2').classList.add('light-mycontainer-contact-us');
+      };
+
+      // Function to disable light mode (enable dark mode)
+      const disablelightmode = () => {
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('light-mode', '');
+        document.documentElement.setAttribute("data-theme", "dark");
+
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('light-theme');
+        document.getElementById('main-id').classList.add('dark-theme');
+        document.getElementById('main-id').classList.remove('light-theme');
+
+        document.querySelector('.navbar').classList.add('navbar-dark', 'dark-theme');
+        document.querySelector('.navbar').classList.remove('navbar-light', 'light-theme');
+        document.getElementById('theme-toggle').classList.add('text-dark-theme');
+        document.getElementById('theme-toggle').classList.remove('text-light-theme');
+        document.getElementById('profile-toggle').classList.add('text-dark-theme');
+        document.getElementById('profile-toggle').classList.remove('text-light-theme');
+
+        document.getElementById('profile-invert').style.filter = 'invert(1)';
+        document.getElementById('profile-invert2').style.filter = 'invert(0)';
+        document.querySelector('.profile-invert3').style.filter = 'invert(1)';
+        document.querySelector('.foot-theme').classList.remove('light-theme-footer');
+        document.querySelector('.foot-theme').classList.add('dark-theme-footer');
+        document.getElementById('profile-invert4').style.filter = 'invert(1)';
+        // document.getElementById('profile-invert5').style.filter = 'invert(1)';
+        document.getElementById('change-bg2').classList.remove('light-mycontainer-contact-us');
+      };
+
+      // Check if light mode is active on page load
+      if (lightmode === 'active') enablelightmode();
+
+      // Add event listener to themeSwitch button
+      if (themeSwitch) {
+        themeSwitch.addEventListener("click", () => {
+          lightmode = localStorage.getItem('light-mode');
+          lightmode !== 'active' ? enablelightmode() : disablelightmode();
+        });
+      } else {
+        console.error('themeSwitch button not found');
+      }
+    });
 
     document.getElementById('searchButton').addEventListener('click', searchAppointment);
 
