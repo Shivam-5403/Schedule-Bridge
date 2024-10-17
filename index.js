@@ -37,9 +37,8 @@ app.use((req, res, next) => {
 
 app.use('/', adminRouter);
 app.use('/', bookingRouter);
-// app.use(loginRequired);
-app.use(sessionChecker);
 app.use('/', userRouter);
+app.use(sessionChecker);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');

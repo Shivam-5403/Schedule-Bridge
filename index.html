@@ -11,7 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body,
         html {
@@ -174,13 +175,6 @@
             z-index: 1;
             min-height: 100vh;
         }
-
-        main {
-            /* padding: 30px 0; */
-        }
-
-
-
         /* For screens where the height is greater than 700px (desktop-like devices) */
         @media (min-height: 700px) {
 
@@ -273,7 +267,7 @@
         <nav style="background-color: transparent; border:none;"
             class="navbar navbar-expand-lg navbar-light navbar-custom">
             <div class="container2 d-flex justify-content-around">
-                <img style="" class="logo-login" height="50px" src="Images/logo.png" alt="">
+                <img class="logo-login" height="50px" src="Images/logo.png" alt="">
                 <a style="color:white;" class="navbar-brand" href="#">Schedule-Bridge</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -308,7 +302,7 @@
         <hr>
         <main>
             <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-                <div style="" class="row champ w-100">
+                <div  class="row champ w-100">
                     <div class="col-md-6 col-12 d-flex align-items-center justify-content-center left-content">
                         <img style="filter: invert();" src="Images/l2.png" alt="logo">
                     </div>
@@ -338,7 +332,7 @@
                                 onclick="document.location='\signup'">Sign Up</button>
                                 <button type="submit" class="btn btn-primary m-1" id="submitbtn"
                                     style="display: none;">Submit</button>
-                                <small class="fp"><a style="" href="\forgot-password">Forgot Password?</a></small>
+                                <small class="fp"><a href="\forgot-password">Forgot Password?</a></small>
 
                             </form>
                             <div style="color: white" class="footer-text text-center">
@@ -352,44 +346,6 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script>
-        function bgcolor(e) {
-            let c = document.getElementById(e.target.id);
-            if (c.value == "") {
-                c.style.borderColor = 'red';
-            } else {
-                c.style.borderColor = 'lightgray';
-            }
-        }
-
-        function loginbtn() {
-            var un = document.getElementById('un').value;
-            var pwd = document.getElementById('pwd').value;
-            if (un == "") {
-                document.getElementById('un').style.borderColor = "red";
-                window.alert('Fill the require fields!');
-            } else if (pwd == "") {
-                document.getElementById('pwd').style.borderColor = "red";
-                window.alert('Fill the require fields!');
-            } else {
-                console.log(un);
-                console.log(pwd);
-                document.getElementById('submitbtn').click();
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            const params = new URLSearchParams(window.location.search);
-            const errorMessage = params.get('error');
-            const Message = params.get('message');
-            if (errorMessage) {
-                alert(decodeURIComponent(errorMessage));
-            }
-            else if (Message) {
-                alert(decodeURIComponent(Message));
-            }
-        });
-    </script> -->
     <script>
         function bgcolor(e) {
             let c = document.getElementById(e.target.id);
