@@ -1,40 +1,32 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const app = express();
-const appRoute = require('./Routes/Router');
 const cookieParser = require('cookie-parser');
-const sessionChecker = require('./Middleware/session');
+const { sessionChecker } = require('./Middleware/session');
+const userRouter = require('./Routes/UserRouter');  // Import UserRouter
+const adminRouter = require('./Routes/AdminRouter'); // Import AdminRouter
+const bookingRouter = require('./Routes/BookingRouter'); // Import BookingRouter
+
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 app.use(express.static(__dirname));
 app.use(express.static('public'));
-
 app.use(express.static(__dirname + '/Pages'));
 
 app.use(
     session({
         name: 'user-session',
-        secret: 'Userkey888',
+        secret: 'YourSecretKey',
         resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false, maxAge: 30 * 60 * 1000 },
-    })
-);
-
-app.use(
-    session({
-        name: 'admin-session',
-        secret: 'Adminkey999',
-        resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: { secure: false, maxAge: 30 * 60 * 1000 },
     })
 );
 
 app.use(cookieParser());
-app.use(sessionChecker);
 
 app.use((req, res, next) => {
     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
@@ -43,7 +35,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/', appRoute);
+app.use('/', adminRouter);
+app.use('/', bookingRouter);
+// app.use(loginRequired);
+app.use(sessionChecker);
+app.use('/', userRouter);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
