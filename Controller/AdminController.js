@@ -64,22 +64,23 @@ const view_admin_profile = async (req, res) => {
 const admin_login = async (req, res) => {
     const { admin, admin_password } = req.body;
     try {
-        const ad = await Admin.findOne({ admin })
+        const ad = await Admin.findOne({ admin });
+
         if (ad && bcrypt.compareSync(admin_password, ad.admin_password)) {
             const now = Date.now();
 
-            req.session.admin = admin;
-            req.session.loginTime = now;
-            req.session.lastActive = now;
+            req.session.admin = admin; // Store admin in session
+            req.session.loginTime = now; // Track login time
+            req.session.lastActive = now; // Track activity time
 
             res.cookie('adminId_', admin, { httpOnly: true, sameSite: 'strict' });
-            res.sendFile(path.join(__dirname, '../Pages/admin.html'));
-        } else {
-            res.redirect('./admin/?error=Invalid%20credentials%2C%20please%20try%20again.');
+            return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         }
+
+        res.redirect('/admin/?error=Invalid%20credentials,%20please%20try%20again.');
     } catch (error) {
         console.error('Error during admin login:', error);
-        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
+        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
 
@@ -146,9 +147,9 @@ const change_pass_admin = async (req, res) => {
 };
 
 const change_admin_prof = async (req, res) => {
-    const { oldAdminId, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
+    const { admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
     try {
-        await Admin.updateOne({ oldAdminId }, { admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
+        await Admin.updateOne({ admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {

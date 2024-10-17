@@ -22,7 +22,7 @@ app.use(
         secret: 'YourSecretKey',
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: false, maxAge: 30 * 60 * 1000 },
+        cookie: { secure: false, maxAge: 30 * 60 * 1000 }, // 30 mins session
     })
 );
 
