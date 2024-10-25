@@ -170,7 +170,7 @@
         </li>
       </ul>
       <div class="search-theme ml-auto d-flex navbar-nav">
-        <li class="nav-item d-flex justify-content-center align-items-center">
+        <li style="" class="nav-item d-flex justify-content-center align-items-center">
           <button id="theme-switch">
 
 
@@ -192,7 +192,13 @@
             <span>
               <img id="profile-invert2" src="../Pages/svg/dark.svg" alt="" />
             </span>
+
+
           </a>
+          <!-- <div class="dropdown-menu mt-3">
+            <a id="dark-theme" class="dropdown-item" href="#">Dark</a>
+            <a id="light-theme" class="dropdown-item" href="#">Light</a>
+          </div> -->
         </li>
 
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
@@ -467,8 +473,8 @@
         console.error('themeSwitch button not found');
       }
     });
-
-    //filter script for pending appointment
+  </script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       const pendingContainer = document.querySelector('.pending-appointment');
       const bookedContainer = document.querySelector('.booked-appointment');
@@ -488,8 +494,6 @@
         card.style.width = '370px';
         card.style.flexShrink = '0'; // Prevent shrinking of cards
         card.dataset.customerName = data.customer_name;
-        card.dataset.cus_fname = data.first_name;
-        card.dataset.cus_lname = data.last_name;
         card.dataset.date = new Date(data.date).toISOString().split('T')[0]; // Format date for comparison
 
         const modalId = `details-modal-${data._id}`;
@@ -568,14 +572,14 @@
         document.body.appendChild(modal);
       };
 
-      const updateAppointmentStatus = async (customerName, cus_fname, cus_lname, date, status) => {
+      const updateAppointmentStatus = async (customerName, date, status) => {
         try {
           await fetch('/update-appointment', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ customer_name: customerName, first_name: cus_fname, last_name: cus_lname, date, status })
+            body: JSON.stringify({ customer_name: customerName, date, status })
           });
         } catch (error) {
           console.error('Error updating appointment status:', error);
@@ -593,13 +597,11 @@
           if (confirm(`Are you sure you want to ${confirmation} this appointment?`)) {
             const card = button.closest('.card');
             const customerName = card.dataset.customerName;
-            const cus_fname = card.dataset.cus_fname;
-            const cus_lname = card.dataset.cus_lname;
             const date = card.dataset.date;
             const status = action === 'Accept' ? 'Booked' : 'Rejected';
 
             // Update status in MongoDB
-            await updateAppointmentStatus(customerName, cus_fname, cus_lname, date, status);
+            await updateAppointmentStatus(customerName, date, status);
 
             // Reload the page to fetch updated data
             window.location.reload();

@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
 const bcrypt = require('bcryptjs');
+const { verifyUserAndGetToken } = require('../utils/jwt.util')
 
 app.use(cookieParser());
 app.use(express.static(__dirname));
@@ -13,7 +14,7 @@ const User = require('../Model/User');
 const hashPassword = (password) => bcrypt.hashSync(password, 8);
 
 const Login = (req, res) => {
-    res.sendFile(path.join(__dirname, '../Pages/index.html'));
+    res.sendFile(path.join(__dirname, '../index.html'));
 };
 
 const Home = (req, res) => {
@@ -57,7 +58,7 @@ const ViewApp = (req, res) => {
 };
 
 const view_profile = async (req, res) => {
-    const userId = req.session.name;
+    const userId = req.session.username;
     try {
         const profile = await User.find({
             username: { $regex: new RegExp(userId, 'i') }
@@ -73,22 +74,26 @@ const login = async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
-
-        if (user && bcrypt.compareSync(password, user.password)) {
-            const now = Date.now();
-
-            req.session.name = username; // Store username in session
-            req.session.loginTime = now; // Track login time
-            req.session.lastActive = now; // Track activity time
-
-            res.cookie('userId_', username, { httpOnly: true, sameSite: 'strict' });
-            return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
+        if (!user) {
+            return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
 
-        res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
+        const token = verifyUserAndGetToken(username, password);
+
+        req.session.username = username;
+        req.session.lastActive = Date.now();
+        req.session.loginTime = Date.now();
+
+        res.cookie('UserId_', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
     } catch (error) {
         console.error('Error during login:', error);
-        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
+        return res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
 

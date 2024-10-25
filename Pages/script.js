@@ -92,19 +92,3 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('themeSwitch button not found');
   }
 });
-
-document.addEventListener('DOMContentLoaded', function () {
-  const params = new URLSearchParams(window.location.search);
-
-  if (params.get('timeout') === 'true') {
-
-    localStorage.removeItem('username');
-    localStorage.removeItem('password');
-    localStorage.removeItem('adminUsername');
-    localStorage.removeItem('adminPassword');
-
-    alert('Session expired, please log in again.');
-
-    window.location.href = '/';
-  }
-});
