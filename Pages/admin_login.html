@@ -176,12 +176,6 @@
             min-height: 100vh;
         }
 
-        main {
-            /* padding: 30px 0; */
-        }
-
-
-
         /* For screens where the height is greater than 700px (desktop-like devices) */
         @media (min-height: 700px) {
 
@@ -355,42 +349,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script>
-        function bgcolor(e) {
-            let c = document.getElementById(e.target.id);
-                if (c.value == "") {
-                    c.style.borderColor = 'red';
-                } else {
-                    c.style.borderColor = 'lightgray';
-                }
-        }
-    
-        function loginbtn() {
-            var un = document.getElementById('un').value;
-            var pwd = document.getElementById('pwd').value;
-            if (un == "") {
-                document.getElementById('un').style.borderColor = "red";
-                window.alert('Fill the require fields!');
-            } else if (pwd == "") {
-                document.getElementById('pwd').style.borderColor = "red";
-                window.alert('Fill the require fields!');
-            } else {
-                document.getElementById('submitbtn').click();
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            const errorMessage = params.get('error');
-            const Message = params.get('message');
-            if (errorMessage) {
-                alert(decodeURIComponent(errorMessage));
-            }
-            else if (Message) {
-                alert(decodeURIComponent(Message));
-            }
-        });
-        </script> -->
-
     <script>
         function bgcolor(e) {
             let c = document.getElementById(e.target.id);
@@ -422,29 +380,32 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-                const savedAdminUsername = localStorage.getItem('adminUsername');
-                const savedAdminPassword = localStorage.getItem('adminPassword');
+        document.addEventListener('DOMContentLoaded', async function () {
+                try {
+                    const response = await fetch('/check-session', {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
 
-                if (savedAdminUsername && savedAdminPassword) {
-                    document.getElementById('un').value = savedAdminUsername;
-                    document.getElementById('pwd').value = savedAdminPassword;
+                    const result = await response.json();
 
-                    document.getElementById('submitbtn').click();
-                } 
+                    if (result.sessionExists && result.role == admin) {
+                        window.location.href = "/Admin_Home"; // Redirect to Home if session exists
+                    }
+
+                } catch (error) {
+                    console.error('Error checking session:', error);
+                }
 
                 const params = new URLSearchParams(window.location.search);
                 const errorMessage = params.get('error');
-                const message = params.get('message');
+                const Message = params.get('message');
 
                 if (errorMessage) {
                     alert(decodeURIComponent(errorMessage));
-                } else if (message) {
-                    alert(decodeURIComponent(message));
+                } else if (Message) {
+                    alert(decodeURIComponent(Message));
                 }
-
-                document.getElementById('un').addEventListener('input', bgcolor);
-                document.getElementById('pwd').addEventListener('input', bgcolor);
             });
 
     </script>

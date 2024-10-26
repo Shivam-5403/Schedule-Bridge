@@ -1,4 +1,4 @@
-const INACTIVE_LIMIT = 0.5 * 60 * 1000; // 30 seconds
+const INACTIVE_LIMIT = 0.5 * 60 * 1000;
 
 const sessionChecker = (req, res, next) => {
     const now = Date.now();
@@ -7,9 +7,8 @@ const sessionChecker = (req, res, next) => {
         const inactiveTime = now - req.session.lastActive;
 
         if (inactiveTime > INACTIVE_LIMIT) {
-            const adminId = req.session.admin;
-            const userId = req.session.name;
-
+            const adminId = req.cookies.AdminId_;
+            const userId = req.cookies.UserId_;
             req.session.destroy((err) => {
                 if (err) {
                     console.error('Error destroying session:', err);
@@ -17,11 +16,11 @@ const sessionChecker = (req, res, next) => {
                 }
 
                 if (adminId) {
-                    res.clearCookie('adminId_', { path: '/admin_login' });
+                    res.clearCookie('AdminId_', { path: '/' });
                     console.log(`Session expired for admin: ${adminId}`);
                 }
                 if (userId) {
-                    res.clearCookie('userId_', { path: '/' });
+                    res.clearCookie('UserId_', { path: '/' });
                     console.log(`Session expired for user: ${userId}`);
                 }
                 res.clearCookie('connect.sid', { path: '/' });
@@ -37,11 +36,4 @@ const sessionChecker = (req, res, next) => {
     }
 };
 
-const loginRequired = (req, res, next) => {
-    if (!req.session.name) {
-        return res.redirect('/?error=Please%20login%20first.');
-    }
-    next();
-};
-
-module.exports = { sessionChecker, loginRequired };
+module.exports = { sessionChecker };
