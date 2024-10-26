@@ -355,16 +355,16 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script>
         function bgcolor(e) {
             let c = document.getElementById(e.target.id);
-            if (c.value == "") {
-                c.style.borderColor = 'red';
-            } else {
-                c.style.borderColor = 'lightgray';
-            }
+                if (c.value == "") {
+                    c.style.borderColor = 'red';
+                } else {
+                    c.style.borderColor = 'lightgray';
+                }
         }
-
+    
         function loginbtn() {
             var un = document.getElementById('un').value;
             var pwd = document.getElementById('pwd').value;
@@ -378,36 +378,20 @@
                 document.getElementById('submitbtn').click();
             }
         }
-        document.addEventListener('DOMContentLoaded', async function () {
-            try {
-                const response = await fetch('/check-session', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-
-                const result = await response.json();
-
-                if (result.sessionExists) {
-                    window.location.href = "/admin_login"; // Redirect to Home if session exists
-                }
-
-            } catch (error) {
-                console.error('Error checking session:', error);
-            }
-
+        document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             const errorMessage = params.get('error');
             const Message = params.get('message');
-
             if (errorMessage) {
                 alert(decodeURIComponent(errorMessage));
-            } else if (Message) {
+            }
+            else if (Message) {
                 alert(decodeURIComponent(Message));
             }
         });
-    </script>
+        </script> -->
 
-    <!-- <script>
+    <script>
         function bgcolor(e) {
             let c = document.getElementById(e.target.id);
             if (c.value == "") {
@@ -463,7 +447,7 @@
                 document.getElementById('pwd').addEventListener('input', bgcolor);
             });
 
-    </script> -->
+    </script>
 </body>
 
 </html>

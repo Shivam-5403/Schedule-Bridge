@@ -2,12 +2,11 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bcrypt = require('bcryptjs');
-const Admin = require('../Model/Admin');
-const { verifyAdminAndGetToken } = require('../utils/jwt.util')
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../public/Pages')));
 app.use(express.static(path.join(__dirname, '../public')));
+const Admin = require('../Model/admin');
 
 const admin = (req, res) => {
     res.sendFile(path.join(__dirname, '../Pages/admin_login.html'));
@@ -65,27 +64,23 @@ const view_admin_profile = async (req, res) => {
 const admin_login = async (req, res) => {
     const { admin, admin_password } = req.body;
     try {
-        const login_admin = await Admin.findOne({ admin });
-        if (!login_admin) {
-            return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
+        const ad = await Admin.findOne({ admin });
+
+        if (ad && bcrypt.compareSync(admin_password, ad.admin_password)) {
+            const now = Date.now();
+
+            req.session.admin = admin; // Store admin in session
+            req.session.loginTime = now; // Track login time
+            req.session.lastActive = now; // Track activity time
+
+            res.cookie('adminId_', admin, { httpOnly: true, sameSite: 'strict' });
+            return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         }
 
-        const token = verifyAdminAndGetToken(admin, admin_password);
-
-        req.session.admin = login_admin;
-        req.session.lastActive = Date.now();
-        req.session.loginTime = Date.now();
-
-        res.cookie('AdminId_', token, {
-            httpOnly: true,
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
-        return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
+        res.redirect('/admin/?error=Invalid%20credentials,%20please%20try%20again.');
     } catch (error) {
         console.error('Error during admin login:', error);
-        return res.redirect('/admin/?error=Something%20went%20wrong%2C%20please%20try%20again.');
+        res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
 

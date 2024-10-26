@@ -16,12 +16,15 @@ app.use(express.static(__dirname));
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/Pages'));
 
-app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, maxAge: 30 * 60 * 1000 } // Set to true if using HTTPS
-}));
+app.use(
+    session({
+        name: 'user-session',
+        secret: 'YourSecretKey',
+        resave: false,
+        saveUninitialized: false,
+        cookie: { secure: false, maxAge: 30 * 60 * 1000 }, // 30 mins session
+    })
+);
 
 app.use(cookieParser());
 
@@ -32,10 +35,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(sessionChecker);
 app.use('/', adminRouter);
 app.use('/', bookingRouter);
 app.use('/', userRouter);
+app.use(sessionChecker);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');

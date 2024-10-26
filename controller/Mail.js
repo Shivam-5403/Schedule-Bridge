@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
-const { EMAIL, PASS } = process.env;
+const { EMAIL, PASS } = require('./env');
 
 const config = {
     service: 'gmail',
