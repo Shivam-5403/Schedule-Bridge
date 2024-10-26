@@ -1,8 +1,17 @@
 const cron = require('node-cron');
 const { transporter, generateEmailTemplate } = require('./EmailController');
-const Admin = require('../Model/admin')
-const Booking = require('../Model/booking');
-const Contact = require('../Model/contact');
+const Booking = require('../Model/Booking');
+const Contact = require('../Model/Contact');
+const Admin = require('../Model/Admin');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const app = express();
+
+app.use(cookieParser());
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../public/Pages')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 const appointment = async (req, res) => {
     try {
@@ -19,7 +28,7 @@ const appointment = async (req, res) => {
 };
 
 const logout = (req, res) => {
-    const { role } = req.query; 
+    const { role } = req.query;
 
     req.session.destroy((err) => {
         if (err) {
@@ -28,23 +37,14 @@ const logout = (req, res) => {
         }
 
         if (role === 'user') {
-            res.clearCookie('userId_');
+
+            res.clearCookie('UserId_');
+            res.clearCookie('user-session');
         } else if (role === 'admin') {
-            res.clearCookie('adminId_');
+            res.clearCookie('AdminId_');
         }
-        res.clearCookie('connect.sid'); 
-
-        const redirectUrl = role === 'admin' ? '/admin' : '/';
-
-        return res.send(`
-            <script>
-                localStorage.removeItem('${role === 'user' ? 'username' : 'adminUsername'}');
-                localStorage.removeItem('${role === 'user' ? 'password' : 'adminPassword'}');
-                
-                alert('You have been logged out.');
-                window.location.href = '${redirectUrl}';
-            </script>
-        `);
+        res.clearCookie('connect.sid');
+        return res.sendFile(path.join(__dirname, '../index.html'));;
     });
 };
 
@@ -152,14 +152,20 @@ const cancel_appointment = async (req, res) => {
 
 const fetch_admins = async (req, res) => {
     try {
-        const admins = await Admin.find().limit(9);
+        const page = parseInt(req.body.page) || 1; // Get the current page, default to 1
+        const limit = 9; // Items per page
+        const skip = (page - 1) * limit;
 
-        if (admins.length > 0) {
-            let Table = `<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">`;
+        const totalAdmins = await Admin.countDocuments(); // Total number of admins
+        const totalPages = Math.ceil(totalAdmins / limit); // Total pages
 
-            admins.forEach(admin => {
-                const modalId = `profile-modal-${admin._id}`;
-                Table += `
+        const admins = await Admin.find().skip(skip).limit(limit); // Get admins for the page
+
+        let Table = `<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">`;
+
+        admins.forEach(admin => {
+            const modalId = `profile-modal-${admin._id}`;
+            Table += `
                 <div style="width: 370px; margin: 15px;" class="card">
                     <div class="card-body text-dark">
                         <h4 class="card-title">${admin.companyname}</h4>
@@ -168,11 +174,12 @@ const fetch_admins = async (req, res) => {
                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#${modalId}">
                                 Business Details
                             </a>
-                            <button class="btn btn-success mt-3" onclick="selectBusiness('${encodeURIComponent(JSON.stringify(admin))}')">Book Appointment
+                            <button class="btn btn-success mt-3" onclick="selectBusiness('${encodeURIComponent(JSON.stringify(admin))}')">
+                                Book Appointment
+                            </button>
                         </div>
                     </div>
                 </div>
-                <!-- Profile Modal -->
                 <div class="modal fade text-dark" id="${modalId}" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -187,24 +194,27 @@ const fetch_admins = async (req, res) => {
                                 <p><strong>Address :</strong> ${admin.address} ${admin.state} ${admin.country} ${admin.pincode}</p>
                                 <p><strong>Email :</strong> ${admin.admin_email}</p>
                                 <p><strong>Contact No. :</strong> ${admin.mno}</p>
-                                <p><strong>Business Hours :</strong> ${admin.start_time} AM to ${admin.end_time} PM </p>
+                                <p><strong>Business Hours :</strong> ${admin.start_time} AM to ${admin.end_time} PM</p>
                                 <p><strong>Services :</strong> ${admin.service || 'N/A'}</p>
                                 <p><strong>Website :</strong> ${admin.website || 'N/A'}</p>
-                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>`;
-            });
+        });
 
-            Table += `</div>`;
+        Table += `</div>`;
 
-            res.json({ html: Table });
-        } else {
-            res.json({ html: "No admins found." });
-        }
+        res.json({
+            html: Table,
+            pagination: {
+                currentPage: page,
+                totalPages: totalPages,
+            },
+        });
     } catch (err) {
         console.error("Error fetching admins: ", err);
         res.status(500).json({ error: "Internal Server Error" });
@@ -264,6 +274,18 @@ const contactUs_req = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while sending the msg.' });
     }
 };
+
+const session = (req, res) => {
+    if (req.cookies.userId_) {
+        res.json({ sessionExists: true, role: user });
+    }
+    else if (req.cookies.AdminId_) {
+        res.json({ sessionExists: true, role: admin });
+    }
+    else {
+        res.json({ sessionExists: false });
+    }
+}
 
 const combineDateAndTime = (date, time, isStart = true) => {
     const [startTime, endTime] = time.split(' - ').map(t => t.trim());
@@ -342,5 +364,6 @@ module.exports = {
     view_appointments,
     cancel_appointment,
     logout,
-    appointment
+    appointment,
+    session
 };
