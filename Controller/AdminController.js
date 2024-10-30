@@ -70,19 +70,22 @@ const admin_login = async (req, res) => {
             return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
 
-        const token = verifyAdminAndGetToken(admin, admin_password);
+        const token = await verifyAdminAndGetToken(admin, admin_password);
+        console.log('admin Generated Token:');
+        console.log("Admin :- " + token);
+        if (token) {
+            req.session.admin = login_admin;
+            req.session.lastActive = Date.now();
+            req.session.loginTime = Date.now();
 
-        req.session.admin = login_admin;
-        req.session.lastActive = Date.now();
-        req.session.loginTime = Date.now();
+            res.cookie('AdminId_', token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 24 * 60 * 60 * 1000
+            });
+            return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
+        }
 
-        res.cookie('AdminId_', token, {
-            httpOnly: true,
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
-        return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
     } catch (error) {
         console.error('Error during admin login:', error);
         return res.redirect('/admin/?error=Something%20went%20wrong%2C%20please%20try%20again.');

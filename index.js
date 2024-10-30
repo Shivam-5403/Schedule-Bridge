@@ -6,6 +6,7 @@ const { sessionChecker } = require('./Middleware/session');
 const userRouter = require('./Routes/UserRouter');  // Import UserRouter
 const adminRouter = require('./Routes/AdminRouter'); // Import AdminRouter
 const bookingRouter = require('./Routes/BookingRouter'); // Import BookingRouter
+require('dotenv').config();
 
 const app = express();
 
@@ -35,10 +36,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(sessionChecker);
+app.use('/', userRouter);
 app.use('/', adminRouter);
 app.use('/', bookingRouter);
-app.use('/', userRouter);
-app.use(sessionChecker);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');

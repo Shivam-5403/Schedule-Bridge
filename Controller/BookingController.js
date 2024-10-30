@@ -16,6 +16,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 const appointment = async (req, res) => {
     try {
         const Company = await Admin.findOne({ admin: req.session.admin });
+        console.log('admin :-' + req.session)
+        console.log(Company);
         if (!Company) {
             return res.status(404).json({ error: 'Admin not found.' });
         }
@@ -37,12 +39,11 @@ const logout = (req, res) => {
         }
 
         if (role === 'user') {
-
             res.clearCookie('UserId_');
-            res.clearCookie('user-session');
         } else if (role === 'admin') {
             res.clearCookie('AdminId_');
         }
+        res.clearCookie('user-session');
         res.clearCookie('connect.sid');
         return res.sendFile(path.join(__dirname, '../index.html'));;
     });
@@ -64,7 +65,7 @@ const search_business = async (req, res) => {
 const search_appointment = async (req, res) => {
     const uf_name = req.query.first_name;
     const ul_name = req.query.last_name;
-    const userId = req.session.name;
+    const userId = req.session.username;
     try {
         const appointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
@@ -82,7 +83,7 @@ const search_appointment = async (req, res) => {
 const search_appointment2 = async (req, res) => {
     const uf_name = req.query.first_name;
     const ul_name = req.query.last_name;
-    const userId = req.session.name;
+    const userId = req.session.username;
     try {
         const appointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },  // Case-insensitive search
@@ -98,7 +99,7 @@ const search_appointment2 = async (req, res) => {
 };
 
 const view_appointments = async (req, res) => {
-    const userId = req.session.name;
+    const userId = req.session.username;
     try {
         if (!userId) {
             return res.status(401).json({ error: 'User not logged in.' });
@@ -237,7 +238,7 @@ const Update = async (req, res) => {
 
 const book_appointment = async (req, res) => {
     const { companyname, address, first_name, last_name, email, admin_email, mno, time, date, status } = req.body;
-    const userId = req.session.name;
+    const userId = req.session.username;
     try {
         const booking = new Booking({
             customer_name: userId,
@@ -276,11 +277,11 @@ const contactUs_req = async (req, res) => {
 };
 
 const session = (req, res) => {
-    if (req.cookies.userId_) {
-        res.json({ sessionExists: true, role: user });
+    if (req.cookies.UserId_) {
+        res.json({ sessionExists: true, role: 'user' });
     }
     else if (req.cookies.AdminId_) {
-        res.json({ sessionExists: true, role: admin });
+        res.json({ sessionExists: true, role: 'admin' });
     }
     else {
         res.json({ sessionExists: false });

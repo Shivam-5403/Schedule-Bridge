@@ -59,6 +59,8 @@ const ViewApp = (req, res) => {
 
 const view_profile = async (req, res) => {
     const userId = req.session.username;
+    console.log(req.session)
+    console.log("Profile :-" + userId);
     try {
         const profile = await User.find({
             username: { $regex: new RegExp(userId, 'i') }
@@ -72,25 +74,28 @@ const view_profile = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
+    console.log(username + password);
     try {
         const user = await User.findOne({ username });
         if (!user) {
             return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
         }
 
-        const token = verifyUserAndGetToken(username, password);
+        const token = await verifyUserAndGetToken(username, password);
+        console.log('User Generated Token:');
+        if (token) {
+            req.session.username = username;
+            req.session.lastActive = Date.now();
+            req.session.loginTime = Date.now();
 
-        req.session.username = username;
-        req.session.lastActive = Date.now();
-        req.session.loginTime = Date.now();
+            res.cookie('UserId_', token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                maxAge: 24 * 60 * 60 * 1000
+            });
+            return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
+        }
 
-        res.cookie('UserId_', token, {
-            httpOnly: true,
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000
-        });
-
-        return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
     } catch (error) {
         console.error('Error during login:', error);
         return res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
