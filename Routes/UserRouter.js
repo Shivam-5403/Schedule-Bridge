@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Authenticate = require('../Middleware/Authenticate');
 const {
     Home, About, Contact, Members, User_Profile, Login, G_signup,
     forgot_password, G_verification, view_profile, BookApp, ViewApp,
@@ -16,8 +15,6 @@ router.post('/Home', login);
 router.post('/signup', P_signup);
 router.post('/verification', P_verification);
 router.post('/changepassword', P_changepassword);
-
-router.use(Authenticate);
 
 router.get('/User-Profile', User_Profile);
 router.get('/view-profile', view_profile);

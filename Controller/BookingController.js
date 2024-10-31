@@ -14,9 +14,9 @@ app.use(express.static(path.join(__dirname, '../public/Pages')));
 app.use(express.static(path.join(__dirname, '../public')));
 
 const appointment = async (req, res) => {
+    const admin = req.session.admin;
     try {
-        const Company = await Admin.findOne({ admin: req.session.admin });
-        console.log('admin :-' + req.session)
+        const Company = await Admin.findOne({ admin: admin.admin });
         console.log(Company);
         if (!Company) {
             return res.status(404).json({ error: 'Admin not found.' });
@@ -40,12 +40,13 @@ const logout = (req, res) => {
 
         if (role === 'user') {
             res.clearCookie('UserId_');
+            return res.sendFile(path.join(__dirname, '../index.html'));;
         } else if (role === 'admin') {
             res.clearCookie('AdminId_');
+            return res.sendFile(path.join(__dirname, '../Pages/admin_login.html'));;
         }
         res.clearCookie('user-session');
         res.clearCookie('connect.sid');
-        return res.sendFile(path.join(__dirname, '../index.html'));;
     });
 };
 
@@ -276,18 +277,6 @@ const contactUs_req = async (req, res) => {
     }
 };
 
-const session = (req, res) => {
-    if (req.cookies.UserId_) {
-        res.json({ sessionExists: true, role: 'user' });
-    }
-    else if (req.cookies.AdminId_) {
-        res.json({ sessionExists: true, role: 'admin' });
-    }
-    else {
-        res.json({ sessionExists: false });
-    }
-}
-
 const combineDateAndTime = (date, time, isStart = true) => {
     const [startTime, endTime] = time.split(' - ').map(t => t.trim());
     const [hours, minutes] = (isStart ? startTime : endTime).split(':').map(Number);
@@ -366,5 +355,4 @@ module.exports = {
     cancel_appointment,
     logout,
     appointment,
-    session
 };

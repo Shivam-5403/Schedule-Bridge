@@ -3,7 +3,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
 const bcrypt = require('bcryptjs');
-const { verifyUserAndGetToken } = require('../utils/jwt.util')
 
 app.use(cookieParser());
 app.use(express.static(__dirname));
@@ -59,11 +58,9 @@ const ViewApp = (req, res) => {
 
 const view_profile = async (req, res) => {
     const userId = req.session.username;
-    console.log(req.session)
-    console.log("Profile :-" + userId);
     try {
         const profile = await User.find({
-            username: { $regex: new RegExp(userId, 'i') }
+            username: userId
         });
         res.json(profile);
     } catch (error) {
@@ -74,24 +71,14 @@ const view_profile = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
-    console.log(username + password);
     try {
         const user = await User.findOne({ username });
-        if (!user) {
-            return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
-        }
-
-        const token = await verifyUserAndGetToken(username, password);
-        console.log('User Generated Token:');
-        if (token) {
-            req.session.username = username;
-            req.session.lastActive = Date.now();
-            req.session.loginTime = Date.now();
-
-            res.cookie('UserId_', token, {
+        if (user && bcrypt.compareSync(password, user.password)) {
+            req.session.username = user.username;
+            
+            res.cookie('UserId_', user, {
                 httpOnly: true,
                 sameSite: 'strict',
-                maxAge: 24 * 60 * 60 * 1000
             });
             return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
         }
@@ -173,7 +160,6 @@ const change_prof = async (req, res) => {
         const updateFields = {};
         if (username) updateFields.username = username;
         if (email) updateFields.email = email;
-
         await User.updateOne(updateFields);
 
         res.json({ message: 'Profile Changed.' });
