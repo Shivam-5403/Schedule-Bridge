@@ -114,9 +114,10 @@
             padding: 40px 65px;
         }
 
-        .fc{
-            color:white;
+        .fc {
+            color: white;
         }
+
         @media (max-width:425px) {
 
             /* for phone size */
@@ -175,6 +176,7 @@
             z-index: 1;
             min-height: 100vh;
         }
+
         /* For screens where the height is greater than 700px (desktop-like devices) */
         @media (min-height: 700px) {
 
@@ -287,7 +289,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-whitet" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-expanded="false">
-                                English 
+                                English
                             </a>
                             <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">English</a></li>
@@ -302,7 +304,7 @@
         <hr>
         <main>
             <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-                <div  class="row champ w-100">
+                <div class="row champ w-100">
                     <div class="col-md-6 col-12 d-flex align-items-center justify-content-center left-content">
                         <img style="filter: invert();" src="Images/l2.png" alt="logo">
                     </div>
@@ -316,27 +318,28 @@
                                         required> -->
                                     <label for="un" class="form-label">Username</label>
                                     <input type="text" class="form-control fc" id="un" placeholder="Username"
-                                    onblur="bgcolor(event)" name="username">
+                                        onblur="bgcolor(event)" name="username">
                                     <!-- <input id="un"  class="form-control fc" placeholder="Email Address"
                                         required> -->
                                 </div>
                                 <div class="mb-3">
                                     <label for="pwd" class="form-label">Password</label>
                                     <input type="password" class="form-control fc" id="pwd" placeholder="Password"
-                                    onblur="bgcolor(event)" name="password">
+                                        onblur="bgcolor(event)" name="password">
                                     <!-- <input id="pwd" type="password" class="form-control fc" placeholder="Password"
                                         required> -->
                                 </div>
                                 <button class="btn btn-custom mb-3" onclick="loginbtn()" type="button">Log In</button>
                                 <button type="button" class="btn btn-custom mb-3 "
-                                onclick="document.location='\signup'">Sign Up</button>
+                                    onclick="document.location='\signup'">Sign Up</button>
                                 <button type="submit" class="btn btn-primary m-1" id="submitbtn"
                                     style="display: none;">Submit</button>
                                 <small class="fp"><a href="\forgot-password">Forgot Password?</a></small>
 
                             </form>
                             <div style="color: white" class="footer-text text-center">
-                                <p style="color:gray;font-size: 18px;">By signing in, you agree to Schedule-Bridge's Privacy Statement and Terms of Service.
+                                <p style="color:gray;font-size: 18px;">By signing in, you agree to Schedule-Bridge's
+                                    Privacy Statement and Terms of Service.
                                 </p>
                             </div>
                         </div>
@@ -359,36 +362,33 @@
         function loginbtn() {
             var un = document.getElementById('un').value;
             var pwd = document.getElementById('pwd').value;
-
             if (un == "") {
                 document.getElementById('un').style.borderColor = "red";
-                window.alert('Fill the required fields!');
+                window.alert('Fill the require fields!');
             } else if (pwd == "") {
                 document.getElementById('pwd').style.borderColor = "red";
-                window.alert('Fill the required fields!');
+                window.alert('Fill the require fields!');
             } else {
-
-                localStorage.setItem('username', un);
-                localStorage.setItem('password', pwd);
-
                 console.log(un);
                 console.log(pwd);
-                
                 document.getElementById('submitbtn').click();
             }
         }
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const response = await fetch('/check-session', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
 
-        document.addEventListener('DOMContentLoaded', function () {
+                const result = await response.json();
 
-            const savedUsername = localStorage.getItem('username');
-            const savedPassword = localStorage.getItem('password');
+                if (result.sessionExists && result.role == user) {
+                    window.location.href = "/"; // Redirect to Home if session exists
+                }
 
-            if (savedUsername && savedPassword) {
-            
-                document.getElementById('un').value = savedUsername;
-                document.getElementById('pwd').value = savedPassword;
-                
-                document.getElementById('submitbtn').click();
+            } catch (error) {
+                console.error('Error checking session:', error);
             }
 
             const params = new URLSearchParams(window.location.search);
@@ -400,9 +400,6 @@
             } else if (Message) {
                 alert(decodeURIComponent(Message));
             }
-
-            document.getElementById('un').addEventListener('input', bgcolor);
-            document.getElementById('pwd').addEventListener('input', bgcolor);
         });
     </script>
 </body>

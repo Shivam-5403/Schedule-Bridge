@@ -370,12 +370,6 @@
                 document.getElementById('pwd').style.borderColor = "red";
                 alert('Fill the required fields!');
             } else {
-                localStorage.setItem('adminUsername', un);
-                localStorage.setItem('adminPassword', pwd);
-
-                console.log(un);
-                console.log(pwd);
-
                 document.getElementById('submitbtn').click();
             }
         }

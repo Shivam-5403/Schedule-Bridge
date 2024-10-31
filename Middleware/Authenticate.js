@@ -11,23 +11,23 @@ const authorize = (req, res, next) => {
         const userToken = req.cookies?.UserId_;
         const adminToken = req.cookies?.AdminId_;
 
-        // Check if the request is for the login pages
-        const isLoginPage = req.url === '/' || req.url === '/admin';
         if (userToken) {
+            console.log('Token');
             if (!userToken && !req.url.startsWith('/')) {
                 return res.sendFile(path.join(__dirname, '../index.html'));
             }
-            if (userToken && isLoginPage) {
+            if (userToken && req.url === '/') {
                 return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
             }
             next();
         }
 
         if (adminToken) {
+            console.log('Token');
             if (!adminToken && !req.url.startsWith('/admin')) {
                 return res.sendFile(path.join(__dirname, '../Pages/admin_login.html'));
             }
-            if (adminToken && isLoginPage) {
+            if (adminToken && req.url === '/admin') {
                 return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
             }
             next();

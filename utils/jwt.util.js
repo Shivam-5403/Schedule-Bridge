@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../Model/User')
 const Admin = require('../Model/Admin');
-const { JWT_SECRET } = process.env;
+const Env = process.env;
+const bcrypt = require('bcryptjs');
 
 // Verify user and generate JWT token
 const verifyUserAndGetToken = async (username, password) => {
@@ -10,7 +11,8 @@ const verifyUserAndGetToken = async (username, password) => {
         if (!user || !bcrypt.compareSync(password, user.password)) {
             throw new Error('Invalid username or password');
         }
-        return jwt.sign({ username: user.username, email: user.email, role: 'user' }, JWT_SECRET, { expiresIn: '1h' });
+        console.log("Token Generate for User")
+        return jwt.sign({ username: user.username, email: user.email, role: 'user' }, Env.JWT_SECRET, { expiresIn: '1h' });
     } catch (error) {
         console.error(error.message);
         return null;
@@ -18,13 +20,13 @@ const verifyUserAndGetToken = async (username, password) => {
 };
 
 // Verify admin and generate JWT token
-const verifyAdminAndGetToken = async (username, admin_password) => {
+const verifyAdminAndGetToken = async (admin, admin_password) => {
     try {
-        const admin = await Admin.findOne({ username });
-        if (!admin || !bcrypt.compareSync(admin_password, admin.admin_password)) {
-            throw new Error('Invalid admin credentials');
+        const Login_admin = await Admin.findOne({ admin });
+        if (!Login_admin || !bcrypt.compareSync(admin_password, Login_admin.admin_password)) {
+            throw new Error('Invalid ID or Password of login Admin');
         }
-        return jwt.sign({ admin: admin.admin, email: admin.admin_email, role: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
+        return jwt.sign({ admin: admin.admin, email: admin.admin_email, role: 'admin' }, Env.JWT_SECRET, { expiresIn: '1h' });
     } catch (error) {
         console.error(error.message);
         return null;
@@ -35,7 +37,7 @@ const verifyAdminAndGetToken = async (username, admin_password) => {
 const verifyUserOrAdmin = (token) => {
     try {
         if (!token) throw new Error('Token is missing');
-        return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token, Env.JWT_SECRET);
     } catch (error) {
         console.error(error.message);
         return null;
