@@ -375,22 +375,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', async function () {
-                try {
-                    const response = await fetch('/check-session', {
-                        method: 'GET',
-                        credentials: 'include'
-                    });
-
-                    const result = await response.json();
-
-                    if (result.sessionExists && result.role == admin) {
-                        window.location.href = "/Admin_Home"; // Redirect to Home if session exists
-                    }
-
-                } catch (error) {
-                    console.error('Error checking session:', error);
-                }
-
                 const params = new URLSearchParams(window.location.search);
                 const errorMessage = params.get('error');
                 const Message = params.get('message');

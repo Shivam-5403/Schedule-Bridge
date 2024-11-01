@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const bcrypt = require('bcryptjs');
 const Admin = require('../Model/Admin');
-const { verifyAdminAndGetToken } = require('../utils/jwt.util')
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../public/Pages')));
@@ -65,20 +64,10 @@ const view_admin_profile = async (req, res) => {
 const admin_login = async (req, res) => {
     const { admin, admin_password } = req.body;
     try {
-        const login_admin = await Admin.findOne({ admin });
-        if (!login_admin) {
-            return res.redirect('/?error=Invalid%20credentials%2C%20please%20try%20again.');
-        }
-
-        const token = await verifyAdminAndGetToken(admin, admin_password);
-        console.log('admin Generated Token:');
-        console.log("Admin :- " + token);
-        if (token) {
-            req.session.admin = login_admin;
-            req.session.lastActive = Date.now();
-            req.session.loginTime = Date.now();
-
-            res.cookie('AdminId_', token, {
+        const Login_admin = await Admin.findOne({ admin });
+        if (Login_admin && bcrypt.compareSync(admin_password, Login_admin.admin_password)) {
+            req.session.admin = Login_admin;
+            res.cookie('AdminId_', admin, {
                 httpOnly: true,
                 sameSite: 'strict',
                 maxAge: 24 * 60 * 60 * 1000
@@ -104,11 +93,9 @@ const adminP_signup = async (req, res) => {
 const adminP_changepassword = async (req, res) => {
     const { newpassword, newreckey } = req.body;
     const admin = req.session.admin;
-
     if (!admin) {
         return res.redirect('../Pages/admin_verification/?error=Session%20expired,%20please%20try%20again.');
     }
-
     try {
         const hashedPassword = bcrypt.hashSync(newpassword, 8);
         const hashedReckey = bcrypt.hashSync(newreckey, 8);

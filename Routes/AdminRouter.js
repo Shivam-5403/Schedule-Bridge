@@ -8,8 +8,6 @@ const {
     change_admin_prof, change_pass_admin
 } = require('../Controller/AdminController');
 
-const Authenticate = require('../Middleware/Authenticate');
-
 router.get('/admin', admin);
 router.get('/admin_signup', adminG_signup);
 router.get('/admin_verification', adminG_verification);
@@ -19,8 +17,6 @@ router.post('/admin_login', admin_login);
 router.post('/admin_signup', adminP_signup);
 router.post('/admin_changepassword', adminP_changepassword);
 router.post('/admin_verification', adminP_verification);
-
-router.use(Authenticate);
 
 router.get('/Admin-Profile', Admin_Profile);
 router.get('/Admin_Home', Admin_Home);
