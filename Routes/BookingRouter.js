@@ -9,7 +9,7 @@ router.get('/search-appointment', search_appointment);
 router.get('/search-appointment2', search_appointment2);
 router.get('/view-appointments', view_appointments);
 router.get('/appointments', appointment);
-router.get('/cancel-appointment/:id', cancel_appointment);
+router.put('/cancel-appointment/:id', cancel_appointment);
 router.get('/logout', logout);
 
 router.post('/Info', fetch_admins);

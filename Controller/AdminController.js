@@ -49,7 +49,8 @@ const Admin_Profile = (req, res) => {
 };
 
 const view_admin_profile = async (req, res) => {
-    const adminId = req.session.admin;
+    const adminID = req.session.admin;
+    const adminId = adminID.admin;
     try {
         const profile = await Admin.findOne({
             admin: { $regex: new RegExp(adminId, 'i') }
