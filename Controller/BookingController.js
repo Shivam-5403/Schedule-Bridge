@@ -37,7 +37,6 @@ const logout = (req, res) => {
             console.error('Error destroying session:', err);
             return res.status(500).send('Error logging out.');
         }
-
         if (role === 'user') {
             res.clearCookie('UserId_');
             return res.sendFile(path.join(__dirname, '../index.html'));;

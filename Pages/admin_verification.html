@@ -78,19 +78,17 @@
         }
 
         #un,
-        #ln
-         {
+        #ln {
             background-color: transparent;
             border: 1px solid white;
             color: white;
         }
 
         #un:hover,
-        #ln:hover
-         {
+        #ln:hover {
             background-color: white;
             border: 1px solid black;
-            color:black;
+            color: black;
         }
 
         .form-container {
@@ -163,11 +161,12 @@
             flex-wrap: wrap;
         }
 
-        .text-white2{
-            color:gray;
+        .text-white2 {
+            color: gray;
         }
-        .text-white2:hover{
-            color:white;
+
+        .text-white2:hover {
+            color: white;
             text-decoration: none;
         }
     </style>
@@ -182,7 +181,8 @@
     </div>
 
     <div class="content">
-        <nav style="background-color: transparent; border:none;" class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <nav style="background-color: transparent; border:none;"
+            class="navbar navbar-expand-lg navbar-light navbar-custom">
             <div class="container2 d-flex justify-content-around">
                 <img class="logo-login" height="50px" src="Images/logo.png" alt="">
                 <a style="color:white;" class="navbar-brand" href="#">Schedule-Bridge</a>
@@ -222,22 +222,26 @@
                             <form action="/admin_verification" method="post">
                                 <div class="mb-3">
                                     <label for="un" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="un" placeholder="Admin Id" onblur="bgcolor(event)" name="admin">
+                                    <input type="text" class="form-control" id="un" placeholder="Admin Id"
+                                        onblur="bgcolor(event)" name="admin">
                                 </div>
                                 <div class="mb-3">
                                     <label for="ln" class="form-label">Recovery Key</label>
-                                    <input type="text" class="form-control" id="ln" placeholder="Recovery number" onblur="bgcolor(event)" name="admin_reckey">
+                                    <input type="text" class="form-control" id="ln" placeholder="Recovery number"
+                                        onblur="bgcolor(event)" name="admin_reckey">
                                 </div>
                                 <div class="">
                                     <button type="button" class="btn btn-custom mb-3" onclick="verify()">Verify</button>
-                                    <button type="submit" class="btn btn-custom mb-3" id="submitbtn" style="display: none;">Submit</button>
-                                    <a href="/admin_login"><button type="button" class="btn btn-custom mb-3">Cancel</button></a>
+                                    <button type="submit" class="btn btn-custom mb-3" id="submitbtn"
+                                        style="display: none;">Submit</button>
+                                    <a href="/admin"><button type="button"
+                                            class="btn btn-custom mb-3">Cancel</button></a>
                                 </div>
-                                <a href="/admin_login" class="text-white2">Back to Login</a>
+                                <a href="/admin" class="text-white2">Back to Login</a>
 
                             </form>
 
-                            
+
                         </div>
                     </div>
                 </div>
@@ -246,16 +250,16 @@
     </div>
 
     <script>
-        function bgcolor(e){
+        function bgcolor(e) {
             let c = document.getElementById(e.target.id);
-            if(c.value == ""){
+            if (c.value == "") {
                 c.style.borderColor = 'red';
             }
-            else{
+            else {
                 c.style.borderColor = 'lightgray';
             }
         }
-    
+
         function verify() {
             var un = document.getElementById('un').value;
             var ln = document.getElementById('ln').value;
@@ -271,14 +275,14 @@
                 document.getElementById('submitbtn').click();
             }
         }
-    
-        window.onload = function() {
-                const params = new URLSearchParams(window.location.search);
-                if (params.has('error')) {
-                    const errorMessage = params.get('error');
-                    alert(decodeURIComponent(errorMessage));
-                }
-            };
+
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('error')) {
+                const errorMessage = params.get('error');
+                alert(decodeURIComponent(errorMessage));
+            }
+        };
     </script>
 </body>
 
