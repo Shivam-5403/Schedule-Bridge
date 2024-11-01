@@ -105,19 +105,25 @@ const view_appointments = async (req, res) => {
             return res.status(401).json({ error: 'User not logged in.' });
         }
 
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         const pendingAppointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },
-            status: "Pending"
+            status: "Pending",
+            date: { $gt: today }
         });
 
         const scheduledAppointments = await Booking.find({
             customer_name: { $regex: new RegExp(userId, 'i') },
-            status: "Booked"
+            status: "Booked",
+            date: { $gt: today }
         });
 
         const doneAppointments = await Booking.find({
             customer_name: userId,
-            status: "Done"
+            status: "Done",
+            // date: { $gt: today }
         });
 
         res.json({

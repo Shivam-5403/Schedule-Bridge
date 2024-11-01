@@ -383,7 +383,7 @@
       } else {
         console.error("Scroll-to-top button not found");
       }
-      
+
     });
 
     document.documentElement.setAttribute("data-theme", localStorage.getItem('light-mode') === 'active' ? 'light' : 'dark');
@@ -470,7 +470,7 @@
       const doneContainer = document.querySelector('.done-appointment');
 
       // Ensure the containers are flex containers with horizontal scrolling
-      [pendingContainer, bookedContainer, rejectedContainer].forEach(container => {
+      [pendingContainer, bookedContainer, rejectedContainer, doneContainer].forEach(container => {
         container.style.display = 'flex';
         container.style.flexWrap = 'wrap';
         container.style.gap = '16px';
