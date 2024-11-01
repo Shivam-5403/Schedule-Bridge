@@ -333,7 +333,7 @@
                                     onclick="document.location='\admin_signup'">Sign Up</button>
                                 <button type="submit" class="btn btn-primary m-1" id="submitbtn"
                                     style="display: none;">Submit</button>
-                                <small class="fp"><a style="" href="\forgot-admin-password">Forgot Password?</a></small>
+                                <small class="fp"><a href="\forgot-admin-password">Forgot Password?</a></small>
 
                             </form>
                             <div style="color: white" class="footer-text text-center">
@@ -375,16 +375,16 @@
         }
 
         document.addEventListener('DOMContentLoaded', async function () {
-                const params = new URLSearchParams(window.location.search);
-                const errorMessage = params.get('error');
-                const Message = params.get('message');
+            const params = new URLSearchParams(window.location.search);
+            const errorMessage = params.get('error');
+            const Message = params.get('message');
 
-                if (errorMessage) {
-                    alert(decodeURIComponent(errorMessage));
-                } else if (Message) {
-                    alert(decodeURIComponent(Message));
-                }
-            });
+            if (errorMessage) {
+                alert(decodeURIComponent(errorMessage));
+            } else if (Message) {
+                alert(decodeURIComponent(Message));
+            }
+        });
 
     </script>
 </body>
