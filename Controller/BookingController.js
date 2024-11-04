@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 const appointment = async (req, res) => {
     const admin = req.session.admin;
     try {
-        const Company = await Admin.findOne({ admin: admin.admin });
+        const Company = await Admin.findOne({ admin });
         console.log(Company);
         if (!Company) {
             return res.status(404).json({ error: 'Admin not found.' });

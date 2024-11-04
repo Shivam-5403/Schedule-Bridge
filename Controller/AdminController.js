@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const bcrypt = require('bcryptjs');
 const Admin = require('../Model/Admin');
+const { Login } = require('./UserController');
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../public/Pages')));
@@ -49,12 +50,13 @@ const Admin_Profile = (req, res) => {
 };
 
 const view_admin_profile = async (req, res) => {
-    const adminID = req.session.admin;
-    const adminId = adminID.admin;
+    const adminId = req.session.admin;
+    console.log(adminId);
     try {
         const profile = await Admin.findOne({
             admin: { $regex: new RegExp(adminId, 'i') }
         });
+        console.log(profile)
         res.json(profile);
     } catch (error) {
         console.error('Error searching admin:', error);
@@ -65,17 +67,24 @@ const view_admin_profile = async (req, res) => {
 const admin_login = async (req, res) => {
     const { admin, admin_password } = req.body;
     try {
-        const Login_admin = await Admin.findOne({ admin });
+        const Login_admin = await Admin.findOne(
+            { admin },
+            { admin: 1, admin_password: 1, _id: 0 }
+        );
+
         if (Login_admin && bcrypt.compareSync(admin_password, Login_admin.admin_password)) {
-            req.session.admin = Login_admin;
+            req.session.admin = Login_admin.admin;
+            console.log(Login_admin.admin);
+
             res.cookie('AdminId_', admin, {
                 httpOnly: true,
                 sameSite: 'strict',
                 maxAge: 24 * 60 * 60 * 1000
             });
             return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
+        } else {
+            return res.status(401).send('Invalid credentials');
         }
-
     } catch (error) {
         console.error('Error during admin login:', error);
         return res.redirect('/admin/?error=Something%20went%20wrong%2C%20please%20try%20again.');
