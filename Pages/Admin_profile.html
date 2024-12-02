@@ -132,7 +132,7 @@
                 <div class="modal-header">
                   <h5 class="modal-title" id="confirmtion">Password Changing Successful</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="window.location.href=`/Home`">
+                    onclick="window.location.href=`/logout?role=admin`">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -226,7 +226,7 @@
                 <div class="modal-header">
                   <h5 class="modal-title" id="econfirmtion">Profile Changing Successful</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="window.location.href=`/`">
+                    onclick="window.location.href=`/logout?role=admin`">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -614,10 +614,10 @@
       }
     }
     document.getElementById('goHome').addEventListener('click', function () {
-      window.location.href = '/Admin_Home';
+      window.location.href = '/logout?role=admin';
     });
     document.getElementById('goHome2').addEventListener('click', function () {
-      window.location.href = '/Admin_Home';
+      window.location.href = '/logout?role=admin';
     });
     document.getElementById('esubmitbtn').addEventListener('click', function (event) {
       event.preventDefault();

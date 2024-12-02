@@ -81,6 +81,8 @@ const login = async (req, res) => {
                 sameSite: 'strict',
             });
             return res.sendFile(path.join(__dirname, '../Pages/User-Home.html'));
+        }else{
+            return res.redirect('/?error=Invalid%20Username%20or%2C%20password%20,plaese%20try%20again.');
         }
 
     } catch (error) {
@@ -106,8 +108,7 @@ const P_verification = async (req, res) => {
             req.session.username = username;
             res.sendFile(path.join(__dirname, '../Pages/changepassword.html'));
         } else {
-            res.sendFile(path.join(__dirname, '../Pages/verification.html'));
-            res.redirect('/verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
+            return res.redirect('/?error=Invalid%20Username%20or%2C%Recovery-Key%20,plaese%20try%20again.');
         }
     }
     catch (error) {
@@ -154,13 +155,10 @@ const change_pass = async (req, res) => {
 };
 
 const change_prof = async (req, res) => {
-    const { username, email } = req.body;
+    const { ousername, username, email } = req.body;
 
     try {
-        const updateFields = {};
-        if (username) updateFields.username = username;
-        if (email) updateFields.email = email;
-        await User.updateOne(updateFields);
+        await User.updateOne({username: ousername},{username: username, email: email});
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {

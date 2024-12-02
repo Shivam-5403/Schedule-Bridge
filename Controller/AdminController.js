@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const bcrypt = require('bcryptjs');
 const Admin = require('../Model/Admin');
-const { Login } = require('./UserController');
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../public/Pages')));
@@ -83,11 +82,11 @@ const admin_login = async (req, res) => {
             });
             return res.sendFile(path.join(__dirname, '../Pages/admin.html'));
         } else {
-            return res.status(401).send('Invalid credentials');
+            return res.redirect('/?error=Invalid%20AdminId%20or%2C%20Password%20please%20try%20again.');
         }
     } catch (error) {
         console.error('Error during admin login:', error);
-        return res.redirect('/admin/?error=Something%20went%20wrong%2C%20please%20try%20again.');
+        return res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
 
@@ -113,10 +112,10 @@ const adminP_changepassword = async (req, res) => {
         await Admin.updateOne({ admin }, { admin_password: hashedPassword, admin_reckey: hashedReckey });
 
         req.session.destroy(); // Destroy session after updating password
-        res.redirect('/admin/?message=Password%20changed%20successfully.');
+        res.redirect('/?message=Password%20changed%20successfully.');
     } catch (error) {
         console.error('Error during password change:', error);
-        res.redirect('/admin_changepassword/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
+        res.redirect('/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
     }
 }
 
@@ -129,7 +128,7 @@ const adminP_verification = async (req, res) => {
             res.sendFile(path.join(__dirname, '../Pages/admin_changepassword.html'));
         }
         else {
-            res.redirect('/admin_verification/?error=Invalid%20recovery%20key,%20please%20try%20again.');
+            res.redirect('/?error=Invalid%20recovery%20key,%20please%20try%20again.');
         }
     }
     catch (error) {
@@ -152,9 +151,9 @@ const change_pass_admin = async (req, res) => {
 };
 
 const change_admin_prof = async (req, res) => {
-    const { admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
+    const { oadmin, admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service } = req.body;
     try {
-        await Admin.updateOne({ admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
+        await Admin.updateOne({admin: oadmin},{ admin, admin_email, companyname, sector, address, state, country, pincode, mno, total_workhours, start_time, end_time, totalslots, website, service });
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {

@@ -389,6 +389,45 @@
     document.documentElement.setAttribute("data-theme", localStorage.getItem('light-mode') === 'active' ? 'light' : 'dark');
 
     document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('filter-button').addEventListener('click', function () {
+        const selectedDate = document.getElementById('filter-date').value;
+        const filterResult = document.getElementById('filter-result');
+        filterResult.innerHTML = ''; // Clear previous results
+
+        if (!selectedDate) {
+            filterResult.textContent = 'Please select a date to filter appointments.';
+            return;
+        }
+
+        // Find all appointment cards in the document
+        const appointmentCards = document.querySelectorAll('.card');
+
+        // Track if any appointment matches the selected date
+        let hasResults = false;
+
+        // Filter and display matching cards
+        appointmentCards.forEach(card => {
+            const cardDate = card.dataset.date; // Date stored in the card's data attribute
+
+            if (cardDate === selectedDate) {
+                hasResults = true;
+                const clonedCard = card.cloneNode(true); // Clone the card to avoid removing it from the original container
+                clonedCard.querySelector('.accept-btn')?.addEventListener('click', () => {
+                    alert('Accept button clicked for the filtered card.');
+                });
+                clonedCard.querySelector('.reject-btn')?.addEventListener('click', () => {
+                    alert('Reject button clicked for the filtered card.');
+                });
+                filterResult.appendChild(clonedCard); // Append the cloned card to the filter result container
+            }
+        });
+
+        // Show a message if no appointments match the selected date
+        if (!hasResults) {
+            filterResult.textContent = 'No appointments found for the selected date.';
+        }
+    });
+
       let lightmode = localStorage.getItem('light-mode');
       const themeSwitch = document.getElementById('theme-switch');
 
@@ -611,6 +650,22 @@
         })
         .catch(error => console.error('Error fetching appointments:', error));
     });
+    const today = new Date().toISOString().split('T')[0];
+
+// Set the min attribute to today's date to disable past dates
+document.getElementById('filter-date').setAttribute('min', today);
+
+// Add an event listener to disable Sundays
+document.getElementById('filter-date').addEventListener('input', function () {
+  const selectedDate = new Date(this.value);
+  const dayOfWeek = selectedDate.getUTCDay();
+
+  // If the selected date is a Sunday (0 represents Sunday)
+  if (dayOfWeek === 0) {
+    alert('Sundays are not selectable. Please choose another day.');
+    this.value = ''; // Clear the input value
+  }
+});
 
   </script>
 </body>
