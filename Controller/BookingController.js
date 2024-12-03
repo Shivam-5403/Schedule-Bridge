@@ -17,14 +17,12 @@ const appointment = async (req, res) => {
     const admin = req.session.admin;
     try {
         const Company = await Admin.findOne({ admin });
-        console.log(Company);
         if (!Company) {
             return res.status(404).json({ error: 'Admin not found.' });
         }
         const Appointments = await Booking.find({ companyname: Company.companyname });
         res.json(Appointments);
     } catch (error) {
-        console.error('Error fetching pending appointments:', error);
         res.status(500).json({ error: 'An error occurred while fetching pending appointments.' });
     }
 };
@@ -34,9 +32,10 @@ const logout = (req, res) => {
 
     req.session.destroy((err) => {
         if (err) {
-            console.error('Error destroying session:', err);
             return res.status(500).send('Error logging out.');
         }
+        res.clearCookie('user-session');
+        res.clearCookie('connect.sid');
         if (role === 'user') {
             res.clearCookie('UserId_');
             return res.sendFile(path.join(__dirname, '../index.html'));;
@@ -44,8 +43,6 @@ const logout = (req, res) => {
             res.clearCookie('AdminId_');
             return res.sendFile(path.join(__dirname, '../Pages/admin_login.html'));;
         }
-        res.clearCookie('user-session');
-        res.clearCookie('connect.sid');
     });
 };
 
@@ -57,7 +54,6 @@ const search_business = async (req, res) => {
         });
         res.json(businesses);
     } catch (error) {
-        console.error('Error searching business:', error);
         res.status(500).json({ error: 'An error occurred while searching for businesses.' });
     }
 };
@@ -75,7 +71,6 @@ const search_appointment = async (req, res) => {
         });
         res.json(appointments);
     } catch (error) {
-        console.error('Error searching appointment:', error);
         res.status(500).json({ error: 'An error occurred while searching for appointment.' });
     }
 };
@@ -93,7 +88,6 @@ const search_appointment2 = async (req, res) => {
         });
         res.json(appointments);
     } catch (error) {
-        console.error('Error searching appointment:', error);
         res.status(500).json({ error: 'An error occurred while searching for appointment.' });
     }
 };
@@ -132,7 +126,6 @@ const view_appointments = async (req, res) => {
             doneAppointments
         });
     } catch (error) {
-        console.error('Error fetching appointments:', error);
         res.status(500).json({ error: 'An error occurred while fetching appointments.' });
     }
 };
@@ -152,7 +145,6 @@ const cancel_appointment = async (req, res) => {
 
         res.json({ message: 'Appointment cancelled successfully.', appointment: updatedAppointment });
     } catch (error) {
-        console.error('Error cancelling appointment:', error);
         res.status(500).json({ error: 'An error occurred while cancelling the appointment.' });
     }
 };
@@ -223,7 +215,6 @@ const fetch_admins = async (req, res) => {
             },
         });
     } catch (err) {
-        console.error("Error fetching admins: ", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -237,7 +228,6 @@ const Update = async (req, res) => {
         );
         res.status(200).json({ message: 'Appointment updated successfully' });
     } catch (err) {
-        console.error('Error updating appointment status:', err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
@@ -263,7 +253,6 @@ const book_appointment = async (req, res) => {
         await booking.save();
         res.json({ message: 'Appointment Request booked successfully! See The Status of Appointment in View Booked Appointment Section. You wil Be Notified After...' });
     } catch (error) {
-        console.error('Error booking appointment:', error);
         res.status(500).json({ error: 'An error occurred while booking the appointment.' });
     }
 };
@@ -277,7 +266,6 @@ const contactUs_req = async (req, res) => {
         await contact.save();
         res.json({ message: 'Sending Confirmed.' });
     } catch (error) {
-        console.error('Error sending message.', error);
         res.status(500).json({ error: 'An error occurred while sending the msg.' });
     }
 };

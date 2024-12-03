@@ -64,7 +64,6 @@ const view_profile = async (req, res) => {
         });
         res.json(profile);
     } catch (error) {
-        console.error('Error searching user:', error);
         res.status(500).json({ error: 'An error occurred while searching for user.' });
     }
 };
@@ -86,7 +85,6 @@ const login = async (req, res) => {
         }
 
     } catch (error) {
-        console.error('Error during login:', error);
         return res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
@@ -112,7 +110,6 @@ const P_verification = async (req, res) => {
         }
     }
     catch (error) {
-        console.error('Error during verification:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
 }
@@ -134,7 +131,6 @@ const P_changepassword = async (req, res) => {
         req.session.destroy();
         return res.redirect('/?message=Password%20changed%20successfully.');
     } catch (error) {
-        console.error('Error during password change:', error);
         return res.redirect('/changepassword/?error=Something%20went%20wrong,%20please%20try%20again.');
     }
 };
@@ -144,12 +140,9 @@ const change_pass = async (req, res) => {
     const { username, password } = req.body;
     try {
         const hashedPassword = bcrypt.hashSync(password, 8);
-
         await User.updateOne({ username }, { password: hashedPassword });
-
         res.json({ message: 'Password Changed.' });
     } catch (error) {
-        console.error('Error Changing Password:', error);
         res.status(500).json({ error: 'An error occurred while Changing Password.' });
     }
 };
@@ -162,7 +155,6 @@ const change_prof = async (req, res) => {
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {
-        console.error('Error Changing Profile:', error);
         res.status(500).json({ error: 'An error occurred while changing profile.' });
     }
 };

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- FInal -->
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,7 +37,6 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            /* Ensures the video covers the whole background */
             pointer-events: none;
         }
 
@@ -103,8 +100,6 @@
         }
 
         .champ {
-            /* background-color: rgba(255, 255, 255, 0.174); */
-            /* filter:blur(1); */
             background: transparent;
             border: 2px solid rgba(0, 0, 0, 0.501);
             backdrop-filter: blur(20px);
@@ -133,8 +128,6 @@
             }
 
             .champ {
-                /* background-color: rgba(255, 255, 255, 0.174); */
-                /* filter:blur(1); */
                 background: transparent;
                 border: 2px solid rgba(0, 0, 0, 0.501);
                 backdrop-filter: blur(20px);
@@ -169,7 +162,6 @@
             }
         }
 
-        /* Ensure only content is scrollable, not the video */
         .content {
             position: relative;
             z-index: 1;
@@ -179,13 +171,11 @@
         /* For screens where the height is greater than 700px (desktop-like devices) */
         @media (min-height: 700px) {
 
-            /* Hides the scrollbar for desktop */
             html,
             body {
                 overflow: hidden;
             }
 
-            /* Ensures the content doesn't overflow even when there is no scrollbar */
             .content {
                 height: 100vh;
                 overflow: hidden;
@@ -195,29 +185,21 @@
         /* For screens where the height is less than 700px (mobile devices) */
         @media (max-height: 700px) {
 
-            /* Allow scrolling, but hide the scrollbar for mobile */
             html,
             body {
                 overflow-y: scroll;
-                /* Enable scrolling */
             }
 
-            /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
             ::-webkit-scrollbar {
                 display: none;
-                /* Hides the scrollbar */
             }
 
-            /* Hide scrollbar for Firefox */
             html {
                 scrollbar-width: none;
-                /* Hides scrollbar in Firefox */
             }
 
-            /* Hide scrollbar for Internet Explorer/Edge */
             body {
                 -ms-overflow-style: none;
-                /* Hides scrollbar in IE/Edge */
             }
         }
 
@@ -234,7 +216,6 @@
         }
 
         .navbar-light .navbar-toggler-icon {
-            /* background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e); */
             background-image: url("svg/menu.svg");
         }
 
@@ -246,11 +227,7 @@
             flex-wrap: wrap;
         }
 
-
         .fp a:hover {
-            /* color:white; */
-            /* font-weight: bold; */
-            /* padding:2px; */
             text-decoration: none;
         }
     </style>
@@ -282,19 +259,11 @@
                         <li class="nav-item">
                             <a id="active" class="nav-link text-whitet" href="#">Admin Login</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link text-whitet" href="\Contact">Contact us</a>
-                        </li> -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-whitet" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-expanded="false">
                                 English
                             </a>
-                            <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">English</a></li>
-                                <li><a class="dropdown-item" href="#">French</a></li>
-                                <li><a class="dropdown-item" href="#">Spanish</a></li>
-                            </ul> -->
                         </li>
                     </ul>
                 </div>
@@ -313,20 +282,14 @@
                             <h2 class="text-center mb-4">Admin Login</h2>
                             <form action="/admin_login" method="post">
                                 <div class="mb-3">
-                                    <!-- <input id="un" type="email" class="form-control fc" placeholder="Email Address"
-                                        required> -->
                                     <label for="un" class="form-label">Username</label>
                                     <input type="text" class="form-control fc" id="un" placeholder="Enter your Admin ID"
                                         onblur="bgcolor(event)" name="admin">
-                                    <!-- <input id="un"  class="form-control fc" placeholder="Email Address"
-                                        required> -->
                                 </div>
                                 <div class="mb-3">
                                     <label for="pwd" class="form-label">Password</label>
                                     <input type="password" class="form-control fc" id="pwd" placeholder="Password"
-                                        onblur="bgcolor(event)" name="admin_password">
-                                    <!-- <input id="pwd" type="password" class="form-control fc" placeholder="Password"
-                                        required> -->
+                                        onblur="bgcolor(event)" name="admin_password" minlength="4">
                                 </div>
                                 <button class="btn btn-custom mb-3" onclick="loginbtn()" type="button">Log In</button>
                                 <button type="button" class="btn btn-custom mb-3 "
