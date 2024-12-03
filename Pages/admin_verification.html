@@ -193,7 +193,7 @@
                 <div class="collapse navbar-collapse justify-content-end text-white" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-whitet" href="\index.html">User Login</a>
+                            <a class="nav-link text-whitet" href="\login">User Login</a>
                         </li>
                         <li class="nav-item">
                             <a id="active" class="nav-link text-whitet" href="\Admin">Admin Login</a>
@@ -228,7 +228,7 @@
                                 <div class="mb-3">
                                     <label for="ln" class="form-label">Recovery Key</label>
                                     <input type="text" class="form-control" id="ln" placeholder="Recovery number"
-                                        onblur="bgcolor(event)" name="admin_reckey">
+                                        onblur="bgcolor(event)" name="admin_reckey" minlength="4">
                                 </div>
                                 <div class="">
                                     <button type="button" class="btn btn-custom mb-3" onclick="verify()">Verify</button>

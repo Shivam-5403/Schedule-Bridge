@@ -221,7 +221,6 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            /* Ensures the video covers the whole background */
             pointer-events: none;
         }
 
@@ -291,8 +290,6 @@
             margin-right: 20px;
         }
 
-       
-
         .fc {
             color: white;
         }
@@ -313,8 +310,6 @@
             }
 
             .champ {
-                /* background-color: rgba(255, 255, 255, 0.174); */
-                /* filter:blur(1); */
                 background: transparent;
                 border: 2px solid rgba(0, 0, 0, 0.501);
                 backdrop-filter: blur(20px);
@@ -349,29 +344,20 @@
             }
         }
 
-        /* Ensure only content is scrollable, not the video */
         .content {
             position: relative;
             z-index: 1;
             min-height: 100vh;
         }
 
-        main {
-            /* padding: 30px 0; */
-        }
-
-
-
         /* For screens where the height is greater than 700px (desktop-like devices) */
         @media (min-height: 700px) {
 
-            /* Hides the scrollbar for desktop */
             html,
             body {
                 overflow: hidden;
             }
 
-            /* Ensures the content doesn't overflow even when there is no scrollbar */
             .content {
                 height: 100vh;
                 overflow-y: scroll;
@@ -380,33 +366,24 @@
 
             ::-webkit-scrollbar {
                 width: 10px;
-                /* Width of the scrollbar */
             }
 
             ::-webkit-scrollbar-thumb {
                 background-color: #444;
-                /* Dark grey for the scrollbar thumb */
                 border-radius: 5px;
-                /* Rounded corners */
             }
 
             ::-webkit-scrollbar-track {
                 background-color: #222;
-                /* Dark background for the track */
             }
 
-            /* Custom scrollbar for Firefox */
             html {
                 scrollbar-width: thin;
-                /* Makes the scrollbar thinner */
                 scrollbar-color: #444 #222;
-                /* Thumb color and track color */
             }
 
-            /* Custom scrollbar for Internet Explorer/Edge */
             body {
                 -ms-overflow-style: scrollbar;
-                /* Use default scrollbar */
             }
 
         }
@@ -425,30 +402,22 @@
                 flex-direction: column;
             }
 
-            /* Allow scrolling, but hide the scrollbar for mobile */
             html,
             body {
                 overflow-y: scroll;
                 overflow-x: scroll;
-                /* Enable scrolling */
             }
 
-            /* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
             ::-webkit-scrollbar {
                 display: none;
-                /* Hides the scrollbar */
             }
 
-            /* Hide scrollbar for Firefox */
             html {
                 scrollbar-width: none;
-                /* Hides scrollbar in Firefox */
             }
 
-            /* Hide scrollbar for Internet Explorer/Edge */
             body {
                 -ms-overflow-style: none;
-                /* Hides scrollbar in IE/Edge */
             }
         }
 
@@ -465,7 +434,6 @@
         }
 
         .navbar-light .navbar-toggler-icon {
-            /* background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e); */
             background-image: url("svg/menu.svg");
         }
 
@@ -479,9 +447,6 @@
 
 
         .fp a:hover {
-            /* color:white; */
-            /* font-weight: bold; */
-            /* padding:2px; */
             text-decoration: none;
         }
 
@@ -526,20 +491,11 @@
                     </ul>
                 </div>
             </div>
-            <!-- <hr > -->
 
         </nav>
         <main>
             <div class="container d-flex justify-content-center align-items-center champ flex-column my-3" style="min-height: 100vh;">
                 <h2 class="text-center mb-4">Admin - Sign Up</h2>
-                <!-- <div class="col-md-6 col-12 d-flex align-items-center justify-content-center left-content">
-                        <img style="filter: invert();" src="Images/l2.png" alt="logo">
-                    </div> -->
-
-
-                    
-                    
-                    
                     <form id="signup-form" class="form-container row" action="/admin_signup" method="POST">
                         <div class="col-sm-6 col-12">
                             
@@ -551,12 +507,12 @@
                             <div class="mb-3">
                                 <label for="admin-password" class="form-label">Password</label>
                                 <input type="password" class="form-control fc" id="admin-password" placeholder="Password"
-                                    name="admin_password" required>
+                                    name="admin_password" required minlength="4">
                             </div>
                             <div class="mb-3">
                                 <label for="admin-reckey" class="form-label">Password Recovery Key</label>
                                 <input type="text" class="form-control fc" id="admin-reckey"
-                                    placeholder="Password Recovery Key" name="admin_reckey" required>
+                                    placeholder="Password Recovery Key" name="admin_reckey" required minlength="4">
                             </div>
                             <div class="mb-3">
                                 <label for="companyname" class="form-label">Company Name</label>
@@ -588,10 +544,7 @@
                                 <input type="text" class="form-control fc" id="country" placeholder="Country" name="country"
                                     required>
                             </div>
-                            
                         
-                            
-
                         </div>
                         <div class="col-sm-6 col-12">
                             <div class="mb-3">
@@ -603,7 +556,7 @@
                             <div class="mb-3">
                                 <label for="mno" class="form-label">Mobile Number</label>
                                 <input type="text" class="form-control fc" id="mno" placeholder="Mobile Number" name="mno"
-                                    required>
+                                    required inputmode="numeric" pattern="\d{10}">
                             </div>
                             <div class="mb-3">
                                 <label for="total_workhours" class="form-label">Total Working Hours</label>
@@ -645,17 +598,11 @@
                                 Privacy Statement and Terms of Service.</p>
                         </div>
                     </form>
-
-
-
                 </div>
                 
-
         </main>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>

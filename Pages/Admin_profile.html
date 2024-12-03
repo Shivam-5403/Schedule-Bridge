@@ -67,13 +67,8 @@
             <span>
               <img id="profile-invert2" src="../Pages/svg/dark.svg" alt="" />
             </span>
-
-
+          
           </a>
-          <!-- <div class="dropdown-menu mt-3">
-                <a id="dark-theme" class="dropdown-item" href="#">Dark</a>
-                <a id="light-theme" class="dropdown-item" href="#">Light</a>
-              </div> -->
         </li>
 
         <li class="nav-item dropdown d-flex justify-content-center align-items-center">
@@ -113,11 +108,11 @@
                       <label for="adminname">Admin Name :</label>
                       <input type="text" class="form-control" id="adminname" name="adminname" readonly />
                       <label for="newp">New Password :</label>
-                      <input type="password" class="form-control" id="newp" name="newp" />
+                      <input type="password" class="form-control" id="newp" name="newp" minlength="4"/>
                     </div>
                     <div class="form-group">
                       <label for="cnewp">Confirm New Password :</label>
-                      <input type="password" class="form-control" id="cnewp" name="cnewp" />
+                      <input type="password" class="form-control" id="cnewp" name="cnewp" minlength="4"/>
                     </div>
                     <button type="button" class="btn btn-success" onclick="verify()">Change</button>
                     <button type="submit" id="submitbtn" style="display: none;">Submit</button>
@@ -168,7 +163,7 @@
                       <label for="oldaddres">Addres :</label>
                       <input type="text" class="form-control" id="oldaddress" name="oldaddress" readonly />
                       <label for="oldmno">Mobile No. :</label>
-                      <input type="text" class="form-control" id="oldmno" name="oldmno" readonly />
+                      <input type="text" class="form-control" id="oldmno" name="oldmno" readonly inputmode="numeric" pattern="\d{10}"/>
                       <label for="oldtime">Total Working Hours and Business Hours :</label>
                       <input type="text" class="form-control" id="oldtime" name="oldtime" readonly />
                       <label for="oldslots">Total Slots :</label>
@@ -197,7 +192,7 @@
                       <label for="epincode">Pincode :</label>
                       <input type="text" class="form-control" id="epincode" name="epincode" required />
                       <label for="emno">Mobile No. :</label>
-                      <input type="text" class="form-control" id="emno" name="emno" required />
+                      <input type="text" class="form-control" id="emno" name="emno" required inputmode="numeric" pattern="\d{10}"/>
                       <label for="etotal_workhours">Total Working Hours :</label>
                       <input type="number" class="form-control" id="etotal_workhours" name="etotal_workhours" min="1"
                         max="24" required />
@@ -270,7 +265,6 @@
         <h3 class="m-0 ml-sm-4 mb-2 text-center">Schedule-Bridge</h3>
         <a class="image-container">
           <img id="profile-invert4" class="ml-sm-3 last-logo h-auto w-75" src="../Pages/Images/logo.png" alt="">
-          <!-- <div class="overlay"></div> -->
         </a>
 
       </div>
@@ -397,15 +391,13 @@
   <script>
 
   document.addEventListener("DOMContentLoaded", () => {
-      // Check if the scroll-to-top button exists
       const scrollToTopButton = document.getElementById('scroll-to-top');
       if (scrollToTopButton) {
-        // Add event listener to scroll-to-top button
         scrollToTopButton.addEventListener('click', function (event) {
-          event.preventDefault(); // Prevent default anchor behavior
+          event.preventDefault(); 
           window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Smooth scroll to top
+            behavior: 'smooth' 
           });
           console.log("Scroll to top button clicked");
         });
@@ -421,7 +413,6 @@
       let lightmode = localStorage.getItem('light-mode');
       const themeSwitch = document.getElementById('theme-switch');
 
-      // Function to enable light mode
       const enablelightmode = () => {
         console.log("light mode on");
         document.body.classList.add('light-mode');
@@ -450,7 +441,6 @@
         document.getElementById('change-bg2').classList.add('light-mycontainer-contact-us');
       };
 
-      // Function to disable light mode (enable dark mode)
       const disablelightmode = () => {
         console.log("light mode off");
         document.body.classList.remove('light-mode');
@@ -479,10 +469,8 @@
         document.getElementById('change-bg2').classList.remove('light-mycontainer-contact-us');
       };
 
-      // Check if light mode is active on page load
       if (lightmode === 'active') enablelightmode();
 
-      // Add event listener to themeSwitch button
       if (themeSwitch) {
         themeSwitch.addEventListener("click", () => {
           console.log("Theme switch clicked");
@@ -529,7 +517,6 @@
                     <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(pro))}')">Edit Profile</button>
                 `;
       adminProfile.appendChild(profileDiv);
-
     }
 
     function changepassword(proJson) {

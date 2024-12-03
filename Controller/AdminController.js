@@ -50,15 +50,12 @@ const Admin_Profile = (req, res) => {
 
 const view_admin_profile = async (req, res) => {
     const adminId = req.session.admin;
-    console.log(adminId);
     try {
         const profile = await Admin.findOne({
             admin: { $regex: new RegExp(adminId, 'i') }
         });
-        console.log(profile)
         res.json(profile);
     } catch (error) {
-        console.error('Error searching admin:', error);
         res.status(500).json({ error: 'An error occurred while searching for admin.' });
     }
 };
@@ -73,7 +70,6 @@ const admin_login = async (req, res) => {
 
         if (Login_admin && bcrypt.compareSync(admin_password, Login_admin.admin_password)) {
             req.session.admin = Login_admin.admin;
-            console.log(Login_admin.admin);
 
             res.cookie('AdminId_', admin, {
                 httpOnly: true,
@@ -85,7 +81,6 @@ const admin_login = async (req, res) => {
             return res.redirect('/?error=Invalid%20AdminId%20or%2C%20Password%20please%20try%20again.');
         }
     } catch (error) {
-        console.error('Error during admin login:', error);
         return res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again.');
     }
 };
@@ -114,7 +109,6 @@ const adminP_changepassword = async (req, res) => {
         req.session.destroy(); // Destroy session after updating password
         res.redirect('/?message=Password%20changed%20successfully.');
     } catch (error) {
-        console.error('Error during password change:', error);
         res.redirect('/?error=Something%20went%20wrong,%20please%20try%20again%20later.');
     }
 }
@@ -132,7 +126,6 @@ const adminP_verification = async (req, res) => {
         }
     }
     catch (error) {
-        console.error('Error during verification:', error);
         res.redirect('/?error=Something%20went%20wrong%2C%20please%20try%20again%20later.');
     }
 }
@@ -145,7 +138,6 @@ const change_pass_admin = async (req, res) => {
 
         res.json({ message: 'Password Changed.' });
     } catch (error) {
-        console.error('Error Changing Password:', error);
         res.status(500).json({ error: 'An error occurred while Changing Password.' });
     }
 };
@@ -157,7 +149,6 @@ const change_admin_prof = async (req, res) => {
 
         res.json({ message: 'Profile Changed.' });
     } catch (error) {
-        console.error('Error Changing Profile:', error);
         res.status(500).json({ error: 'An error occurred while Changing Profile.' });
     }
 }
